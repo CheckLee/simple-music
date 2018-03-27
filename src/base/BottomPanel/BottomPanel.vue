@@ -26,5 +26,5 @@
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./BottomPanel.styl"
+  @import "BottomPanel.styl"
 </style>
