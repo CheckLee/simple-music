@@ -3,10 +3,25 @@
   justify-content: space-around
   align-items: center
   height: 112px
-  line-height: 112px
   font-size: 24px
   color: #fff
   background-color: rgba(0, 0, 0, 0.9)
   .bottom-item
     width: 118px
     height: 80px
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    .icon
+      width: 44px
+      height: 44px
+      font-size: 44px
+    .bottom-link
+      font-size: 24px
+      color: rgba(255, 255, 255, 0.3)
+    &.router-link-active
+      .bottom-link
+        color: rgba(255, 255, 255, 1)
+      .icon
+        color: rgba(255, 255, 255, 1)

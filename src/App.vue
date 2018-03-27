@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import BottomPanel from 'components/BottomPanel/BottomPanel'
+  import BottomPanel from 'base/BottomPanel/BottomPanel'
   export default {
     name: 'App',
     components: {
