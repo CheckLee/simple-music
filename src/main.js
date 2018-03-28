@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'babel-polyfill'
-import 'common/stylus/index.styl'
+import 'assets/stylus/index.styl'
 
 Vue.config.productionTip = false
 
