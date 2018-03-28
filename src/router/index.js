@@ -3,8 +3,14 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const Account = (resolve) => {
+  import('components/Account.vue').then((module) => {
+    resolve(module)
+  })
+}
+
 const FoundMusic = (resolve) => {
-  import('components/FoundMusic/FoundMusic').then((module) => {
+  import('@/components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
   })
 }
@@ -34,6 +40,11 @@ export default new Router({
     {
       path: '/',
       redirect: '/foundmusic/recommend'
+    },
+    {
+      path: '/Account',
+      name: 'Account',
+      component: Account
     },
     {
       path: '/foundmusic',

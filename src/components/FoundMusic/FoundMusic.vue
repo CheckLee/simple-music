@@ -18,8 +18,8 @@
 </template>
 
 <script>
-  import Tab from 'base/tab/tab'
-  
+  import Tab from 'base/Tab/Tab'
+
   export default {
     name: "found-music",
     data() {
