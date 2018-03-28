@@ -10,7 +10,7 @@ const Account = (resolve) => {
 }
 
 const FoundMusic = (resolve) => {
-  import('components/FoundMusic/FoundMusic').then((module) => {
+  import('@/components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
   })
 }
