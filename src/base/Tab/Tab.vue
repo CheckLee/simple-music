@@ -30,5 +30,5 @@
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./tab.styl"
+  @import "Tab.styl"
 </style>
