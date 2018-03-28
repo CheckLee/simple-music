@@ -15,23 +15,15 @@
 <style scoped>
   .collect-item {
     width: 100%;
+    height: 80px;
     display: flex;
     flex-wrap: nowrap;
   }
   .collect-item > * {
-    /*border: 1px solid red;*/
+    border: 1px solid red;
   }
   .collect-item-header, .collect-item-tail {
     text-align: left;
-  }
-  .collect-item-header {
-    flex-grow: 0.5;
-    /*text-indent: 30px;*/
-  }
-  .collect-item-tail {
-    flex-grow: 0.5;
-  }
-  .collect-item-body {
-    flex-grow: 8;
+    width: 78px;
   }
 </style>

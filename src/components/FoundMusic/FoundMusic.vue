@@ -19,7 +19,7 @@
 
 <script>
   import Tab from 'base/tab/tab'
-  
+
   export default {
     name: "found-music",
     data() {
