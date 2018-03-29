@@ -40,4 +40,5 @@
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
   @import "./FoundMusic.styl"
+  @import "~assets/stylus/variable.styl"
 </style>
