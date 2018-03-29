@@ -24,7 +24,7 @@
         </div>
       </div>
     </section>
-    <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-class="icon" :badge-num="5"></collect-item>
+    <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-class="text" :badge-num="5"></collect-item>
   </div>
 </template>
 
