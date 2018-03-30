@@ -15,9 +15,18 @@
       </div>
       <div class="row">
         <ul class="account-detail">
-          <li>{{ accountTweetsNum }}</li>
-          <li>{{ accountFollowers }}</li>
-          <li>{{ accountFans }}</li>
+          <li>
+            <p>动态</p>
+            <span>{{ accountTweetsNum }}</span>
+          </li>
+          <li>
+            <p>关注</p>
+            <span>{{ accountFollowers }}</span>
+          </li>
+          <li>
+            <p>粉丝</p>
+            <span>{{ accountFans }}</span>
+          </li>
         </ul>
         <div class="account-action-modify">
           <a href=""></a>
@@ -55,14 +64,59 @@
     display: flex;
     flex-direction: column;
   }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 34px;
+  }
+  .account-brief {
+    display: flex;
+    align-items: center;
+  }
   .account-avatar {
     width: 120px;
     height: 120px;
     border-radius: 100%;
+    margin: 0 20px 0 30px;
   }
   .account-avatar img {
     width: inherit;
     height: inherit;
     object-fit: fill;
+  }
+  .account-name, .account-level {
+    height: 40px;
+    line-height: 40px;
+    display: block;
+  }
+  .account-name {
+    font-size: 26px;
+  }
+  .account-level {
+    font-size: 22px;
+  }
+  .account-action-daily {
+    width: 140px;
+    margin-right: 40px;
+  }
+  .account-detail {
+    display: flex;
+    width: 74%;
+    text-align: center;
+  }
+  .account-detail li {
+    flex-grow: 1;
+  }
+  .account-detail li > * {
+    height: 40px;
+    line-height: 40px;
+  }
+  .account-detail li p {
+    font-size: 22px;
+    color: #8e8d92;
+  }
+  .account-detail li span {
+    font-size: 26px;
   }
 </style>
