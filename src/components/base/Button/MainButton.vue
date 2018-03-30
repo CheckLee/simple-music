@@ -30,14 +30,6 @@
     }
 </script>
 
-<style scoped>
-  .button, .medium-primary-button {
-    background-color: #dd3f3c;
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    height: 60px;
-    line-height: 60px;
-    display: block;
-  }
+<style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
+  @import "./MainButton.styl"
 </style>

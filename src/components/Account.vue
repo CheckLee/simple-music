@@ -55,13 +55,14 @@
     display: flex;
     flex-direction: column;
   }
-  .button, .medium-primary-button {
-    background-color: #dd3f3c;
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    height: 60px;
-    line-height: 60px;
-    display: block;
+  .account-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+  }
+  .account-avatar img {
+    width: inherit;
+    height: inherit;
+    object-fit: fill;
   }
 </style>
