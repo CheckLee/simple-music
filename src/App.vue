@@ -1,15 +1,27 @@
 <template>
   <div id="app">
     <router-view/>
+    <div class="bottom-wrapper">
+      <bottom-panel></bottom-panel>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  import BottomPanel from 'base/BottomPanel/BottomPanel'
+  export default {
+    name: 'App',
+    components: {
+      BottomPanel
+    }
+  }
 </script>
 
 <style>
-
+  .bottom-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 112px;
+  }
 </style>
