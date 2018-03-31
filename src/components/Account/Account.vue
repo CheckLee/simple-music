@@ -1,0 +1,53 @@
+<template>
+  <div id="ACCOUNT" class="account">
+    <section class="account-info-card">
+      <router-view></router-view>
+      <!--<logined-account-card></logined-account-card>-->
+    </section>
+    <section class="collections">
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+    </section>
+    <section class="collections">
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+    </section>
+    <section class="collections">
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+    </section>
+    <section class="collections">
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+    </section>
+    <section class="collections account-action-login">
+      <router-link tag="div" to="/account/unloginaccount">
+        <main-button :toggle="true" :button-name-list="['登录', '退出登录']" button-size="large" :button-status="false"></main-button>
+      </router-link>
+    </section>
+  </div>
+</template>
+
+<script>
+    import CollectItem from "../base/CollectItem/CollectItem";
+    import MainButton from "../base/Button/MainButton";
+
+    export default {
+      components: {
+        MainButton,
+        CollectItem},
+      name: "Account"
+    }
+</script>
+
+<style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
+  @import './Account.styl'
+</style>

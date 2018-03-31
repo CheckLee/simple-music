@@ -1,0 +1,37 @@
+@import "~assets/stylus/variable.styl"
+.collect-item
+.icon-collect-item
+  display: flex
+  flex-wrap: nowrap
+  width: calc(100% - 36px)
+  height: 94px
+  margin-left: 36px
+  box-sizing: border-box
+  font-size: $font-size-large-xxxlll
+  line-height: 94px
+  border-bottom: 1px solid $color-background;
+  border-top: 1px solid $color-background;
+  text-align left
+  .material-icons
+    height: inherit
+    line-height: inherit
+    color: $color-icon
+  .collect-item-header
+    width: sum(92px, -36px)
+  .collect-item-tail
+    width: 92px
+  .collect-item-body
+    display: flex
+    justify-content: space-between
+    width: calc(100% - 184px)
+    color: $color-text
+    text-indent: 5px
+    .badge
+      color: $color-icon
+      font-size: $font-size-large-xxx
+
+.text-collect-item
+  .collect-item-header
+    display: none
+  .collect-item-body
+    width calc(100% - 92px)
