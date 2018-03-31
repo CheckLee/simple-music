@@ -4,13 +4,25 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const Account = (resolve) => {
-  import('components/Account.vue').then((module) => {
+  import('components/Account/Account').then((module) => {
+    resolve(module)
+  })
+}
+
+const UnLoginAccountCard = (resolve) => {
+  import('components/Account/UnLoginAccountCard').then((module) => {
+    resolve(module)
+  })
+}
+
+const LoginedAccountCard = (resolve) => {
+  import('components/Account/LoginedAccountCard').then((module) => {
     resolve(module)
   })
 }
 
 const FoundMusic = (resolve) => {
-  import('@/components/FoundMusic/FoundMusic').then((module) => {
+  import('components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
   })
 }
@@ -42,9 +54,22 @@ export default new Router({
       redirect: '/foundmusic/recommend'
     },
     {
-      path: '/Account',
+      path: '/account',
       name: 'Account',
-      component: Account
+      component: Account,
+      redirect: '/account/loginedaccount',
+      children: [
+        {
+          path: 'unloginaccount',
+          name: 'UnLoginAccount',
+          component: UnLoginAccountCard
+        },
+        {
+          path: 'loginedaccount',
+          name: 'LoginedAccount',
+          component: LoginedAccountCard
+        }
+      ]
     },
     {
       path: '/foundmusic',
