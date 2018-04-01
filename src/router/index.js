@@ -21,6 +21,18 @@ const LoginedAccountCard = (resolve) => {
   })
 }
 
+const Fans = (resolve) => {
+  import('components/Fans/Fans').then((module) => {
+    resolve(module)
+  })
+}
+
+const Followers = (resolve) => {
+  import('components/Followers/Followers').then((module) => {
+    resolve(module)
+  })
+}
+
 const FoundMusic = (resolve) => {
   import('components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
@@ -70,6 +82,16 @@ export default new Router({
           component: LoginedAccountCard
         }
       ]
+    },
+    {
+      path: '/account/fans',
+      name: 'fans',
+      component: Fans
+    },
+    {
+      path: '/account/followers',
+      name: 'followers',
+      component: Followers
     },
     {
       path: '/foundmusic',

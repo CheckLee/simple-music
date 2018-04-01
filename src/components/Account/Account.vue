@@ -5,7 +5,7 @@
       <!--<logined-account-card></logined-account-card>-->
     </section>
     <section class="collections">
-      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
+      <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="icon" :badge-num="5"></collect-item>
       <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
       <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
       <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>

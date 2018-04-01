@@ -1,0 +1,38 @@
+@import '~assets/stylus/variable.styl'
+@import '~assets/stylus/mixin.styl'
+
+.img-collect-item
+.fans-img-collect-item
+  display: flex
+  width: 100%
+  height: 140px
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  .img-collect-item-header
+    margin-left: 24px
+    width: 92px
+    height: 92px
+    img
+      width: inherit
+      height: inherit
+      object-fit: fill
+  .img-collect-item-body
+    align-self: stretch
+    width: 100%
+    text-indent: 28px
+    h2
+      margin-top: 24px
+      font-size: $font-size-large-xxxl
+      height: 58px
+      line-height: 58px
+    p
+      font-size: $font-size-large-xx
+      color: $color-icon
+      height: 32px
+      line-height: 32px
+  .img-collect-item-tail
+    margin-right: 24px
+    .material-icons
+      color: $color-icon
+
