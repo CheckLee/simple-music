@@ -1,6 +1,6 @@
 <template>
   <div class="tweets">
-    <img-viewer :show="show" :img-src="imgSrc" @clickit="view"></img-viewer>
+    <img-viewer v-show="show" :img-src="imgSrc" @clickit="view"></img-viewer>
     <float-button></float-button>
     <div class="img-wrapper">
       <img :src="imgSrc" @click="clickImg">
