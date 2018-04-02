@@ -1,6 +1,6 @@
 <template>
-  <div id="ACCOUNT" class="account">
-    <scroll class="account-content">
+  <div id="ACCOUNT" class="account" ref="account">
+    <scroll class="content">
       <div>
         <section class="account-info-card">
           <router-view></router-view>
