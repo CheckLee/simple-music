@@ -27,7 +27,20 @@
     name: "found-music",
     data() {
       return {
-        slideType: 'slide-left'
+        slideType: 'slide-left',
+        activeRoute: 'recommend'
+      }
+    },
+    watch: {
+      $route(to, from) {
+        // console.log(to)
+        if (to.matched[0].path === "/foundmusic") {
+          if (to.matched[1]) {
+            this.activeRoute = to.name.toLowerCase()
+          } else {
+            this.$router.push(`/foundmusic/${this.activeRoute}`)
+          }
+        }
       }
     },
     methods: {

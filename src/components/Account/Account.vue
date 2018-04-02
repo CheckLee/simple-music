@@ -34,6 +34,7 @@
             <main-button :toggle="true" :button-name-list="['登录', '退出登录']" button-size="large" :button-status="false"></main-button>
           </router-link>
         </section>
+        <div class="blank"></div>
       </div>
     </scroll>
   </div>
