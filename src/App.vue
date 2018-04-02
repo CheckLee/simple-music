@@ -18,6 +18,10 @@
 </script>
 
 <style>
+  #app {
+    height: 100%;
+    width: 100%;
+  }
   .bottom-wrapper {
     position: fixed;
     bottom: 0;

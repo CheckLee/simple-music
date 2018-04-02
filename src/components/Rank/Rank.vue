@@ -9,5 +9,7 @@
 </script>
 
 <style scoped>
-
+  .rank {
+    background-color: darkorchid;
+  }
 </style>

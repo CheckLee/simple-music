@@ -10,15 +10,18 @@
         <i class="material-icons md-56 md-light">equalizer</i>
       </div>
     </div>
-    <tab @judgeType="selectType"></tab>
+    <tab @judgeType="selectType" class="tab"></tab>
     <transition :name="slideType">
-      <router-view style="height: 100%;"></router-view>
+      <keep-alive>
+        <router-view class="page"></router-view>
+      </keep-alive>
     </transition>
   </div>
 </template>
 
 <script>
   import Tab from 'base/Tab/Tab'
+  import Scroll from 'base/Scroll/Scroll'
 
   export default {
     name: "found-music",
@@ -33,7 +36,7 @@
       }
     },
     components: {
-      Tab
+      Tab, Scroll
     }
   }
 </script>

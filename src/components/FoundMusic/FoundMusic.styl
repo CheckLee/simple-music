@@ -1,28 +1,33 @@
 @import "~assets/stylus/variable.styl"
 
-.header
-  .search
-    position: relative
-    width: 100%
-    height: 104px
-    background-color: $color-theme-primary
-    display: flex
-    justify-content: space-evenly
-    align-items: center
-    .panel
-      width: 540px
-      height: 70px
-      background: #fff
-      border-radius: 36px
+.found-music
+  height: 100%
+  .header
+    .search
+      position: relative
+      width: 100%
+      height: 104px
+      background-color: $color-theme-primary
       display: flex
-      justify-content: center
+      justify-content: space-evenly
       align-items: center
-      .input
-        font-size: 28px
-        margin-left: 20px
-        outline: none
-        &:focus
-          color: $color-theme-primary
+      .panel
+        width: 540px
+        height: 70px
+        background: #fff
+        border-radius: 36px
+        display: flex
+        justify-content: center
+        align-items: center
+        .input
+          font-size: 28px
+          margin-left: 20px
+          outline: none
+          &:focus
+            color: $color-theme-primary
+  .page
+    background: $color-background-d
+/*
 .slide-left-enter-active, .slide-left-leave-active
   opacity: 1
   transition: all 0.3s
@@ -41,3 +46,14 @@
 .slide-right-leave-to
   opacity: 0
   transform: translate3d(100%, 0, 0)
+*/
+.slide-left-enter, .slide-right-leave-to {
+  opacity: 0
+  transition: all 0.3s
+  transform: translate(100%, 0)
+}
+.slide-right-enter, .slide-left-leave-to {
+  opacity: 0
+  transition: all 0.3s
+  transform: translate(-100%, 0)
+}

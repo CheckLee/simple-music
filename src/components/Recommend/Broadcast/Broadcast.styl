@@ -1,0 +1,50 @@
+.broadcast
+  width: 100%
+  .content
+    .top-column
+      .item
+        width: calc((100% - 14px)/2)
+    .bottom-column
+      .item
+        width: 100%
+    .column
+      margin-bottom: 12px
+      display: flex
+      justify-content: space-between
+      .item
+        .pic
+          width: 100%
+          height: 246px
+          background: #ccc;
+          position: relative
+          .icon-wrapper
+            position: relative
+            top: 15px
+            left: 15px
+            width: 42px
+            height: 40px
+            border-radius: 20px
+            border: 2px solid $color-background-d
+            background: rgba(0, 0, 0, 0.3)
+            display: flex
+            justify-content: center
+            align-items: center
+            .material-icons
+              font-size: 30px
+              margin-right: -2px
+              margin-top: -2px
+              color: $color-background-d
+        .text-wrapper
+          height: 112px
+          .text
+            padding: 14px 10px 0 10px
+            font-size: 26px
+            line-height: 30px
+            -ms-text-overflow: -o-ellipsis-lastline
+            text-overflow: -o-ellipsis-lastline
+            overflow: hidden
+            text-overflow: ellipsis
+            display: -webkit-box
+            -webkit-line-clamp: 2
+            -webkit-box-orient: vertical
+
