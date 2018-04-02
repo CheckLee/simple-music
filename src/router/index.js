@@ -33,6 +33,12 @@ const Followers = (resolve) => {
   })
 }
 
+const Tweets = (resolve) => {
+  import('components/Tweets/Tweets').then((module) => {
+    resolve(module)
+  })
+}
+
 const FoundMusic = (resolve) => {
   import('components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
@@ -92,6 +98,11 @@ export default new Router({
       path: '/account/followers',
       name: 'followers',
       component: Followers
+    },
+    {
+      path: '/tweets',
+      name: 'Tweets',
+      component: Tweets
     },
     {
       path: '/foundmusic',
