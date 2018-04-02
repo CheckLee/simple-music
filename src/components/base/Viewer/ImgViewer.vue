@@ -1,23 +1,20 @@
 <template>
   <!-- 过渡动画 -->
-  <!--<transition name="fade">-->
-    <div v-show="show" class="img-viewer" @click="hide">
+  <transition name="fade">
+    <div class="img-view" @click="bigImg">
       <!-- 遮罩层 -->
-      <!--<div class="img-layer"></div>-->
-      <transition name="fade">
-        <div v-show="show" class="img">
-          <img :src="imgSrc">
-        </div>
-      </transition>
+      <div class="img-layer"></div>
+      <div class="img">
+        <img :src="imgSrc">
+      </div>
     </div>
-  <!--</transition>-->
+  </transition>
 </template>
 <script>
   export default {
-    name: 'img-viewer',
-    props: ['imgSrc','show'],
+    props: ['imgSrc'],
     methods: {
-      hide() {
+      bigImg() {
         // 发送事件
         this.$emit('clickit')
       }
@@ -27,31 +24,27 @@
 <style scoped>
   /*动画*/
   .fade-enter-active,
-  .fade-leave-active {
-    transition: all 5s ease-out;
+  .fade-leave-active{
+    transition: all 5s linear;
   }
 
-  .fade-enter {
+  .fade-enter .img-layer,
+  .fade-leave-active .img-layer{
     transform: scale(0);
   }
-  .fade-leave-active {
-    transform: scale(0);
-  }
+
 
 
   /* bigimg */
 
-  .img-viewer {
+  .img-view {
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
-    overflow: hidden;
   }
 
   /*遮罩层样式*/
-  .img-viewer .img-layer {
+  .img-view .img-layer {
     position: fixed;
     z-index: 999;
     top: 0;
@@ -63,10 +56,13 @@
   }
 
   /*不限制图片大小，实现居中*/
-  .img-viewer .img img {
-    width: 100%;
-    object-fit: fill;
+  .img-view .img img {
+    max-width: 100%;
+    display: block;
     position: absolute;
-    top: 200px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1000;
   }
 </style>

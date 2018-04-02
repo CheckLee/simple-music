@@ -47,7 +47,7 @@
   import LatestMusic from './LatestMusic/LatestMusic'
   import SelectedColumns from './SelectedColumn/SelectedColumns'
   import Radio from './Radio/Radio'
-  
+
   export default {
     name: "recommend",
     components: {
