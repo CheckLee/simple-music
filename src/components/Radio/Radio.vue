@@ -9,5 +9,7 @@
 </script>
 
 <style scoped>
-
+  .radio {
+    background-color: lightblue;
+  }
 </style>

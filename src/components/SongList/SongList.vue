@@ -11,5 +11,7 @@
 </script>
 
 <style scoped>
-
+  .song-list {
+    background-color: lime;
+  }
 </style>

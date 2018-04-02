@@ -30,5 +30,6 @@
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "Tab.styl"
+  @import "~assets/stylus/variable.styl"
+  @import "./Tab.styl"
 </style>
