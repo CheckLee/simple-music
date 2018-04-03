@@ -25,11 +25,11 @@
   /*动画*/
   .fade-enter-active,
   .fade-leave-active{
-    transition: all 5s linear;
+    transition: all 5s ease-in;
   }
 
-  .fade-enter .img-layer,
-  .fade-leave-active .img-layer{
+  .fade-enter,
+  .fade-leave-active{
     transform: scale(0);
   }
 

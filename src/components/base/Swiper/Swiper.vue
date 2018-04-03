@@ -10,7 +10,7 @@
 <script>
   import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
-  
+
   export default {
     name: "",
     data() {
@@ -39,6 +39,9 @@
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
+  .swiper-container swiper-container-horizontal swiper-container-android {
+    width: 100%
+  }
   .swiper-pagination-bullet-custom
     width: 20px
     height: 20px
@@ -52,5 +55,5 @@
     color: #fff
     background: #007aff
   .swiper-item
-    width: 375px
+    width: 100%
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div id="ACCOUNT" class="account" ref="account">
-    <scroll class="content">
+  <div id="ACCOUNT" class="account">
+    <scroll class="account-content">
       <div>
         <section class="account-info-card">
           <router-view></router-view>
@@ -34,6 +34,7 @@
             <main-button :toggle="true" :button-name-list="['登录', '退出登录']" button-size="large" :button-status="false"></main-button>
           </router-link>
         </section>
+        <div class="blank"></div>
       </div>
     </scroll>
   </div>
