@@ -30,4 +30,26 @@
     width: 100%;
     height: 112px;
   }
+  .swiper-pagination-bullet-imgview{
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    display: inline-block;
+    border-radius: 100%;
+    background: white;
+    opacity: 0.2;
+
+  }
+  .swiper-pagination-bullet-imgview-active {
+    opacity: 1;
+  }
+  .swiper-lazy-preloader-imgview {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%);
+  }
+  .img-view-slide {
+    height: 100vh;
+  }
 </style>

@@ -2,13 +2,18 @@
   <!-- 过渡动画 -->
     <div class="img-view" @click="bigImg">
       <!-- 遮罩层 -->
-      <div v-show="show" class="img-layer"></div>
+      <div v-show="show" class="img-layer">
+        <div class="swiper-pagination" slot="pagination"></div>
+      </div>
       <transition name="fade">
-        <!--<img v-show="show" :src="imgSrc">-->
         <div v-show="show" class="swiper-container">
           <swiper :options="swiperOption">
-            <swiper-slide v-for="slide in swiperSlides" :key="slide">I'm Slide {{ slide }}</swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
+            <swiper-slide v-for="slide in imgArr" :key="slide.alt" class="img-view-slide">
+              <img :data-src="slide.url" alt="slide.alt" class="swiper-lazy">
+              <div class="swiper-lazy-preloader-imgview">
+                <inf-circle-loader class="inf-preloader" size="large" color="white"></inf-circle-loader>
+              </div>
+            </swiper-slide>
           </swiper>
         </div>
       </transition>
@@ -17,26 +22,32 @@
 <script>
   import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import InfCircleLoader from "../Loader/InfCircleLoader";
   export default {
     data() {
       return {
         swiperOption: {
           pagination: {
-            el: '.swiper-pagination'
-          }
-        },
-        swiperSlides: [1, 2, 3, 4, 5]
+            el: '.swiper-pagination',
+            bulletClass : 'swiper-pagination-bullet-imgview',
+            bulletActiveClass: 'swiper-pagination-bullet-imgview-active',
+          },
+          lazy: {
+            loadPrevNext: true,
+            preloaderClass: 'swiper-lazy-preloader-imgview',
+          },
+        }
       }
     },
     mounted() {
       setInterval(() => {
         console.log('simulate async data')
-        if (this.swiperSlides.length < 10) {
-          this.swiperSlides.push(this.swiperSlides.length + 1)
-        }
+        // if (this.swiperSlides.length < 10) {
+        //   this.swiperSlides.push(this.swiperSlides.length + 1)
+        // }
       }, 3000)
     },
-    props: ['imgSrc', 'show'],
+    props: ['imgArr', 'show'],
     methods: {
       bigImg() {
         // 发送事件
@@ -44,6 +55,7 @@
       }
     },
     components: {
+      InfCircleLoader,
       swiper, swiperSlide
     }
   }
@@ -62,7 +74,7 @@
 
   .fade-enter,
   .fade-leave-active{
-    transform: scale(0.5) translate3d(calc(-50% + 200px), calc(-100% - 300px), 0);
+    transform: scale(0.5) translate3d(calc(-50% + 200px), -700px, 0);
   }
 
 
@@ -87,24 +99,25 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
 
-  /*不限制图片大小，实现居中*/
-  /*.img-view img {*/
-    /*max-width: 100%;*/
-    /*display: block;*/
-    /*position: absolute;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*!*top: 400px;*!*/
-    /*margin: auto;*/
-    /*z-index: 1000;*/
-  /*}*/
   .img-view .swiper-container {
-    height: 400px;
     width: 750px;
-    overflow: hidden;
-    background: #ccc;
-    /*top: 400px;*/
   }
+
+  .img-view .swiper-container img {
+    width: inherit;
+    object-fit: fill;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .swiper-pagination {
+    align-self: flex-end;
+  }
+
 </style>
