@@ -15,7 +15,6 @@
 
 <script>
     import FloatButton from "../base/Button/FloatButton";
-    import ImgViewer from "../base/Viewer/ImgViewer";
     import ImgViewer2 from "../base/Viewer/ImgViewer2";
     import InfCircleLoader from "../base/Loader/InfCircleLoader";
     import CircleLoader from "../base/Loader/CircleLoader";
@@ -25,16 +24,15 @@
         CircleLoader,
         InfCircleLoader,
         ImgViewer2,
-        ImgViewer,
         FloatButton},
       name: "tweets",
       data() {
         return {
           show: false,
           imageList: [
-            { width: 750, height: 675, alt:'slide1', url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-            { width: 750, height: 675, alt:'slide2', url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
-            { width: 750, height: 675, alt:'slide3', url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' }
+            { width: 750, type: 'normal', alt:'slide1', url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
+            { width: 750, type: 'normal', alt:'slide2', url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
+            { width: 750, type: 'long', alt:'slide3', url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/test_longpics.jpg' }
           ],
           imgSrc: require("../../assets/img/default_unloadimg.png")
         }

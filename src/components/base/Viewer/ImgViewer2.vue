@@ -1,15 +1,15 @@
 <template>
   <!-- 过渡动画 -->
-    <div class="img-view" @click="bigImg">
+    <div v-show="show" class="img-view" @click="bigImg">
       <!-- 遮罩层 -->
       <div v-show="show" class="img-layer">
         <div class="swiper-pagination" slot="pagination"></div>
       </div>
       <transition name="fade">
-        <div v-show="show" class="swiper-container">
-          <swiper :options="swiperOption">
+        <div v-if="show" class="swiper-container">
+          <swiper :options="swiperOption" class="img-view-swiper">
             <swiper-slide v-for="slide in imgArr" :key="slide.alt" class="img-view-slide">
-              <img :data-src="slide.url" alt="slide.alt" class="swiper-lazy">
+              <div class="swiper-zoom-container"> <img :data-src="slide.url" class="swiper-lazy" :class="slide.type"> </div>
               <div class="swiper-lazy-preloader-imgview">
                 <inf-circle-loader class="inf-preloader" size="large" color="white"></inf-circle-loader>
               </div>
@@ -36,6 +36,7 @@
             loadPrevNext: true,
             preloaderClass: 'swiper-lazy-preloader-imgview',
           },
+          zoom: true
         }
       }
     },
@@ -69,12 +70,12 @@
 
   .fade-leave,
   .fade-enter-active {
-    transform: scale(1)
+    transform: scale(1, 1)
   }
 
   .fade-enter,
   .fade-leave-active{
-    transform: scale(0.5) translate3d(calc(-50% + 200px), -700px, 0);
+    transform: scale(0.5, 0.5) translate3d(calc(-50% + 200px), -700px, 0);
   }
 
 
@@ -108,12 +109,19 @@
     width: 750px;
   }
 
-  .img-view .swiper-container img {
+  .img-view .swiper-container .swiper-zoom-container img {
     width: inherit;
     object-fit: fill;
+  }
+
+  .img-view .swiper-container .swiper-zoom-container img.long {
+    width: inherit;
+    max-height: none;
+    object-fit: fill;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+    transform: translateY(0);
+    left: 0;
   }
 
   .swiper-pagination {
