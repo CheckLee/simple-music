@@ -25,7 +25,7 @@
       },
       computed: {
         spinnerColor() {
-          return `spinner${this.color}-only`
+          return `spinner-${this.color}-only`
         }
       }
     }
@@ -105,6 +105,11 @@
     border-color: #fff;
   }
 
+  .spinner-black,
+  .spinner-black-only {
+    border-color: #1f1f1f;
+  }
+
   /**
    * IMPORTANT NOTE ABOUT CSS ANIMATION PROPERTIES (keanulee):
    *
@@ -146,7 +151,9 @@
   .active .spinner-layer.spinner-blue-only,
   .active .spinner-layer.spinner-red-only,
   .active .spinner-layer.spinner-yellow-only,
-  .active .spinner-layer.spinner-green-only {
+  .active .spinner-layer.spinner-green-only,
+  .active .spinner-layer.spinner-white-only,
+  .active .spinner-layer.spinner-black-only {
     /* durations: 4 * ARCTIME */
     opacity: 1;
     -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;

@@ -1,7 +1,6 @@
 <template>
-  <!-- 过渡动画 -->
-    <div v-show="show" class="img-view" @click="bigImg">
-      <!-- 遮罩层 -->
+  <div v-show="show" class="img-view" >
+    <v-touch v-on:doubletap="_doubleTap" v-on:tripletap="_tripleTap" v-on:tap="_singleTap" class="swiper-touch-contanier">
       <div v-show="show" class="img-layer">
         <div class="swiper-pagination" slot="pagination"></div>
       </div>
@@ -9,7 +8,9 @@
         <div v-if="show" class="swiper-container">
           <swiper :options="swiperOption" class="img-view-swiper">
             <swiper-slide v-for="slide in imgArr" :key="slide.alt" class="img-view-slide">
-              <div class="swiper-zoom-container"> <img :data-src="slide.url" class="swiper-lazy" :class="slide.type"> </div>
+              <div class="swiper-zoom-container">
+                <img :data-src="slide.url" class="swiper-lazy" :class="slide.type">
+              </div>
               <div class="swiper-lazy-preloader-imgview">
                 <inf-circle-loader class="inf-preloader" size="large" color="white"></inf-circle-loader>
               </div>
@@ -17,15 +18,18 @@
           </swiper>
         </div>
       </transition>
-    </div>
+    </v-touch>
+  </div>
 </template>
 <script>
   import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import InfCircleLoader from "../Loader/InfCircleLoader";
   export default {
+    name: 'img-previewer',
     data() {
       return {
+        emitFlag: false,
         swiperOption: {
           pagination: {
             el: '.swiper-pagination',
@@ -42,7 +46,7 @@
     },
     mounted() {
       setInterval(() => {
-        console.log('simulate async data')
+        // console.log('simulate async data')
         // if (this.swiperSlides.length < 10) {
         //   this.swiperSlides.push(this.swiperSlides.length + 1)
         // }
@@ -53,6 +57,20 @@
       bigImg() {
         // 发送事件
         this.$emit('clickit')
+      },
+      _singleTap() {
+        this.emitFlag = true
+        setTimeout(() => {
+          if (this.emitFlag) {
+            this.$emit('clickit')
+          }
+        }, 200)
+      },
+      _doubleTap() {
+        this.emitFlag = false
+      },
+      _tripleTap() {
+        this.emitFlag = false
       }
     },
     components: {
@@ -105,8 +123,14 @@
     align-items: flex-start;
   }
 
+  .swiper-touch-contanier {
+    width: 750px;
+    height: 100%;
+  }
+
   .img-view .swiper-container {
     width: 750px;
+    height: 100%;
   }
 
   .img-view .swiper-container .swiper-zoom-container img {

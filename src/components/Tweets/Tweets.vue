@@ -1,29 +1,23 @@
 <template>
   <div class="tweets">
-    <!--<img-viewer v-show="show" :img-src="imgSrc" @clickit="view"></img-viewer>-->
-    <!--<circle-loader width="50px" height="50px" class="circle-loader"></circle-loader>-->
-    <img-viewer2 :show="show" :img-arr="imageList" @clickit="view"></img-viewer2>
-    <float-button></float-button>
-    <div class="img-wrapper">
-      <img :src="imgSrc" @click="clickImg">
-    </div>
-    <!--<div class="list img-wrapper" v-for="(n, index) in imageList" :data-index="index">-->
-      <!--<img @click="open($event)" :src="n.url">-->
+    <inf-circle-loader color="blue"></inf-circle-loader>
+    <!--<img-pre-viweer :show="show" :img-arr="imageList" @clickit="view"></img-pre-viweer>-->
+    <!--<float-button button-icon-name="create"></float-button>-->
+    <!--<div class="img-wrapper">-->
+      <!--<img :src="imgSrc" @click="clickImg">-->
     <!--</div>-->
   </div>
 </template>
 
 <script>
     import FloatButton from "../base/Button/FloatButton";
-    import ImgViewer2 from "../base/Viewer/ImgViewer2";
+    import ImgPreViewer from "../base/Viewer/ImgPreViewer";
     import InfCircleLoader from "../base/Loader/InfCircleLoader";
-    import CircleLoader from "../base/Loader/CircleLoader";
 
     export default {
       components: {
-        CircleLoader,
         InfCircleLoader,
-        ImgViewer2,
+        ImgPreViewer,
         FloatButton},
       name: "tweets",
       data() {

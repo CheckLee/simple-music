@@ -31,8 +31,8 @@
     height: 112px;
   }
   .swiper-pagination-bullet-imgview{
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     margin: 0 5px;
     display: inline-block;
     border-radius: 100%;
@@ -49,8 +49,11 @@
     top: 50%;
     transform: translateX(-50%);
   }
+  .img-view-swiper {
+    height: 100%;
+  }
   .img-view-slide {
-    height: 100vh;
+    height: 100%;
     overflow: auto;
   }
 </style>

@@ -9,9 +9,10 @@
 <script>
     export default {
       name: "float-button",
+      props: ['buttonIconName'],
       data() {
         return {
-          buttonIconName: 'create'
+          name:"float-button"
         }
       }
     }
