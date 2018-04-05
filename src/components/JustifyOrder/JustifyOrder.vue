@@ -1,5 +1,5 @@
 <template>
-  <div class="justify-order" v-show="isJustifyOrder">
+  <div class="justify-order">
     <div class="header">
       <span class="title">调整栏目顺序</span>
       <span class="finish" @click="finish">完成</span>
@@ -44,9 +44,6 @@
       }
     },
     computed: {
-      isJustifyOrder() {
-        return this.$store.state.isJustifyOrder
-      },
       orderList: {
         get() {
           return this.$store.state.recommendOrderList

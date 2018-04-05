@@ -6,7 +6,9 @@
     <div class="bottom-wrapper">
       <bottom-panel></bottom-panel>
     </div>
-    <justify-order class="justify-order"></justify-order>
+    <transition name="pullup">
+      <justify-order v-if="isJustifyOrder" class="justify-order"></justify-order>
+    </transition>
   </div>
 </template>
 
@@ -18,6 +20,11 @@
     name: 'App',
     components: {
       BottomPanel, JustifyOrder
+    },
+    computed: {
+      isJustifyOrder() {
+        return this.$store.state.isJustifyOrder
+      }
     }
   }
 </script>
@@ -34,6 +41,12 @@
     width: 100%;
     height: 112px;
     z-index: 1;
+  }
+  .pullup-enter-active, .pullup-leave-active {
+    transition: all 0.4s
+  }
+  .pullup-enter, .pullup-leave-to {
+    transform: translate3d(0, 100%, 0);
   }
   .swiper-pagination-bullet-imgview{
     width: 8px;
