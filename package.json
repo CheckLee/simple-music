@@ -24,7 +24,11 @@
     "vue-awesome-swiper": "3.1.3",
     "vue-lazyload": "1.2.2",
     "vue-router": "^3.0.1",
+<<<<<<< HEAD
     "vuedraggable": "2.16.0",
+=======
+    "vue-touch": "^2.0.0-beta.4",
+>>>>>>> ee014fa09cc112ca39fb91ab5a316c450bc1001b
     "vuex": "3.0.1"
   },
   "devDependencies": {
