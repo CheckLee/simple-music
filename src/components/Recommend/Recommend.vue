@@ -25,13 +25,10 @@
             <div class="text">云音乐热歌榜</div>
           </div>
         </section>
-        <recommend-list></recommend-list>
-        <broadcast></broadcast>
-        <latest-music></latest-music>
-        <selected-columns></selected-columns>
-        <radio></radio>
+        
+        <div v-for="item in orderList" :is="item.name" :key="item.order"></div>
         <div class="justify-order-wrapper">
-          <div class="justify-order">调整栏目顺序</div>
+          <div class="justify-order-button" @click="justifyOrder">调整栏目顺序</div>
         </div>
         <div class="blank"></div>
       </div>
@@ -47,11 +44,27 @@
   import LatestMusic from './LatestMusic/LatestMusic'
   import SelectedColumns from './SelectedColumn/SelectedColumns'
   import Radio from './Radio/Radio'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: "recommend",
     components: {
       Swiper, RecommendList, Broadcast, Scroll, LatestMusic, SelectedColumns, Radio
+    },
+    computed: {
+      orderList: {
+        get() {
+          return this.$store.state.recommendOrderList
+        }
+      }
+    },
+    methods: {
+      ...mapMutations({
+        setJustifyOrder: 'SET_JUSTIFY_ORDER'
+      }),
+      justifyOrder() {
+        this.setJustifyOrder()
+      }
     }
   }
 </script>

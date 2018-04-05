@@ -6,21 +6,25 @@
     <div class="bottom-wrapper">
       <bottom-panel></bottom-panel>
     </div>
+    <justify-order class="justify-order"></justify-order>
   </div>
 </template>
 
 <script>
   import BottomPanel from 'base/BottomPanel/BottomPanel'
+  import JustifyOrder from 'components/JustifyOrder/JustifyOrder'
+  
   export default {
     name: 'App',
     components: {
-      BottomPanel
+      BottomPanel, JustifyOrder
     }
   }
 </script>
 
 <style>
   #app {
+    z-index: 0;
     height: 100%;
     width: 100%;
   }
@@ -29,5 +33,6 @@
     bottom: 0;
     width: 100%;
     height: 112px;
+    z-index: 1;
   }
 </style>
