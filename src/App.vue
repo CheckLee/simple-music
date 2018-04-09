@@ -30,6 +30,9 @@
     width: 100%;
     height: 112px;
   }
+  body.preview {
+    overflow: hidden;
+  }
   .swiper-pagination-bullet-imgview{
     width: 8px;
     height: 8px;

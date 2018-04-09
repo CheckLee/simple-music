@@ -1,0 +1,108 @@
+@import "~assets/stylus/variable.styl"
+
+.card
+.tweets-card
+  width: 100%
+  .tweets-header
+    display: flex
+    width: inherit
+    height: 140px
+    align-items: center
+    justify-content: space-between
+    .tweets-account-avatar
+      width: 140px
+      padding: 24px
+      box-sizing: border-box
+      height: inherit
+      display: flex
+      justify-content: center
+      align-items: center
+      .img
+        width: 92px
+        height: 92px
+        border-radius: 100%
+        img
+          width: inherit
+          object-fit: fill
+    .tweets-header-brief
+      width: 448px
+      .tweets-account-name
+        font-size: $font-size-large-xxxl
+        height: 42px
+        line-height: 42px
+      .tweets-time
+        font-size: $font-size-large-xx
+        color: $color-icon
+        display: block
+        height: 50px
+        line-height 50px
+    .tweets-actions
+      width: 140px
+      box-sizing: border-box
+      margin-right: 24px
+  .tweets-body, .tweets-tail
+    width: 100%
+    padding: 0 24px 0 140px
+    box-sizing: border-box
+  .tweets-body
+    .tweets-body-brief
+      font-size: $font-size-large-xxxl
+      line-height: 28px
+      overflow: hidden
+      position: relative
+    .tweets-body-brief.more
+      height: 100%
+    .tweets-body-brief.less
+      height: 130px
+      &::after
+        content:"...";
+        font-weight:bold;
+        position:absolute;
+        bottom:0;
+        right:0;
+        padding:0 20px 0px 0px;
+    .more-or-less
+      width 70px
+    .tweets-body-content
+      ul.images
+        display: flex
+        flex-wrap: wrap
+        width: 586px
+        height: 586px
+        li
+          flex-grow: 1
+          width: 33.3%
+          height: 33.3%
+          overflow: hidden
+          img
+            width: 100%
+            object-fit: center
+  .tweets-tail
+    display: flex
+    justify-content: space-between
+    .tweets-actions
+      display: flex
+      .tweets-action
+        width: 120px
+        height: 114px
+        line-height: 114px
+        display: flex
+        align-items: center
+        .material-icons
+          height: inherit
+          line-height: inherit
+          color: $color-icon
+        .material-icons.active
+          color: $color-theme-primary
+        span
+          font-size: $font-size-large-xx
+          text-indent: 8px
+    .tweets-api
+      height: 114px
+      line-height 114px
+      .material-icons
+        height: inherit
+        line-height: inherit
+        color: $color-icon
+      .material-icons.active
+        color: $color-theme-primary

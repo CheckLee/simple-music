@@ -1,12 +1,12 @@
 <template>
-  <div class="main-button">
-    <span class="button" :class="buttonClass" @click="_changeStatus">{{ buttonName }}</span>
+  <div class="flat-button" @click="_emitStatus">
+    <span class="button" :class="[buttonClass, buttonSize]" @click="_changeStatus">{{ buttonName }}</span>
   </div>
 </template>
 
 <script>
     export default {
-      name: "main-button",
+      name: "flat-button",
       data() {
         return {
           isClicked: false
@@ -28,6 +28,9 @@
         buttonStatus: {
           type: Boolean,
           default: false
+        },
+        buttonColor: {
+          type: String
         }
       },
       computed: {
@@ -35,7 +38,7 @@
           return this.isClicked? this.buttonNameList[1]:this.buttonNameList[0]
         },
         buttonClass() {
-          return this.isClicked? `${this.buttonSize}-secondary-button`:`${this.buttonSize}-primary-button`
+          return `${this.buttonColor}-flat-button`
         }
       },
       methods: {
@@ -46,6 +49,9 @@
           else {
             this.isClicked = true
           }
+        },
+        _emitStatus() {
+          this.$emit('getClickStatus', this.isClicked)
         }
       },
       created() {
@@ -54,6 +60,6 @@
     }
 </script>
 
-<style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./MainButton.styl"
+<style type="text/stylus" rel="stylesheet/stylus" lang="stylus" scoped>
+  @import './FlatButton.styl'
 </style>
