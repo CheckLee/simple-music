@@ -1,13 +1,15 @@
 <template>
   <div v-show="show" class="img-view" >
     <v-touch v-on:doubletap="_doubleTap" v-on:tripletap="_tripleTap" v-on:tap="_singleTap" class="swiper-touch-contanier">
-      <div v-show="show" class="img-layer">
-        <div class="swiper-pagination" slot="pagination"></div>
-      </div>
-      <transition name="fade">
+      <!--<div v-show="show" class="img-layer">-->
+        <!--<div class="swiper-pagination" slot="pagination"></div>-->
+      <!--</div>-->
+      <transition
+        v-on:before-enter="_beforeEnter"
+        v-on:enter="_enter">
         <div v-if="show" class="swiper-container">
           <swiper :options="swiperOption" class="img-view-swiper">
-            <swiper-slide v-for="slide in imgArr" :key="slide.alt" class="img-view-slide">
+            <swiper-slide v-for="slide in imgArr" :key="slide.index" class="img-view-slide">
               <div class="swiper-zoom-container">
                 <img :data-src="slide.url" class="swiper-lazy" :class="slide.type">
               </div>
@@ -30,6 +32,8 @@
     data() {
       return {
         emitFlag: false,
+        deletaX: 0,
+        deletaY: 0,
         swiperOption: {
           pagination: {
             el: '.swiper-pagination',
@@ -40,24 +44,22 @@
             loadPrevNext: true,
             preloaderClass: 'swiper-lazy-preloader-imgview',
           },
-          zoom: true
+          zoom: true,
+          initialSlide : 0,
+          observer:true,
         }
       }
     },
-    mounted() {
-      setInterval(() => {
-        // console.log('simulate async data')
-        // if (this.swiperSlides.length < 10) {
-        //   this.swiperSlides.push(this.swiperSlides.length + 1)
-        // }
-      }, 3000)
+    watch: {
+      index(val, oldVal) {
+        this.swiperOption.initialSlide = parseInt(val)
+      }
     },
-    props: ['imgArr', 'show'],
+    mounted() {
+
+    },
+    props: ['imgArr', 'show', 'scale', 'offsetX', 'offsetY', 'width', 'height', 'index'],
     methods: {
-      bigImg() {
-        // 发送事件
-        this.$emit('clickit')
-      },
       _singleTap() {
         this.emitFlag = true
         setTimeout(() => {
@@ -71,6 +73,22 @@
       },
       _tripleTap() {
         this.emitFlag = false
+      },
+      _beforeEnter(el) {
+        let screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth,
+          screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight,
+          scrollX = document.documentElement.scrollTop || document.body.scrollTop,
+          midXLine = screenWidth / 2.0,
+          midYLine = screenHeight / 2.0 + scrollX,
+          radio = 750/midXLine
+        this.deletaX = -( midXLine - (this.offsetX + this.width/2) ) * radio
+        this.deletaY = -( midYLine - (this.offsetY + this.width/2) ) * radio
+        Velocity(el, { scaleX: this.scale/2, scaleY: this.scale/2, translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px` }, { duration: 0 })
+      },
+      _enter(el, done) {
+        // Velocity(el, { translateX: `${this.deletaX/2}px`, translateY: `${this.deletaY/2}px`,  scaleX: 0.5, scaleY: 0.5}, { duration: 50, easing: 'ease' })
+        Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 500, easing: 'ease' })
+        // Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
       }
     },
     components: {
@@ -81,26 +99,27 @@
 </script>
 <style scoped>
   /*动画*/
-  .fade-enter-active,
-  .fade-leave-active{
-    transition: all .5s ease;
-  }
+  /*.fade-enter-active,*/
+  /*.fade-leave-active{*/
+    /*transition: all .5s ease;*/
+  /*}*/
 
-  .fade-leave,
-  .fade-enter-active {
-    transform: scale(1, 1)
-  }
+  /*.fade-leave,*/
+  /*.fade-enter-active {*/
+    /*transform: scale(1, 1)*/
+  /*}*/
 
-  .fade-enter,
-  .fade-leave-active{
-    transform: scale(0.5, 0.5) translate3d(calc(-50% + 200px), -700px, 0);
-  }
+  /*.fade-enter,*/
+  /*.fade-leave-active{*/
+    /*transform: scale(0.5, 0.5) translate3d(calc(-50% + 200px), -700px, 0);*/
+  /*}*/
 
 
   /* bigimg */
 
   .img-view {
-    position: absolute;
+    position: fixed;
+    z-index: 1000;
     width: 100%;
     height: 100%;
     display: flex;
@@ -133,7 +152,7 @@
     height: 100%;
   }
 
-  .img-view .swiper-container .swiper-zoom-container img {
+  .img-view .swiper-container .swiper-zoom-container img.normal {
     width: inherit;
     object-fit: fill;
   }

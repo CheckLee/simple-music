@@ -48,6 +48,9 @@
   .pullup-enter, .pullup-leave-to {
     transform: translate3d(0, 100%, 0);
   }
+  body.preview {
+    overflow: hidden;
+  }
   .swiper-pagination-bullet-imgview{
     width: 8px;
     height: 8px;

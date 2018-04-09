@@ -2,7 +2,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueLazyload from 'vue-lazyload'
 import VueTouch from 'vue-touch'
+import Velocity from 'velocity-animate'
 import fastclick from 'fastclick'
 import 'babel-polyfill'
 import 'assets/stylus/index.styl'
@@ -19,15 +21,21 @@ VueTouch.registerCustomEvent('doubletap', {
   interval: 200,
   taps: 2
 })
-
 VueTouch.registerCustomEvent('tripletap', {
   type: 'tap',
   interval: 200,
   taps: 3
 })
-
 Vue.use(VueTouch)
 Vue.use(VueTouch, {name: 'v-touch'})
+
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png',
+  loading: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png',
+  attempt: 1
+})
+
 
 Vue.config.productionTip = false
 
