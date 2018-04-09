@@ -6,21 +6,32 @@
     <div class="bottom-wrapper">
       <bottom-panel></bottom-panel>
     </div>
+    <transition name="pullup">
+      <justify-order v-if="isJustifyOrder" class="justify-order"></justify-order>
+    </transition>
   </div>
 </template>
 
 <script>
   import BottomPanel from 'base/BottomPanel/BottomPanel'
+  import JustifyOrder from 'components/JustifyOrder/JustifyOrder'
+  
   export default {
     name: 'App',
     components: {
-      BottomPanel
+      BottomPanel, JustifyOrder
+    },
+    computed: {
+      isJustifyOrder() {
+        return this.$store.state.isJustifyOrder
+      }
     }
   }
 </script>
 
 <style>
   #app {
+    z-index: 0;
     height: 100%;
     width: 100%;
   }
@@ -29,6 +40,13 @@
     bottom: 0;
     width: 100%;
     height: 112px;
+    z-index: 1;
+  }
+  .pullup-enter-active, .pullup-leave-active {
+    transition: all 0.4s
+  }
+  .pullup-enter, .pullup-leave-to {
+    transform: translate3d(0, 100%, 0);
   }
   body.preview {
     overflow: hidden;

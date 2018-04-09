@@ -2,7 +2,9 @@
 
 .found-music
   height: 100%
+  z-index: 0
   .header
+    z-index: 1
     .search
       position: relative
       width: 100%
@@ -25,8 +27,12 @@
           outline: none
           &:focus
             color: $color-theme-primary
+  .tab
+    z-index: 1
   .page
     background: $color-background-d
+    z-index: 0
+
 /*
 .slide-left-enter-active, .slide-left-leave-active
   opacity: 1
