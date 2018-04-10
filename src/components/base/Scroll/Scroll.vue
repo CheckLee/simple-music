@@ -103,6 +103,7 @@
             this.$emit('beforeScroll')
           })
         }
+        // 初始化上拉加载
         if (this.pullUpLoad) {
           this._initPullUpLoad()
         }
@@ -147,6 +148,7 @@
     },
     watch: {
       data() {
+        // 当外部触发 data 变化时，才触发pullUpLoad
         setTimeout(() => {
           this.forceUpdate(true)
         }, this.refreshDelay)
