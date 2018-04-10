@@ -1,0 +1,44 @@
+.song-list-frame
+  width: calc((100% - 14px)/2)
+  margin-bottom: 22px
+  .pic
+    width: 368px
+    height: 368px
+    background: #ccc;
+    position: relative
+    .play-count
+      position: absolute
+      height: 58px
+      top: 0
+      right: 0
+      display: flex
+      align-items: center
+      color: $color-background-d
+      .material-icons
+        font-size: 28px
+        margin-right: 6px
+      .count
+        font-size: 28px
+        margin-right: 10px
+    .list-owner
+      position: absolute
+      height: 56px
+      left: 0
+      bottom: 0
+      display: flex
+      align-items: center
+      color: $color-background-d
+      .material-icons
+        font-size: 28px
+        margin-left: 6px
+        margin-right: 6px
+      .desc
+        font-size: 26px;
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+  .text-wrapper
+    margin-top: 12px
+    .text
+      font-size: 26px
+      padding: 0 6px

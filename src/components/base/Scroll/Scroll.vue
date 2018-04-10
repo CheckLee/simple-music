@@ -1,11 +1,28 @@
 <template>
-	<div ref="wrapper">
-    <slot></slot>
+	<div ref="wrapper" class="list-wrapper">
+    <div class="scroll-content">
+      <div ref="listWrapper">
+        <slot></slot>
+      </div>
+      <slot name="pullup"
+            :pullUpLoad="pullUpLoad"
+            :isPullUpLoad="isPullUpLoad">
+        <div class="pullup-wrapper" v-if="pullUpLoad">
+          <div class="before-trigger" v-if="!isPullUpLoad">
+            <span>{{ pullUpTxt }}</span>
+          </div>
+          <div class="after-trigger" v-else>
+            <inf-circle-loader :color="circleColor"></inf-circle-loader>
+          </div>
+        </div>
+      </slot>
+    </div>
   </div>
 </template>
 
 <script>
   import BScroll from 'better-scroll'
+  import InfCircleLoader from 'base/Loader/InfCircleLoader'
 
   export default {
     name: "scroll",
@@ -37,6 +54,25 @@
       refreshDelay: {
         type: Number,
         default: 20
+      },
+      pullUpLoad: {
+        type: null,
+        default: false
+      }
+    },
+    data() {
+      return {
+        isPullUpLoad: false,
+        pullUpDirty: true,
+        circleColor: 'red'
+      }
+    },
+    computed: {
+      pullUpTxt() {
+        const moreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.more
+        const noMoreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.noMore
+        // 判断是否加载完
+        return this.pullUpDirty ? moreTxt: noMoreTxt
       }
     },
     methods: {
@@ -46,7 +82,8 @@
         }
         this.scroll = new BScroll(this.$refs.wrapper, {
           probeType: this.probeType,
-          click: this.click
+          click: this.click,
+          pullUpLoad: this.pullUpLoad
         })
         if (this.listenScroll) {
           let me = this
@@ -66,6 +103,9 @@
             this.$emit('beforeScroll')
           })
         }
+        if (this.pullUpLoad) {
+          this._initPullUpLoad()
+        }
       },
       disable() {
         this.scroll && this.scroll.disable()
@@ -81,6 +121,23 @@
       },
       scrollToElement() {
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
+      },
+      forceUpdate(dirty) {
+        if (this.pullUpLoad && this.isPullUpLoad) {
+          this.isPullUpLoad = false
+          this.scroll.finishPullUp()
+          this.pullUpDirty = dirty
+          this.refresh()
+        }
+        else {
+          this.refresh()
+        }
+      },
+      _initPullUpLoad() {
+        this.scroll.on('pullingUp', () => {
+          this.isPullUpLoad = true
+          this.$emit('pullingUp')
+        })
       }
     },
     mounted() {
@@ -91,13 +148,21 @@
     watch: {
       data() {
         setTimeout(() => {
-          this.refresh()
+          this.forceUpdate(true)
         }, this.refreshDelay)
       }
+    },
+    components: {
+      InfCircleLoader
     }
   }
 </script>
 
 <style scoped>
-
+  .pullup-wrapper {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
