@@ -30,7 +30,6 @@
         <div class="justify-order-wrapper">
           <div class="justify-order-button" @click="justifyOrder">调整栏目顺序</div>
         </div>
-        <div class="blank"></div>
       </div>
     </scroll>
   </div>

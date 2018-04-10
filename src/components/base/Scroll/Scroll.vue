@@ -1,16 +1,22 @@
 <template>
-	<div ref="wrapper">
-    <slot></slot>
-    <slot name="pullup" :pullUpLoad="pullUpLoad" :isPullUpLoad="isPullUpLoad">
-      <div class="pullup-wrapper" v-if="pullUpLoad">
-        <div class="before-trigger" v-if="!isPullUpLoad">
-          <span>{{ pullUpTxt }}</span>
-        </div>
-        <div class="after-trigger" v-else>
-          <inf-circle-loader></inf-circle-loader>
-        </div>
+	<div ref="wrapper" class="list-wrapper">
+    <div class="scroll-content">
+      <div ref="listWrapper">
+        <slot></slot>
       </div>
-    </slot>
+      <slot name="pullup"
+            :pullUpLoad="pullUpLoad"
+            :isPullUpLoad="isPullUpLoad">
+        <div class="pullup-wrapper" v-if="pullUpLoad">
+          <div class="before-trigger" v-if="!isPullUpLoad">
+            <span>{{ pullUpTxt }}</span>
+          </div>
+          <div class="after-trigger" v-else>
+            <inf-circle-loader :color="circleColor"></inf-circle-loader>
+          </div>
+        </div>
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -57,14 +63,15 @@
     data() {
       return {
         isPullUpLoad: false,
-        pullUpDirty: true
+        pullUpDirty: true,
+        circleColor: 'red'
       }
     },
     computed: {
       pullUpTxt() {
         const moreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.more
         const noMoreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.noMore
-        // 判断还有没有数据
+        // 判断是否加载完
         return this.pullUpDirty ? moreTxt: noMoreTxt
       }
     },
@@ -152,5 +159,10 @@
 </script>
 
 <style scoped>
-
+  .pullup-wrapper {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>

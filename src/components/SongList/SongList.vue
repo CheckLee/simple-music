@@ -28,7 +28,6 @@
         <div class="content">
           <song-list-frame v-for="item in items" class="item" :key="item.index"></song-list-frame>
         </div>
-        <div class="blank"></div>
       </div>
     </scroll>
   </div>
@@ -84,8 +83,10 @@
         handler(val) {
           const scroll = this.$refs.scroll.scroll
           if (val) {
+            console.log('open pull up')
             scroll.openPullUp()
           } else {
+            console.log('close pull up')
             scroll.closePullUp()
           }
         },
@@ -108,6 +109,7 @@
                 index: this.itemIndex
               })
             }
+            this.$refs.scroll.forceUpdate(true)
           } else {
             this.$refs.scroll.forceUpdate()
           }
