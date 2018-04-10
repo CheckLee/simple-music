@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueVideoPlayer from 'vue-video-player'
 import VueLazyload from 'vue-lazyload'
 import VueTouch from 'vue-touch'
 import Velocity from 'velocity-animate'
@@ -9,6 +10,8 @@ import fastclick from 'fastclick'
 import 'babel-polyfill'
 import 'assets/stylus/index.styl'
 import store from './store'
+
+
 
 // 取消点击延时300ms效果
 fastclick.attach(document.body)
@@ -35,6 +38,12 @@ Vue.use(VueLazyload, {
   loading: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png',
   attempt: 1
 })
+
+// require videojs style
+import 'video.js/dist/video-js.css'
+// import 'vue-video-player/src/custom-theme.css'
+
+Vue.use(VueVideoPlayer)
 
 
 Vue.config.productionTip = false

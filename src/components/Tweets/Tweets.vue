@@ -1,6 +1,7 @@
 <template>
   <div class="tweets">
     <!--<inf-circle-loader color="blue"></inf-circle-loader>-->
+    <video-pre-viewer></video-pre-viewer>
     <img-pre-viewer
       :show="show"
       :index="currentIndex"
@@ -26,9 +27,11 @@
     import ImgPreViewer from "../base/Viewer/ImgPreViewer";
     import InfCircleLoader from "../base/Loader/InfCircleLoader";
     import TweetsCard from "../base/CollectItem/TweetsCard";
+    import VideoPreViewer from "../base/Viewer/videoPreView";
 
     export default {
       components: {
+        VideoPreViewer,
         TweetsCard,
         InfCircleLoader,
         ImgPreViewer,
