@@ -15,7 +15,7 @@
 <script>
   import BottomPanel from 'base/BottomPanel/BottomPanel'
   import JustifyOrder from 'components/JustifyOrder/JustifyOrder'
-  
+
   export default {
     name: 'App',
     components: {
@@ -77,4 +77,6 @@
     height: 100%;
     overflow: auto;
   }
+
+
 </style>

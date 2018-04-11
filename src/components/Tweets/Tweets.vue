@@ -1,7 +1,6 @@
 <template>
   <div class="tweets">
     <!--<inf-circle-loader color="blue"></inf-circle-loader>-->
-    <video-pre-viewer></video-pre-viewer>
     <img-pre-viewer
       :show="show"
       :index="currentIndex"
@@ -27,7 +26,7 @@
     import ImgPreViewer from "../base/Viewer/ImgPreViewer";
     import InfCircleLoader from "../base/Loader/InfCircleLoader";
     import TweetsCard from "../base/CollectItem/TweetsCard";
-    import VideoPreViewer from "../base/Viewer/videoPreView";
+    import VideoPreViewer from "../base/Viewer/VideoPreViewer";
 
     export default {
       components: {
@@ -41,6 +40,7 @@
         return {
           show: false,
           data1: {
+            type: 'images',
             imageList: [
               { width: 750, type: 'normal', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
               { width: 750, type: 'normal', index: 1, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
@@ -54,14 +54,10 @@
             ],
           },
           data2: {
-            imageList: [
-              { width: 750, type: 'normal', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-              { width: 750, type: 'normal', index: 1, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
-              { width: 750, type: 'long', index: 2, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/test_longpics.jpg' },
-              { width: 750, type: 'normal', index: 3, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-              { width: 750, type: 'normal', index: 4, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-              { width: 750, type: 'normal', index: 5, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-            ],
+            type: 'video',
+            videoType: "video/mp4",
+            videoSrc: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm",
+            posterSrc: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-6.jpg"
           },
           currentImgScale: 0.5,
           currentWidth: 0,
@@ -101,13 +97,15 @@
           this.show = false
         },
         _getTargetInfo(payload) {
-          this.currentImageList = payload['imageList']
-          this.currentWidth = payload['width']
-          this.currentOffsetX = payload['left']
-          this.currentHeight = payload['height']
-          this.currentOffsetY = payload['top']
-          this.currentIndex = payload['index']
-          this.show = true
+          if (payload['type'] === 'images') {
+            this.currentImageList = payload['imageList']
+            this.currentWidth = payload['width']
+            this.currentOffsetX = payload['left']
+            this.currentHeight = payload['height']
+            this.currentOffsetY = payload['top']
+            this.currentIndex = payload['index']
+            this.show = true
+          }
         }
       }
     }

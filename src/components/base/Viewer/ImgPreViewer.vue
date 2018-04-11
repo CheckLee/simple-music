@@ -1,9 +1,9 @@
 <template>
   <div v-show="show" class="img-view" >
     <v-touch v-on:doubletap="_doubleTap" v-on:tripletap="_tripleTap" v-on:tap="_singleTap" class="swiper-touch-contanier">
-      <!--<div v-show="show" class="img-layer">-->
-        <!--<div class="swiper-pagination" slot="pagination"></div>-->
-      <!--</div>-->
+      <div v-show="show" class="img-layer">
+        <div class="swiper-pagination" slot="pagination"></div>
+      </div>
       <transition
         v-on:before-enter="_beforeEnter"
         v-on:enter="_enter">
@@ -87,8 +87,8 @@
       },
       _enter(el, done) {
         // Velocity(el, { translateX: `${this.deletaX/2}px`, translateY: `${this.deletaY/2}px`,  scaleX: 0.5, scaleY: 0.5}, { duration: 50, easing: 'ease' })
-        Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 500, easing: 'ease' })
-        // Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
+        Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
+        Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
       }
     },
     components: {
@@ -97,8 +97,8 @@
     }
   }
 </script>
+
 <style scoped>
-  /*动画*/
   /*.fade-enter-active,*/
   /*.fade-leave-active{*/
     /*transition: all .5s ease;*/
@@ -114,8 +114,6 @@
     /*transform: scale(0.5, 0.5) translate3d(calc(-50% + 200px), -700px, 0);*/
   /*}*/
 
-
-  /* bigimg */
 
   .img-view {
     position: fixed;
@@ -170,5 +168,4 @@
   .swiper-pagination {
     align-self: flex-end;
   }
-
 </style>

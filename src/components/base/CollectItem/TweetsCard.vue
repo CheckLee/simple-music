@@ -37,11 +37,19 @@
         :button-name-list="['全文', '收起']"
         :toggle="true"></flat-button>
       <div class="tweets-body-content">
-        <ul class="images">
+        <ul class="images" v-if="isImageList">
           <li v-for="item in data.imageList" @click="_emitTargetInfo($event)">
             <img v-lazy="item.url" :alt="item.index" :index="item.index">
           </li>
         </ul>
+        <div class="video" v-if="isVideo">
+          <video-pre-viewer
+            width="293"
+            :video-type="data.videoType"
+            :video-src="data.videoSrc"
+            :poster-src="data.posterSrc">
+          </video-pre-viewer>
+        </div>
       </div>
     </div>
     <div class="tweets-tail">
@@ -71,9 +79,11 @@
 <script>
     import MainButton from "../Button/MainButton";
     import FlatButton from "../Button/FlatButton";
+    import VideoPreViewer from "../Viewer/VideoPreViewer";
 
     export default {
       components: {
+        VideoPreViewer,
         FlatButton,
         MainButton},
       name: "tweets-card",
@@ -98,16 +108,32 @@
       },
       computed: {
         isImageList() {
-          return this.data.imageList.length === 0
-            ? false
-            : true
+          return this.data.type === 'images'
+            ? true
+            : false
+        },
+        isVideo() {
+          return this.data.type === 'video'
+            ? true
+            : false
         }
       },
       methods: {
         _emitTargetInfo(e) {
           let screeWith = document.documentElement.offsetWidth || document.body.offsetWidth,
-            target = e.target
-          this.$emit('getTargetInfo', { show: this.isImageList, index: e.target.getAttribute('index'), left: target.offsetLeft, top: target.offsetTop, width:target.offsetWidth, height: target.offsetHeight, scale: target.offsetWidth/screeWith, imageList: this.data.imageList  })
+            target = e.target,
+            data = {}
+          data = this.isImageList
+            ? {index: e.target.getAttribute('index'),
+              left: target.offsetLeft,
+              top: target.offsetTop,
+              width:target.offsetWidth,
+              height: target.offsetHeight,
+              scale: target.offsetWidth/screeWith,
+              type: this.data.type,
+              imageList: this.data.imageList}
+            : {}
+          this.$emit('getTargetInfo',data)
         },
         _thumbup() {
           let direction = this.isThumbUp? -1:1
