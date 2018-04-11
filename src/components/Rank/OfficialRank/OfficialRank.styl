@@ -1,4 +1,4 @@
-.pay
+.official-rank
   .content
     .item
       height: 246px
@@ -6,12 +6,25 @@
       border-bottom: 1px solid #ccc
       margin-bottom: 12px
       display: flex
+      justify-content: flex-start
       .pic
         width: 246px
         height: 246px
         background: #ccc
         flex-shrink: 0
         position: relative
+        &.raise
+          background: #6090DA
+        &.new
+          background: #4DB8C0
+        &.original
+          background: #C8476F
+        &.hot
+          background: #B35549
+        &.appreciate
+          background: #B94B4A
+        &.singer
+          background: #8348B4
         .desc
           width: 246px
           height: 46px
@@ -24,41 +37,24 @@
           overflow: hidden
           white-space: nowrap
           text-overflow: ellipsis
-      .info
+      .right
         margin-left: 26px
         margin-right: 36px
+        padding-top: 20px
+        padding-bottom: 20px
         display: flex
         flex-direction: column
+        justify-content: space-around
         width: 100%
-        .title
-          font-size: 30px
-          line-height: 80px
-          height: 80px
-        .sub-title, .play
+        .right-item
           width: 442px
-          font-size: 26px
-          line-height: 40px
-          height: 40px
           overflow: hidden
           white-space: nowrap
           text-overflow: ellipsis
-          color: #ccc
-          display: block
-          vertical-align: center
-        .play
+          font-size: 28px
           .material-icons
-            color: #cccccc
+            margin-left: 30px
             vertical-align: middle
-          .text
-            display: inline-block
-            height: 40px
-            line-height: 40px
-        .price
-          height: 80px
-          line-height: 80px
-          font-size: 30px
-          color: $color-theme-primary
-          .vip
+          .point
+            color: #cccccc
             font-size: 26px
-            color: coral
-
