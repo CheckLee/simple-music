@@ -1,4 +1,5 @@
 const state = {
+  // Recommend 页面顺序列表
   recommendOrderList: [
     {
       name: 'recommend-list',
@@ -26,7 +27,18 @@ const state = {
       order: 5
     },
   ],
-  isJustifyOrder: false
+  // 判断是否排序
+  isJustifyOrder: false,
+  // 调用接口后存储登录当前用户信息
+  currentUser: {
+    uid: ''
+  },
+  // 判断播放器状态
+  isPlayer: false,
+  // 判断FM状态
+  isFM: false,
+  // 判断右上角按钮 当前状态
+  currentPlayer: true
 }
 
 export default state

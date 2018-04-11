@@ -7,7 +7,7 @@
           <i class="material-icons md-28 md-dark md-inactive" style="height: 14px">search</i>
           <input class="input" type="text" placeholder="搜索音乐、歌词、电台">
         </div>
-        <i class="material-icons md-56 md-light">equalizer</i>
+        <div class="blank"></div>
       </div>
     </div>
     <tab @judgeType="selectType" class="tab"></tab>

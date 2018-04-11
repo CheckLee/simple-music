@@ -6,7 +6,7 @@
           <swiper></swiper>
         </div>
         <section class="panel">
-          <div class="panel-item">
+          <div class="panel-item" @click="handleEnterFM">
             <div class="icon-wrapper personal-FM">
               <i class="material-icons theme">radio</i>
             </div>
@@ -43,7 +43,7 @@
   import LatestMusic from './LatestMusic/LatestMusic'
   import SelectedColumns from './SelectedColumn/SelectedColumns'
   import Radio from './Radio/Radio'
-  import { mapMutations } from 'vuex'
+  import { mapActions, mapMutations } from 'vuex'
 
   export default {
     name: "recommend",
@@ -61,8 +61,15 @@
       ...mapMutations({
         setJustifyOrder: 'SET_JUSTIFY_ORDER'
       }),
+      ...mapActions([
+        'enterFM'
+      ]),
       justifyOrder() {
         this.setJustifyOrder()
+      },
+      handleEnterFM() {
+        // 点击进入私人FM以后，先设置当前播放器为FM，然后拉取数据
+        this.enterFM()
       }
     }
   }
