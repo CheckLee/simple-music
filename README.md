@@ -26,6 +26,6 @@ npm run build --report
 
 ## TODO
 
-* [ ] - 由于和`vue-video-player`冲突，所以修改了`fastcilck`源码。并放到了`static`文件中。后期是否删除`fastclick`待定。
+* [ ] - **待定** 由于和`vue-video-player`冲突，所以修改了`fastcilck`源码。并放到了`static`文件中。后期是否删除`fastclick`**待定**。
 * [ ] - `video-previewer`
     * [ ] - 根据滚动条以及`wifi`确定是否加载视频。
