@@ -35,8 +35,10 @@ const state = {
   },
   // 判断播放器状态
   isPlayer: false,
-  // 判断FM状态
+  // 判断 FM 状态
   isFM: false,
+  //FM 播放列表
+  FMPlayList: [],
   // 判断右上角按钮 当前状态
   currentPlayer: true
 }

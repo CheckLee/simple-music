@@ -24,6 +24,9 @@ const mutations = {
   [types.SET_CURRENT_PLAYER](state, type) {
     state.currentPlayer = type
   },
+  [types.SET_FM_PLAYLIST](state, list) {
+    state.FMPlayList = list
+  }
 }
 
 export default mutations
