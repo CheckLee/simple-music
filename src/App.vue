@@ -3,11 +3,15 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <player-button class="player-button"></player-button>
     <div class="bottom-wrapper">
       <bottom-panel></bottom-panel>
     </div>
     <transition name="pullup">
       <justify-order v-if="isJustifyOrder" class="justify-order"></justify-order>
+    </transition>
+    <transition name="slide">
+      <fm v-if="isFM"></fm>
     </transition>
   </div>
 </template>
@@ -15,16 +19,30 @@
 <script>
   import BottomPanel from 'base/BottomPanel/BottomPanel'
   import JustifyOrder from 'components/JustifyOrder/JustifyOrder'
+  import PlayerButton from 'base/PlayerButton/PlayerButton'
+  import Fm from 'components/FM/Fm'
+  import api from 'api/login'
+  import { mapGetters, mapMutations } from 'vuex'
 
   export default {
     name: 'App',
     components: {
-      BottomPanel, JustifyOrder
+      BottomPanel, JustifyOrder, PlayerButton, Fm
+    },
+    created() {
+      api.Login('18810712875', 'L2907685').then(res => {
+        if (res.data.code === 200) {
+          this.setCurrentUserId(res.data.account.id)
+        }
+      })
     },
     computed: {
-      isJustifyOrder() {
-        return this.$store.state.isJustifyOrder
-      }
+      ...mapGetters([ 'isJustifyOrder', 'isPlayer', 'isFM', 'currentPlayer' ])
+    },
+    methods: {
+      ...mapMutations({
+        setCurrentUserId: 'SET_CURRENT_USER_ID'
+      })
     }
   }
 </script>
@@ -34,6 +52,12 @@
     z-index: 0;
     height: 100%;
     width: 100%;
+  }
+  .player-button {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1;
   }
   .bottom-wrapper {
     position: fixed;
@@ -51,6 +75,13 @@
   }
   .pullup-enter, .pullup-leave-to {
     transform: translate3d(0, 100%, 0);
+  }
+
+  .slide-enter-active, .slide-leave-active {
+    transition: all 0.4s
+  }
+  .slide-enter, .slide-leave-to {
+    transform: translate3d(100%, 0, 0);
   }
   body.preview {
     overflow: hidden;

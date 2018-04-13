@@ -3,3 +3,15 @@ export const SET_RECOMMEND_ORDER_LIST = 'SET_RECOMMEND_ORDER_LIST'
 export const SET_JUSTIFY_ORDER = 'SET_JUSTIFY_ORDER'
 
 export const SET_SORT_ORDER = 'SET_SORT_ORDER'
+
+export const SET_CURRENT_USER_ID = 'SET_CURRENT_USER_ID'
+
+export const SET_PLAYER = 'SET_PLAYER'
+
+export const SET_FM = 'SET_FM'
+
+export const SET_CURRENT_PLAYER = 'SET_CURRENT_PLAYER'
+
+export const SET_FM_PLAYLIST = 'SET_FM_PLAYLIST'
+
+

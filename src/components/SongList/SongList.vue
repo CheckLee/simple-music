@@ -109,6 +109,7 @@
                 index: this.itemIndex
               })
             }
+            // 重置上拉加载完的效果
             this.$refs.scroll.forceUpdate(true)
           } else {
             this.$refs.scroll.forceUpdate()
