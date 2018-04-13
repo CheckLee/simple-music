@@ -18,7 +18,7 @@
             <div class="hottopics-content-wrapper">
               <div class="hottopics-content">
                 <p class="content">{{ slide.content }}</p>
-                <p class="type">{{ slide.type }}</p>
+                <span class="type">{{ slide.type }}</span>
               </div>
               <img :data-src="slide.url" class="swiper-lazy">
             </div>
@@ -64,17 +64,20 @@
             preloaderClass: 'swiper-lazy-preloader-imgview',
           },
           initialSlide : 0,
-          slidesPerView : 2,
+          slidesPerView : 3,
+          spaceBetween : 20,
+          slidesOffsetBefore : 20,
+          slidesOffsetAfter : 20,
           centeredSlides : false,
         },
         hotTopicsImageList:[
-          { content: '#来欣赏樱花#', type: '音乐', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-          { content: '#来欣赏樱花#', type: '音乐', index: 1, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
-          { content: '#来欣赏樱花#', type: '音乐', index: 3, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-          { content: '#来欣赏樱花#', type: '音乐', index: 4, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
-          { content: '#来欣赏樱花#', type: '音乐', index: 6, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
-          { content: '#来欣赏樱花#', type: '音乐', index: 7, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
-          { content: '#来欣赏樱花#', type: '音乐', index: 8, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/test_longpics.jpg' }
+          { content: '来欣赏樱花', type: '音乐', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
+          { content: '来欣赏樱花', type: '音乐', index: 1, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
+          { content: '来欣赏樱花', type: '音乐', index: 3, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
+          { content: '来欣赏樱花', type: '音乐', index: 4, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
+          { content: '来欣赏樱花', type: '音乐', index: 6, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
+          { content: '来欣赏樱花', type: '音乐', index: 7, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
+          { content: '来欣赏樱花', type: '音乐', index: 8, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' }
         ],
         data1: {
           type: 'images',
