@@ -68,6 +68,7 @@
       }
     },
     computed: {
+      // 传到scroll组件中上拉加载的选项
       pullUpLoadObj() {
         return this.pullUpLoad ? {
           threshold: parseInt(this.pullUpLoadThreshold),
@@ -79,6 +80,7 @@
       }
     },
     watch: {
+      // 暂时不知道这是干啥用的
       pullUpLoadObj: {
         handler(val) {
           const scroll = this.$refs.scroll.scroll

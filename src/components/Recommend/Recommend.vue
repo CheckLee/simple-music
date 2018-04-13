@@ -43,7 +43,7 @@
   import LatestMusic from './LatestMusic/LatestMusic'
   import SelectedColumns from './SelectedColumn/SelectedColumns'
   import Radio from './Radio/Radio'
-  import { mapActions, mapMutations } from 'vuex'
+  import { mapGetters, mapActions, mapMutations } from 'vuex'
 
   export default {
     name: "recommend",
@@ -51,6 +51,7 @@
       Swiper, RecommendList, Broadcast, Scroll, LatestMusic, SelectedColumns, Radio
     },
     computed: {
+      ...mapGetters(['isFM']),
       orderList: {
         get() {
           return this.$store.state.recommendOrderList
@@ -59,7 +60,8 @@
     },
     methods: {
       ...mapMutations({
-        setJustifyOrder: 'SET_JUSTIFY_ORDER'
+        setJustifyOrder: 'SET_JUSTIFY_ORDER',
+        setIsPlaying: 'SET_IS_PLAYING'
       }),
       ...mapActions([
         'enterFM'
@@ -69,6 +71,10 @@
       },
       handleEnterFM() {
         // 点击进入私人FM以后，先设置当前播放器为FM，然后拉取数据
+        // 如果是第一次进入FM，或者从Player切换到FM，都把isPlaying变成true
+        if (!this.isFM) {
+          this.setIsPlaying(true)
+        }
         this.enterFM()
       }
     }

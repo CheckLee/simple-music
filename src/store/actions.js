@@ -2,11 +2,13 @@ import * as types from './mutation-types'
 
 export const enterFM = function ({ commit, state }) {
   commit(types.SET_FM, true)
+  commit(types.SET_PLAYER, false)
   commit(types.SET_CURRENT_PLAYER, false)
 }
 
 export const enterPlayer = function ({ commit, state }) {
   commit(types.SET_PLAYER, true)
+  commit(types.SET_FM, false)
   commit(types.SET_CURRENT_PLAYER, true)
 }
 

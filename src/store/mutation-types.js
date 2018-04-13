@@ -14,4 +14,4 @@ export const SET_CURRENT_PLAYER = 'SET_CURRENT_PLAYER'
 
 export const SET_FM_PLAYLIST = 'SET_FM_PLAYLIST'
 
-
+export const SET_IS_PLAYING = 'SET_IS_PLAYING'

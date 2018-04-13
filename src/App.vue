@@ -11,7 +11,7 @@
       <justify-order v-if="isJustifyOrder" class="justify-order"></justify-order>
     </transition>
     <transition name="slide">
-      <fm v-if="isFM"></fm>
+      <fm v-show="isFM"></fm>
     </transition>
   </div>
 </template>

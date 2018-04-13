@@ -71,7 +71,7 @@
       pullUpTxt() {
         const moreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.more
         const noMoreTxt = this.pullUpLoad && this.pullUpLoad.txt && this.pullUpLoad.txt.noMore
-        // 判断是否加载完
+        // 判断是否加载过程结束
         return this.pullUpDirty ? moreTxt: noMoreTxt
       }
     },
@@ -123,6 +123,7 @@
       scrollToElement() {
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
       },
+      // 在上拉加载之后，结束加载过程，重新渲染scroll
       forceUpdate(dirty) {
         if (this.pullUpLoad && this.isPullUpLoad) {
           this.isPullUpLoad = false
@@ -135,6 +136,7 @@
         }
       },
       _initPullUpLoad() {
+        // 当拉到最底时，触发pullingUp
         this.scroll.on('pullingUp', () => {
           this.isPullUpLoad = true
           this.$emit('pullingUp')
