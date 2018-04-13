@@ -40,7 +40,9 @@ const state = {
   //FM 播放列表
   FMPlayList: [],
   // 判断右上角按钮 当前状态
-  currentPlayer: true
+  currentPlayer: true,
+  // 判断当前是否在播放音乐
+  isPlaying: false
 }
 
 export default state

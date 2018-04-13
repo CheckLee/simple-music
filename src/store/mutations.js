@@ -26,6 +26,9 @@ const mutations = {
   },
   [types.SET_FM_PLAYLIST](state, list) {
     state.FMPlayList = list
+  },
+  [types.SET_IS_PLAYING](state, type) {
+    state.isPlaying = type
   }
 }
 
