@@ -11,8 +11,13 @@
         <span class="tweets-time">{{ tweetsTime }}</span>
       </div>
       <div class="tweets-actions">
-        <!--<main-button :toggle="false" :button-name-list="['关注+', '已关注']" button-size="small"></main-button>-->
-        <div>
+        <main-button
+          v-if="data.follow"
+          :toggle="true"
+          :button-name-list="['关注+', '取消关注']"
+          button-size="small">
+        </main-button>
+        <div v-else>
           <span class="tweets-actions-more" @click.stop="_dropdown">
             <i class="material-icons md-36">more_vert</i>
           </span>

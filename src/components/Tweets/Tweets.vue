@@ -42,6 +42,7 @@
           show: false,
           data1: {
             type: 'images',
+            follow: true,
             imageList: [
               { width: 750, type: 'normal', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
               { width: 750, type: 'normal', index: 1, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
@@ -56,12 +57,14 @@
           },
           data2: {
             type: 'video',
+            follow: true,
             videoType: "video/mp4",
             videoSrc: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm",
             posterSrc: "https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_video_poster.png"
           },
           data3: {
             type: 'shared',
+            follow: false,
             shared: {
               type: 'music',
               author: '姜维',
