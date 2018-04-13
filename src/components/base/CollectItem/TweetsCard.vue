@@ -1,5 +1,5 @@
 <template>
-  <div class="card tweets-card">
+  <div class="card tweets-card" @click="_dropup">
     <div class="tweets-header">
       <div class="tweets-account-avatar">
         <div class="img">
@@ -11,17 +11,30 @@
         <span class="tweets-time">{{ tweetsTime }}</span>
       </div>
       <div class="tweets-actions">
-        <main-button :toggle="false" :button-name-list="['关注+', '已关注']" button-size="small"></main-button>
-        <!--<div>-->
-          <!--<button class="tweets-action-more"></button>-->
-          <!--<ul>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-          <!--</ul>-->
-        <!--</div>-->
+        <!--<main-button :toggle="false" :button-name-list="['关注+', '已关注']" button-size="small"></main-button>-->
+        <div>
+          <span class="tweets-actions-more" @click.stop="_dropdown">
+            <i class="material-icons md-36">more_vert</i>
+          </span>
+          <ul class="dropdown-menu" :class="{'dropdown': isDropdown}">
+            <li>
+              <i class="material-icons md-36">visibility_off</i>
+              <span>不再关注</span>
+            </li>
+            <li>
+              <i class="material-icons md-36">account_circle</i>
+              <span>设置备注</span>
+            </li>
+            <li>
+              <i class="material-icons md-36">email</i>
+              <span>私信</span>
+            </li>
+            <li>
+              <i class="material-icons md-36">report_problem</i>
+              <span>举报</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="tweets-body">
@@ -49,6 +62,12 @@
             :video-src="data.videoSrc"
             :poster-src="data.posterSrc">
           </video-pre-viewer>
+        </div>
+        <div class="shared" v-if="isShared">
+          <share-item
+            :item-type="data.shared.type"
+            :item-title="data.shared.breif"
+            :item-sub-title="data.shared.author"></share-item>
         </div>
       </div>
     </div>
@@ -80,12 +99,15 @@
     import MainButton from "../Button/MainButton";
     import FlatButton from "../Button/FlatButton";
     import VideoPreViewer from "../Viewer/VideoPreViewer";
+    import ShareItem from "../CollectItem/ShareItem";
+
 
     export default {
       components: {
         VideoPreViewer,
         FlatButton,
-        MainButton},
+        MainButton,
+        ShareItem},
       name: "tweets-card",
       data() {
         return {
@@ -98,6 +120,7 @@
           isThumbUp: false,
           isLongBrief: false,
           isMore: false,
+          isDropdown: false
         }
       },
       props: {
@@ -116,6 +139,11 @@
           return this.data.type === 'video'
             ? true
             : false
+        },
+        isShared() {
+          return this._.isEmpty(this.data.shared)
+            ? false
+            : true
         }
       },
       methods: {
@@ -134,6 +162,12 @@
               imageList: this.data.imageList}
             : {}
           this.$emit('getTargetInfo',data)
+        },
+        _dropdown() {
+          this.isDropdown = true
+        },
+        _dropup() {
+          this.isDropdown = false
         },
         _thumbup() {
           let direction = this.isThumbUp? -1:1

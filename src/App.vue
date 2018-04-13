@@ -42,6 +42,10 @@
     height: 112px;
     z-index: 1;
   }
+  .blank {
+    height: 112px;
+    width: 100%;
+  }
   .pullup-enter-active, .pullup-leave-active {
     transition: all 0.4s
   }
@@ -77,6 +81,7 @@
     height: 100%;
     overflow: auto;
   }
-
-
+  .tweets.preview {
+    z-index: 2000
+  }
 </style>

@@ -4,12 +4,16 @@
       <div class="item-avatar">
         <img :src="avatarUrl" alt="share-item-avatar">
         <div class="item-avatar-layer">
-          <i class="material-icons md-light">{{ iconName }}</i>
+          <i class="material-icons md-light md-48">{{ iconName }}</i>
         </div>
       </div>
-      <p class="item-title"></p>
+      <div class="item-title">
+        <p>{{ itemTitle }}</p>
+      </div>
     </div>
-    <p class="item-tail item-subtitle"></p>
+    <div class="item-tail">
+      <p class="item-subtitle">{{ itemSubTitle }}</p>
+    </div>
   </div>
 </template>
 
@@ -37,6 +41,14 @@
         itemType: {
           type: String,
           required: true
+        },
+        itemTitle: {
+          type: String,
+          required: true
+        },
+        itemSubTitle: {
+          type: String,
+          required: true
         }
       },
       computed: {
@@ -49,6 +61,6 @@
     }
 </script>
 
-<style scoped>
-
+<style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
+  @import "./ShareItem.styl"
 </style>

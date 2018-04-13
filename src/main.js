@@ -6,6 +6,7 @@ import VueVideoPlayer from 'vue-video-player'
 import VueLazyload from 'vue-lazyload'
 import VueTouch from 'vue-touch'
 import Velocity from 'velocity-animate'
+import lodash from 'lodash'
 import 'babel-polyfill'
 import 'assets/stylus/index.styl'
 import store from './store'
@@ -45,6 +46,7 @@ import 'video.js/dist/video-js.css'
 
 Vue.use(VueVideoPlayer)
 
+Vue.prototype._ = lodash
 
 Vue.config.productionTip = false
 
