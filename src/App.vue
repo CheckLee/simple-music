@@ -112,7 +112,7 @@
     height: 100%;
     overflow: auto;
   }
-  .tweets.preview {
+  .tweets.preview, .push-tweets.preview {
     z-index: 2000;
     top: 0px!important;
   }

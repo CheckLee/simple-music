@@ -55,9 +55,6 @@
         this.swiperOption.initialSlide = parseInt(val)
       }
     },
-    mounted() {
-
-    },
     props: ['imgArr', 'show', 'scale', 'offsetX', 'offsetY', 'width', 'height', 'index'],
     methods: {
       _singleTap() {

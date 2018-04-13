@@ -1,5 +1,10 @@
 <template>
   <div id="ACCOUNT" class="account">
+    <div class="nav-panel-wrapper">
+      <div class="nav-panel">
+        <p>账号</p>
+      </div>
+    </div>
     <scroll class="account-content">
       <div>
         <section class="account-info-card">
