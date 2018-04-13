@@ -11,11 +11,9 @@ import 'babel-polyfill'
 import 'assets/stylus/index.styl'
 import store from './store'
 
-
-
 // 取消点击延时300ms效果
-const fastclick = require('../static/js/fastclick')
-fastclick.attach(document.body)
+// const fastclick = require('../static/js/fastclick')
+// fastclick.attach(document.body)
 
 import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper)

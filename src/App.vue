@@ -19,7 +19,7 @@
 <script>
   import BottomPanel from 'base/BottomPanel/BottomPanel'
   import JustifyOrder from 'components/JustifyOrder/JustifyOrder'
-  import PlayerButton from 'base/PlayerButton/PlayerButton'
+  import PlayerButton from 'base/Button/PlayerButton'
   import Fm from 'components/FM/Fm'
   import api from 'api/login'
   import { mapGetters, mapMutations } from 'vuex'
@@ -113,6 +113,7 @@
     overflow: auto;
   }
   .tweets.preview {
-    z-index: 2000
+    z-index: 2000;
+    top: 0px!important;
   }
 </style>
