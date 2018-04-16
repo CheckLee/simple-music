@@ -2,16 +2,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueVideoPlayer from 'vue-video-player'
 import VueLazyload from 'vue-lazyload'
 import VueTouch from 'vue-touch'
 import Velocity from 'velocity-animate'
-import fastclick from 'fastclick'
+import lodash from 'lodash'
 import 'babel-polyfill'
 import 'assets/stylus/index.styl'
 import store from './store'
 
 // 取消点击延时300ms效果
-fastclick.attach(document.body)
+// const fastclick = require('../static/js/fastclick')
+// fastclick.attach(document.body)
 
 import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper)
@@ -36,6 +38,13 @@ Vue.use(VueLazyload, {
   attempt: 1
 })
 
+// require videojs style
+import 'video.js/dist/video-js.css'
+// import 'vue-video-player/src/custom-theme.css'
+
+Vue.use(VueVideoPlayer)
+
+Vue.prototype._ = lodash
 
 Vue.config.productionTip = false
 
