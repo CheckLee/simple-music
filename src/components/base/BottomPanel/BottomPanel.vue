@@ -10,7 +10,7 @@
         <i class="icon material-icons md-light md-inactive">music_note</i>
         <span class="bottom-link">我的</span>
       </router-link>
-      <router-link class="bottom-item" tag="div" to="/tweets">
+      <router-link class="bottom-item" tag="div" to="/friends">
         <i class="icon material-icons md-light md-inactive">group</i>
         <span class="bottom-link">朋友</span>
       </router-link>

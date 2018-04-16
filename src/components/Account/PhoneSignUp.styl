@@ -1,0 +1,110 @@
+@import "~assets/stylus/variable.styl"
+
+.nav-panel
+  display: flex
+  height: 104px
+  width: 100%
+  justify-content: space-evenly
+  background-color : $color-theme-primary
+  align-items: center
+  .nav-body
+    color: white
+    width: 540px
+    display: flex
+    justify-content: center
+    align-content: center
+  .nav-tail.blank
+    width: 56px
+    height: 56px
+
+.phone-signup
+  .phone-signup-forms
+    width: 704px
+    display: flex
+    flex-direction: column
+    margin: 0 auto
+    margin-top: 22px
+    .button
+      display: block
+      text-align: center
+      width: inherit
+      height: 94px
+      line-height: 94px
+      margin: 0 auto
+      margin-top: 70px
+    .login-action-next
+      background-color: $color-theme-primary
+      color: white
+    .input
+      width: inherit
+      height: 94px
+      display: flex
+      align-items: center
+      margin-top: 22px
+      border: 1px solid $color-background
+      .material-icons
+        width: 82px
+        text-indent: 24px
+        color: $color-icon
+      .input-prefix
+        width: 82px
+        height: 94px
+        line-height: 94px
+        font-size: $font-size-large-xxxlll
+      input
+        width: calc(704px, -164px)
+        text-indent: 12px
+        height: 94px
+        line-height: 94px
+        font-size: $font-size-large-xxxll
+      input:focus::-webkit-input-placeholder
+        color:#fff
+      input:focus::-moz-input-placeholder
+        color:#fff
+
+.phone-signup
+  .loginin-actions
+    display: flex
+    flex-direction: column
+    width: 100%
+    height: 680px
+    justify-content: flex-end
+    .loginin-actions-third
+      display: flex
+      flex-direction: column
+      .divide
+        width: 610px
+        text-align: center
+        margin: 0 auto
+        height: 112px
+        line-height: 112px
+        font-size: $font-size-large-xxxl
+        color: $color-text
+      ul
+        margin: 0 auto
+        display: flex
+        width: 610px
+        justify-content: space-between
+        li
+          width: 92px
+          display: flex
+          flex-direction: column
+          text-align: center
+          .img-wrapper
+            width: inherit
+            height: 92px
+            border-radius: 100%
+            background-color: white
+            display: flex
+            justify-content: center
+            align-items: center
+            svg
+              width: 46px
+              height: 46px
+              path
+                fill: $color-icon
+          span
+            height: 58px
+            line-height: 58px
+            font-size: $font-size-large-xxx
+            color: $color-text

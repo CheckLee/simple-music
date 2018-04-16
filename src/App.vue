@@ -3,7 +3,7 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <player-button class="player-button"></player-button>
+    <player-button class="player-button" v-show="playButtonShow"></player-button>
     <div class="bottom-wrapper">
       <bottom-panel></bottom-panel>
     </div>
@@ -19,13 +19,24 @@
 <script>
   import BottomPanel from 'base/BottomPanel/BottomPanel'
   import JustifyOrder from 'components/JustifyOrder/JustifyOrder'
-  import PlayerButton from 'base/PlayerButton/PlayerButton'
+  import PlayerButton from 'base/Button/PlayerButton'
   import Fm from 'components/FM/Fm'
   import api from 'api/login'
   import { mapGetters, mapMutations } from 'vuex'
-  
+
   export default {
     name: 'App',
+    data() {
+      return {
+        playButtonShow: true,
+        routerMap: ['loginin', 'signup']
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        this.playButtonShow = this.routerMap.indexOf(to.path.split('/')[1].toLowerCase()) > -1? false:true
+      }
+    },
     components: {
       BottomPanel, JustifyOrder, PlayerButton, Fm
     },
@@ -66,13 +77,17 @@
     height: 112px;
     z-index: 1;
   }
+  .blank {
+    height: 112px;
+    width: 100%;
+  }
   .pullup-enter-active, .pullup-leave-active {
     transition: all 0.4s
   }
   .pullup-enter, .pullup-leave-to {
     transform: translate3d(0, 100%, 0);
   }
-  
+
   .slide-enter-active, .slide-leave-active {
     transition: all 0.4s
   }
@@ -107,5 +122,9 @@
   .img-view-slide {
     height: 100%;
     overflow: auto;
+  }
+  .tweets.preview, .push-tweets.preview {
+    z-index: 2000;
+    top: 0px!important;
   }
 </style>

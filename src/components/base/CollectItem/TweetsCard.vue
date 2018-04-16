@@ -1,5 +1,5 @@
 <template>
-  <div class="card tweets-card">
+  <div class="card tweets-card" @click="_dropup">
     <div class="tweets-header">
       <div class="tweets-account-avatar">
         <div class="img">
@@ -11,17 +11,35 @@
         <span class="tweets-time">{{ tweetsTime }}</span>
       </div>
       <div class="tweets-actions">
-        <main-button :toggle="false" :button-name-list="['关注+', '已关注']" button-size="small"></main-button>
-        <!--<div>-->
-          <!--<button class="tweets-action-more"></button>-->
-          <!--<ul>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-          <!--</ul>-->
-        <!--</div>-->
+        <main-button
+          v-if="data.follow"
+          :toggle="true"
+          :button-name-list="['关注+', '取消关注']"
+          button-size="small">
+        </main-button>
+        <div v-else>
+          <span class="tweets-actions-more" @click.stop="_dropdown">
+            <i class="material-icons md-36">more_vert</i>
+          </span>
+          <ul class="dropdown-menu" :class="{'dropdown': isDropdown}">
+            <li>
+              <i class="material-icons md-36">visibility_off</i>
+              <span>不再关注</span>
+            </li>
+            <li>
+              <i class="material-icons md-36">account_circle</i>
+              <span>设置备注</span>
+            </li>
+            <li>
+              <i class="material-icons md-36">email</i>
+              <span>私信</span>
+            </li>
+            <li>
+              <i class="material-icons md-36">report_problem</i>
+              <span>举报</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="tweets-body">
@@ -37,11 +55,25 @@
         :button-name-list="['全文', '收起']"
         :toggle="true"></flat-button>
       <div class="tweets-body-content">
-        <ul class="images">
+        <ul class="images" v-if="isImageList">
           <li v-for="item in data.imageList" @click="_emitTargetInfo($event)">
             <img v-lazy="item.url" :alt="item.index" :index="item.index">
           </li>
         </ul>
+        <div class="video" v-if="isVideo">
+          <video-pre-viewer
+            width="293"
+            :video-type="data.videoType"
+            :video-src="data.videoSrc"
+            :poster-src="data.posterSrc">
+          </video-pre-viewer>
+        </div>
+        <div class="shared" v-if="isShared">
+          <share-item
+            :item-type="data.shared.type"
+            :item-title="data.shared.breif"
+            :item-sub-title="data.shared.author"></share-item>
+        </div>
       </div>
     </div>
     <div class="tweets-tail">
@@ -71,11 +103,16 @@
 <script>
     import MainButton from "../Button/MainButton";
     import FlatButton from "../Button/FlatButton";
+    import VideoPreViewer from "../Viewer/VideoPreViewer";
+    import ShareItem from "../CollectItem/ShareItem";
+
 
     export default {
       components: {
+        VideoPreViewer,
         FlatButton,
-        MainButton},
+        MainButton,
+        ShareItem},
       name: "tweets-card",
       data() {
         return {
@@ -88,6 +125,7 @@
           isThumbUp: false,
           isLongBrief: false,
           isMore: false,
+          isDropdown: false
         }
       },
       props: {
@@ -98,7 +136,17 @@
       },
       computed: {
         isImageList() {
-          return this.data.imageList.length === 0
+          return this.data.type === 'images'
+            ? true
+            : false
+        },
+        isVideo() {
+          return this.data.type === 'video'
+            ? true
+            : false
+        },
+        isShared() {
+          return this._.isEmpty(this.data.shared)
             ? false
             : true
         }
@@ -106,8 +154,25 @@
       methods: {
         _emitTargetInfo(e) {
           let screeWith = document.documentElement.offsetWidth || document.body.offsetWidth,
-            target = e.target
-          this.$emit('getTargetInfo', { show: this.isImageList, index: e.target.getAttribute('index'), left: target.offsetLeft, top: target.offsetTop, width:target.offsetWidth, height: target.offsetHeight, scale: target.offsetWidth/screeWith, imageList: this.data.imageList  })
+            target = e.target,
+            data = {}
+          data = this.isImageList
+            ? {index: e.target.getAttribute('index'),
+              left: target.offsetLeft,
+              top: target.offsetTop,
+              width:target.offsetWidth,
+              height: target.offsetHeight,
+              scale: target.offsetWidth/screeWith,
+              type: this.data.type,
+              imageList: this.data.imageList}
+            : {}
+          this.$emit('getTargetInfo',data)
+        },
+        _dropdown() {
+          this.isDropdown = true
+        },
+        _dropup() {
+          this.isDropdown = false
         },
         _thumbup() {
           let direction = this.isThumbUp? -1:1

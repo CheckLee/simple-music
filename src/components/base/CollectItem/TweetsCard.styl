@@ -3,6 +3,8 @@
 .card
 .tweets-card
   width: 100%
+  background-color: white
+  position: relative
   .tweets-header
     display: flex
     width: inherit
@@ -40,6 +42,36 @@
       width: 140px
       box-sizing: border-box
       margin-right: 24px
+      .tweets-actions-more
+        display: block
+        text-align: right
+        .material-icons
+          color: $color-icon
+      ul.dropdown-menu
+        opacity: 0
+        transform-origin: top right
+        transition: transform .2s ease
+        z-index: 1000
+        transform: scale(0)
+        padding: 20px
+        font-size: $font-size-large-xxxl
+        background-color: white
+        box-sizing: border-box
+        color: $color-icon
+        position: absolute
+        top: 0px
+        right: 0px
+        width: auto
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)
+      ul.dropdown
+        opacity: 1
+        transform: scale(1)
+        li
+          display: flex
+          align-items: center
+          height: 96px
+          span
+            text-indent: 10px
   .tweets-body, .tweets-tail
     width: 100%
     padding: 0 24px 0 140px
@@ -68,11 +100,11 @@
         display: flex
         flex-wrap: wrap
         width: 586px
-        height: 586px
+        height: auto
         li
           flex-grow: 1
           width: 33.3%
-          height: 33.3%
+          height: calc(586px/3)
           overflow: hidden
           img
             width: 100%
