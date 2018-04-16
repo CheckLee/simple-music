@@ -11,15 +11,15 @@
       <span class="name">{{ currentSong.singers }}</span>
       <i class="material-icons">chevron_right</i>
     </div>
-    <div class="progress">
+    <div class="progress-wrapper">
       <span class="cur-time">{{ curTime }}</span>
       <div class="progress-bar-wrapper" ref="progressBarWrapper" @click="progressClick">
         <div class="progress-bar" ref="progressBar">
           <div class="progress" ref="progress"></div>
-          <div class="progress-dot-wrapper" ref="progressDot">
-               <!--@touchstart.prevent="progressTouchStart"
+          <div class="progress-dot-wrapper" ref="progressDot"
+               @touchstart.prevent="progressTouchStart"
                @touchmove.prevent="progressTouchMove"
-               @touchend="progressTouchEnd"-->
+               @touchend="progressTouchEnd">
             <div class="progress-dot" ref="progressBtn"></div>
           </div>
         </div>
@@ -35,7 +35,7 @@
       <i class="material-icons info">message</i>
     </div>
     <audio ref="audio" :src="currentSongUrl"
-           @play="ready" @error="error"
+           @play="ready" @error="error" @ended="next"
            @timeupdate="updateTime"></audio>
   </div>
 </template>
@@ -46,20 +46,26 @@
   
   export default {
     name: "",
+    
     created() {
+      // 为touch事件创建一个对象存储touch数据
+      this.touch = {}
+      // 先调用 FM api 接口获取歌单
       api.GetPersonalFM().then(res => {
         if (res.data.code === 200) {
           // console.log(res.data)
           this.setFMPlayList(res.data.data)
           this.currentList = res.data.data
           this.currentSong = this._formatSong(this.currentList[0])
-          api.GetSong(this.currentSong.id).then(res => {
+          this.currentSongUrl = `http://music.163.com/song/media/outer/url?id=${this.currentSong.id}.mp3`
+          // api接口可能会出现 403
+          /*api.GetSong(this.currentSong.id).then(res => {
             if (res.data.code === 200) {
               this.currentSongUrl = res.data.data[0].url
               // 这里要改，在点击 私人FM 的时候触发
               // this.isPlaying = true
             }
-          })
+          })*/
           // 先不格式化数据存储，而是全部存进去
           /*let currentList = []
           let songInfo = {}
@@ -117,7 +123,8 @@
         this.currentSongIndex++
         
         this.currentSong = this._formatSong(this.currentList[this.currentSongIndex])
-        this._getSong(this.currentSong.id)
+        this.currentSongUrl = `http://music.163.com/song/media/outer/url?id=${this.currentSong.id}.mp3`
+        // this._getSong(this.currentSong.id)
         // 如果当前播放状态是暂停，那么改成播放
         if (!this.isPlaying) {
           this.togglePlaying()
@@ -144,6 +151,7 @@
             singers = artist.name
           }
         }
+        let duration = parseInt(song.duration/1000)
         return {
           name: song.name,
           id: song.id,
@@ -173,6 +181,39 @@
       
       /* progress 方法 */
       progressClick() {},
+  
+      progressTouchStart(e) {
+        // 初始化点击事件
+        this.touch.init = true
+        // 第一次touch到的位置
+        this.touch.startX = e.touches[0].pageX
+        // 获取当前进度条的长度
+        this.touch.progressWidth = this.$refs.progress.clientWidth
+      },
+      progressTouchMove(e) {
+        if (!this.touch.init) {
+          return
+        }
+        const moveX = e.touches[0].pageX - this.touch.startX
+        const offsetWidth = Math.min(this.$refs.progressBar.clientWidth, Math.max(0, this.touch.progressWidth + moveX))
+        this._offset(offsetWidth)
+      },
+      progressTouchEnd(e) {
+        this.touch.init = false
+        this._offsetAudio()
+      },
+      // 进度条和进度点偏移
+      _offset(width) {
+        this.$refs.progress.style.width = `${width}px`
+        this.$refs.progressDot.style.transform = `translate3d(${width}px, 0, 0)`
+      },
+      // audio 进度偏移
+      _offsetAudio() {
+        const percent = this.$refs.progress.clientWidth / this.$refs.progressBar.clientWidth
+        this.currentTime = parseInt(this.currentSong.duration / 1000) * percent
+        this.$refs.audio.currentTime = this.currentTime
+        
+      },
       
       /* audio 方法 */
       // 也就是说 当src有了以后，audio就可以play了
@@ -219,7 +260,7 @@
       },
       // 计算当前播放进度百分比，来控制progress-bar
       percent() {
-        return parseInt(this.currentTime) / (this.currentSong.duration / 1000)
+        return parseInt(this.currentTime) / parseInt((this.currentSong.duration / 1000))
       }
     },
     watch: {
@@ -239,12 +280,12 @@
           newState ? audio.play() : audio.pause()
         })
       },
-      // progress进度条长度
+      // progress 进度条长度和按钮便宜
       percent(newPercent) {
         if (newPercent >= 0) {
           const barWidth = this.$refs.progressBar.clientWidth
           const offsetWidth = newPercent * barWidth
-          this.$refs.progress.style.width = `${offsetWidth}px`
+          this._offset(offsetWidth)
         }
       }
     }

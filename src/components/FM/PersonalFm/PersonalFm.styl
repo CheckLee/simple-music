@@ -1,8 +1,10 @@
 .personal-fm
+  height: 100%
   display: flex
   flex-direction: column
   align-items: center
   color: $color-background-d
+  background: rgba(0, 0, 0, 0.3)
   .blur-wrapper
     z-index: -1
     position: fixed
@@ -50,40 +52,51 @@
       vertical-align: middle
       font-size: 32px
       margin-left: -12px
-
-  .progress-bar-wrapper
-    position: relative
-    width: 500px
-    height: 60px
-    .progress-bar
+  .progress-wrapper
+    margin-top: 140px
+    display: flex
+    align-items: center
+    width: 86%
+    justify-content: space-around
+    .cur-time, .song-time
+      height: 60px
+      line-height: 60px
+      font-size: 26px
+      flex-basis: 60px
+    .progress-bar-wrapper
+      flex: 0 0 1
       position: relative
-      top: 27px
-      height: 6px
-      width: 468px
-      margin-left: 16px
-      background: rgba(204, 204, 204, 0.3)
-      .progress
-        position: absolute
-        height: 100%
-        background: $color-theme-primary
-      .progress-dot-wrapper
-        position: absolute
-        left: -32px
-        top: -27px
-        width: 60px
-        height: 60px
-        .progress-dot
-          position: relative
-          top: 14px
-          left: 14px
-          -webkit-box-sizing: border-box
-          -moz-box-sizing: border-box
-          box-sizing: border-box
-          width: 32px
-          height: 32px
-          border: 13px solid $color-background-d
-          border-radius: 50%
+      width: 500px
+      height: 60px
+      .progress-bar
+        position: relative
+        top: 27px
+        height: 6px
+        width: 468px
+        margin-left: 16px
+        background: rgba(204, 204, 204, 0.3)
+        .progress
+          position: absolute
+          height: 100%
           background: $color-theme-primary
+        .progress-dot-wrapper
+          position: absolute
+          left: -32px
+          top: -27px
+          width: 60px
+          height: 60px
+          .progress-dot
+            position: relative
+            top: 14px
+            left: 14px
+            -webkit-box-sizing: border-box
+            -moz-box-sizing: border-box
+            box-sizing: border-box
+            width: 32px
+            height: 32px
+            border: 13px solid $color-background-d
+            border-radius: 50%
+            background: $color-theme-primary
 
   .handlers
     width: 684px
