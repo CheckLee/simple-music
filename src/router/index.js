@@ -21,6 +21,30 @@ const LoginedAccountCard = (resolve) => {
   })
 }
 
+const LoginIn = (resolve) => {
+  import('components/Account/LoginIn').then((module) => {
+    resolve(module)
+  })
+}
+
+const PhoneLoginIn = (resolve) => {
+  import('components/Account/PhoneLoginIn').then((module) => {
+    resolve(module)
+  })
+}
+
+const PhoneSignUp = (resolve) => {
+  import('components/Account/PhoneSignUp').then((module) => {
+    resolve(module)
+  })
+}
+
+const PhoneValidate = (resolve) => {
+  import('components/Account/PhoneValidate').then((module) => {
+    resolve(module)
+  })
+}
+
 const Fans = (resolve) => {
   import('components/Fans/Fans').then((module) => {
     resolve(module)
@@ -82,6 +106,26 @@ export default new Router({
     {
       path: '/',
       redirect: '/foundmusic/recommend'
+    },
+    {
+      path: '/signup/phonesignup',
+      name: 'phoneSignup',
+      component: PhoneSignUp
+    },
+    {
+      path: '/signup/phonevalidate',
+      name: 'phoneValidate',
+      component: PhoneValidate
+    },
+    {
+      path: '/loginin',
+      name: 'loginin',
+      component: LoginIn
+    },
+    {
+      path: '/loginin/phonelogin',
+      name: 'PhoneLoginIn',
+      component: PhoneLoginIn
     },
     {
       path: '/account',

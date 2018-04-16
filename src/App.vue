@@ -3,7 +3,7 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <player-button class="player-button"></player-button>
+    <player-button class="player-button" v-show="playButtonShow"></player-button>
     <div class="bottom-wrapper">
       <bottom-panel></bottom-panel>
     </div>
@@ -26,6 +26,17 @@
 
   export default {
     name: 'App',
+    data() {
+      return {
+        playButtonShow: true,
+        routerMap: ['loginin', 'signup']
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        this.playButtonShow = this.routerMap.indexOf(to.path.split('/')[1].toLowerCase()) > -1? false:true
+      }
+    },
     components: {
       BottomPanel, JustifyOrder, PlayerButton, Fm
     },

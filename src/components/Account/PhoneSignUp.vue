@@ -1,29 +1,29 @@
 <template>
-  <div class="loginin">
+  <div class="phone-signup">
     <div class="nav-panel-wrapper">
       <div class="nav-panel">
         <span class="nav-header action-add">
-          <i class="material-icons md-56">close</i>
+          <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
         </span>
         <div class="nav-body panel">
+          <p>手机号注册</p>
         </div>
         <div class="nav-tail blank"></div>
       </div>
     </div>
-    <section class="loginin-avatar">
-      <div class="avatar-wrapper">
-        <img src="../../assets/img/default_avatar.png" alt="avatar">
+    <section class="phone-signup-forms">
+      <div class="input phone">
+        <i class="material-icons md-56">smartphone</i>
+        <span class="input-prefix">+{{ phonePrefix }}</span>
+        <input type="text" placeholder="输入手机号">
       </div>
+      <div class="input password">
+        <i class="material-icons md-56">lock_outline</i>
+        <input type="password" placeholder="设置登录密码，不少于6位">
+      </div>
+      <span class="button login-action-next">下一步</span>
     </section>
     <section class="loginin-actions">
-      <ul class="loginin-actions-normal">
-        <li class="phone-login">
-          <span class="button">手机号登录</span>
-        </li>
-        <li class="signup">
-          <span class="button">注册</span>
-        </li>
-      </ul>
       <div class="loginin-actions-third">
         <p class="divide">其他登录方式</p>
         <ul>
@@ -59,10 +59,15 @@
 
 <script>
     export default {
-      name: "Loginin"
+      name: "phoneSignup",
+      data() {
+        return {
+          phonePrefix: '86'
+        }
+      }
     }
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./LoginIn.styl"
+  @import "./PhoneSignUp.styl"
 </style>
