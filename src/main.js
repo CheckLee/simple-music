@@ -7,6 +7,7 @@ import VueLazyload from 'vue-lazyload'
 import VueTouch from 'vue-touch'
 import Velocity from 'velocity-animate'
 import lodash from 'lodash'
+import VeeValidate from 'vee-validate'
 import 'babel-polyfill'
 import 'assets/stylus/index.styl'
 import store from './store'
@@ -43,6 +44,8 @@ import 'video.js/dist/video-js.css'
 // import 'vue-video-player/src/custom-theme.css'
 
 Vue.use(VueVideoPlayer)
+
+Vue.use(VeeValidate)
 
 Vue.prototype._ = lodash
 
