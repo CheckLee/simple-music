@@ -1,6 +1,12 @@
 import * as types from './mutation-types'
 
 const mutations = {
+  [types.SET_CURRENT_USER_STATUS](state, status) {
+    state.isLogin = status
+  },
+  [types.SET_CURRENT_USER_ID](state, uid) {
+    state.currentUser.uid = uid
+  },
   [types.SET_RECOMMEND_ORDER_LIST](state, list) {
     state.recommendOrderList = list
   },
@@ -11,9 +17,6 @@ const mutations = {
     state.recommendOrderList.sort((a, b) => {
       return a.order - b.order
     })
-  },
-  [types.SET_CURRENT_USER_ID](state, uid) {
-    state.currentUser.uid = uid
   },
   [types.SET_PLAYER](state, type) {
     state.isPlayer = type

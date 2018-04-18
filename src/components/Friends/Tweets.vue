@@ -1,5 +1,5 @@
 <template>
-  <div class="tweets" :class="{ 'preview': show }">
+  <div class="tweets" :class="{ 'preview': show }" @click="test">
     <!--<inf-circle-loader color="blue"></inf-circle-loader>-->
     <img-pre-viewer
       :show="show"
@@ -18,7 +18,7 @@
       <tweets-card @getTargetInfo="_getTargetInfo" :data="data3"></tweets-card>
       <div class="blank"></div>
     </scroll>
-    <float-button button-icon-name="create" class="tweets-create"></float-button>
+    <float-button button-icon-name="create" class="tweets-create" ></float-button>
   </div>
 </template>
 
@@ -117,8 +117,12 @@
             this.currentIndex = payload['index']
             this.show = true
           }
+        },
+        test() {
+          console.log('test')
+          this.$router.push({path: '/loginin/phonelogin', query: {transition: 'pop-up'}})
         }
-      }
+      },
     }
 </script>
 

@@ -14,22 +14,65 @@
     <section class="phone-login-forms">
       <div class="input phone">
         <i class="material-icons md-56">smartphone</i>
-        <input type="text" placeholder="手机号">
+        <input
+          v-validate="'required|digits:11'"
+          v-model="account"
+          name="phone"
+          type="text"
+          placeholder="手机号">
       </div>
       <div class="input password">
         <i class="material-icons md-56">lock_outline</i>
-        <input type="password" placeholder="请输入密码">
+        <input
+          v-validate="'required|alpha_num'"
+          v-model="password"
+          name="password"
+          type="password"
+          placeholder="请输入密码">
       </div>
-      <span class="button login-action-login">登录</span>
+      <span class="button login-action-login" @click="_submit">登录</span>
       <span class="button login-action-reset">重设密码</span>
     </section>
   </div>
 </template>
 
 <script>
-    export default {
-      name: "phoneLoginIn"
+  import api from '../../api/login'
+  export default {
+    name: "phoneLoginIn",
+    data() {
+      return {
+        account: '',
+        password: '',
+        errorMsg: '',
+        errorSelector: ['请输入正确的手机号', '请输入正确的密码']
+      }
+    },
+    methods: {
+      _submit() {
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            // eslint-disable-next-line
+            api.LoginByPhone(this.account, this.password).then(res => {
+                if (res.data.code === 200) {
+                  this.$store.dispatch('setCurrentUser',
+                    {
+                      status: true,
+                      uid: res.data.account.id,
+                      account: this.account,
+                      password: this.password
+                    })
+                  this.$router.push({path: '/', query: {transition: 'pop-down'}})
+                }
+            })
+            return;
+          }
+          this.errorMsg = this.errors.has('phone')? this.errorSelector[0]:this.errorSelector[1]
+          alert(this.errorMsg);
+        });
+      }
     }
+  }
 </script>
 
 <style type="text/stylus" rel="stylesheet/stylus" lang="stylus" scoped>

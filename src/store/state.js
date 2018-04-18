@@ -1,4 +1,13 @@
 const state = {
+  // 用户 state
+  // 调用接口后存储登录当前用户信息
+  currentUser: {
+    uid: ''
+  },
+  maxAge: 7*24*60*60*100,
+  isLogin: false,
+
+  //界面 state
   // Recommend 页面顺序列表
   recommendOrderList: [
     {
@@ -29,10 +38,8 @@ const state = {
   ],
   // 判断是否排序
   isJustifyOrder: false,
-  // 调用接口后存储登录当前用户信息
-  currentUser: {
-    uid: ''
-  },
+
+  // 音乐 state
   // 判断播放器状态
   isPlayer: false,
   // 判断 FM 状态

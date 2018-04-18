@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <transition :name="transitionName">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
     <player-button class="player-button" v-show="playButtonShow"></player-button>
-    <div class="bottom-wrapper">
+    <div class="bottom-wrapper" :class="{ 'hide': !playButtonShow }">
       <bottom-panel></bottom-panel>
     </div>
     <transition name="pullup">
@@ -29,11 +31,14 @@
     data() {
       return {
         playButtonShow: true,
-        routerMap: ['loginin', 'signup']
+        routerMap: ['loginin', 'signup'],
+        transitionName: 'pop-up'
       }
     },
     watch: {
       '$route'(to, from) {
+        this.transitionName = to.query['transition']
+        console.log(this.transitionName)
         this.playButtonShow = this.routerMap.indexOf(to.path.split('/')[1].toLowerCase()) > -1? false:true
       }
     },
@@ -41,14 +46,23 @@
       BottomPanel, JustifyOrder, PlayerButton, Fm
     },
     created() {
-      api.Login('18810712875', 'L2907685').then(res => {
-        if (res.data.code === 200) {
-          this.setCurrentUserId(res.data.account.id)
-        }
-      })
+      if (! this.isLogin ) {
+        this.$store.dispatch('updateLoginStatus')
+          .then((success) => {
+            console.log('login success')
+          }
+          , (error) => {
+            this.$router.push({path: '/loginin/phonelogin', query: {transition: 'pop-up'}})
+            })
+      }
+      // api.Login('18810712875', 'L2907685').then(res => {
+      //   if (res.data.code === 200) {
+      //     this.setCurrentUserId(res.data.account.id)
+      //   }
+      // })
     },
     computed: {
-      ...mapGetters([ 'isJustifyOrder', 'isPlayer', 'isFM', 'currentPlayer' ])
+      ...mapGetters([ 'isLogin', 'isJustifyOrder', 'isPlayer', 'isFM', 'currentPlayer' ])
     },
     methods: {
       ...mapMutations({
@@ -76,6 +90,9 @@
     width: 100%;
     height: 112px;
     z-index: 1;
+  }
+  .bottom-wrapper.hide {
+    z-index: -1
   }
   .blank {
     height: 112px;
@@ -126,5 +143,16 @@
   .tweets.preview, .push-tweets.preview {
     z-index: 2000;
     top: 0px!important;
+  }
+
+  .pop-up-enter-active, .pop-up-leave-active {
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateY(-104px);
+    opacity: 1;
+  }
+
+  .pop-up-enter, .pop-up-leave-active {
+    transform: translateY(100%);
+    opacity: 0;
   }
 </style>

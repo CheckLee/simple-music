@@ -17,10 +17,10 @@
     </section>
     <section class="loginin-actions">
       <ul class="loginin-actions-normal">
-        <li class="phone-login">
+        <li class="phone-login" @click="_link('/loginin/phonelogin')">
           <span class="button">手机号登录</span>
         </li>
-        <li class="signup">
+        <li class="signup" @click="_link('/signup/phonesignup')">
           <span class="button">注册</span>
         </li>
       </ul>
@@ -59,7 +59,12 @@
 
 <script>
     export default {
-      name: "Loginin"
+      name: "Loginin",
+      methods: {
+        _linkUrl(url) {
+          this.$router.push({path: url})
+        }
+      }
     }
 </script>
 
