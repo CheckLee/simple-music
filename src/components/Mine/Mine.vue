@@ -83,6 +83,7 @@
     // uid 42118535
     created() {
       let userInfo = JSON.parse(localStorage.getItem('simplemusicUserInfo'))
+      let uid = this.currentUid || userInfo.uid
       // console.log(this.currentUid)
       api.GetUserSubCount().then((res) => {
         if (res.status === 200) {
@@ -90,7 +91,7 @@
           this.subPlaylistCount = res.data.subPlaylistCount
         }
       })
-      api.GetUserPlayList(42118535).then(res => {
+      api.GetUserPlayList(uid).then(res => {
         if (res.status === 200) {
           this.createdPlaylist = res.data.playlist.slice(0, this.createdPlaylistCount)
           this.subPlaylist = res.data.playlist.slice(this.createdPlaylistCount)

@@ -53,7 +53,7 @@
     background: rgba(0, 0, 0, 0.2)
   .swiper-pagination-bullet-custom.swiper-pagination-bullet-active
     color: #fff
-    background: #007aff
+    background: #dd3f3c
   .swiper-item
     width: 100%
 </style>
