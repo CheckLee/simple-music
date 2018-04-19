@@ -32,14 +32,22 @@
       </div>
       <span class="button login-action-login" @click="_submit">登录</span>
       <span class="button login-action-reset">重设密码</span>
+      <toast
+        :content="errorMsg">
+      </toast>
     </section>
   </div>
 </template>
 
 <script>
   import api from '../../api/login'
+  import Toast from '../base/Toast/Toast'
+
   export default {
     name: "phoneLoginIn",
+    components: {
+      Toast
+    },
     data() {
       return {
         account: '',
@@ -68,7 +76,6 @@
             return;
           }
           this.errorMsg = this.errors.has('phone')? this.errorSelector[0]:this.errorSelector[1]
-          alert(this.errorMsg);
         });
       }
     }
