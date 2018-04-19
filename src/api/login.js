@@ -39,5 +39,14 @@ export default {
   },
   LoginRefresh() {
     return axios.get('/login/refresh')
+  },
+  GetUserDetail(uid) {
+    return axios.get(`/user/detail?uid=${uid}`)
+  },
+  GetUserSubCount() {
+    return axios.get('/user/subcount')
+  },
+  GetUserPlayList(uid) {
+    return axios.get(`/user/playlist?uid=${uid}`)
   }
 }
