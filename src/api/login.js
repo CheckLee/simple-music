@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-axios.defaults.retry = 4;
-axios.defaults.retryDelay = 1000;
+axios.defaults.retry = 3;
+axios.defaults.retryDelay = 300;
 
 axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
   var config = err.config;

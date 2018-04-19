@@ -20,6 +20,7 @@ export const selectPlayer = function ({ commit, state }) {
 export const setCurrentUser = function ({ commit, state }, { status, uid, account, password }) {
   let userInfo = {
     timeStamp: Date.now(),
+    uid: uid,
     account: account,
     password: password
   }
@@ -31,15 +32,19 @@ export const setCurrentUser = function ({ commit, state }, { status, uid, accoun
 export const updateLoginStatus = function ({ commit, state }) {
   return api.LoginRefresh()
     .then((res) => {
-      Promise.resolve(false)
+      let currentUser= JSON.parse(localStorage.getItem('simplemusicUserInfo')),
+        uid = currentUser.uid
+      commit(types.SET_CURRENT_USER_STATUS, true)
+      commit(types.SET_CURRENT_USER_ID, uid)
+      return Promise.resolve(true)
     })
-    .catch((res) => {
+    .catch((error) => {
       let currentUser= JSON.parse(localStorage.getItem('simplemusicUserInfo')),
         maxAge = state.maxAge,
         isExpired = (Date.now() - currentUser.timeStamp) > maxAge? true:false
 
       if ( !isExpired ) {
-        api.LoginByPhone(currentUser.account, currentUser.password)
+        return api.LoginByPhone(currentUser.account, currentUser.password)
           .then((res) => {
             setCurrentUser({
               status: true,
@@ -54,7 +59,8 @@ export const updateLoginStatus = function ({ commit, state }) {
           })
       }
       else {
-        Promise.reject(false)
+        localStorage.removeItem('simplemusicUserInfo')
+        return Promise.reject(false)
       }
     })
 }
