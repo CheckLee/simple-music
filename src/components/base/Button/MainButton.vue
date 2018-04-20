@@ -1,5 +1,5 @@
 <template>
-  <div class="main-button">
+  <div class="main-button" @click="_emitStatus">
     <span class="button" :class="buttonClass" @click="_changeStatus">{{ buttonName }}</span>
   </div>
 </template>
@@ -28,6 +28,10 @@
         buttonStatus: {
           type: Boolean,
           default: false
+        },
+        secondaryColor: {
+          type: String,
+          default: 'gray'
         }
       },
       computed: {
@@ -35,7 +39,7 @@
           return this.isClicked? this.buttonNameList[1]:this.buttonNameList[0]
         },
         buttonClass() {
-          return this.isClicked? `${this.buttonSize}-secondary-button`:`${this.buttonSize}-primary-button`
+          return this.isClicked? `${this.buttonSize}-secondary-button ${this.secondaryColor}`:`${this.buttonSize}-primary-button`
         }
       },
       methods: {
@@ -46,6 +50,9 @@
           else {
             this.isClicked = true
           }
+        },
+        _emitStatus() {
+          this.$emit('getClickStatus', this.isClicked)
         }
       },
       created() {

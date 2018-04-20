@@ -1,6 +1,6 @@
 <template>
     <div class="logined-account-card">
-      <div class="row">
+      <div class="row" @click="test">
         <div class="account-brief">
           <div class="account-avatar"><img :src="accountAvatarUrl" alt="account-avatar"></div>
           <div>
@@ -35,22 +35,35 @@
 </template>
 
 <script>
-    import MainButton from "../base/Button/MainButton";
+  import MainButton from "../base/Button/MainButton";
+  import api from '../../api/song'
 
-    export default {
-      components: {MainButton},
-      name: "logined-account-card",
-      data() {
-        return {
-          accountAvatarUrl: require('../../assets/img/default_avatar.png'),
-          accountName: '姜维',
-          accountLevel: '99',
-          accountFans: '1000',
-          accountFollowers: '1000',
-          accountTweetsNum: '99'
-        }
+  export default {
+    components: {MainButton},
+    name: "logined-account-card",
+    data() {
+      return {
+        accountAvatarUrl: require('../../assets/img/default_avatar.png'),
+        accountName: '姜维',
+        accountLevel: '99',
+        accountFans: '1000',
+        accountFollowers: '1000',
+        accountTweetsNum: '99'
+      }
+    },
+    methods: {
+      test() {
+        // api.FetchAccountDetail('9861246')
+        //   .then((res) => {
+        //     console.log(res)
+        //   })
+        api.GetPersonalFM()
+          .then((res) => {
+            console.log(res)
+          })
       }
     }
+  }
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>

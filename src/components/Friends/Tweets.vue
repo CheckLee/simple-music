@@ -1,5 +1,5 @@
 <template>
-  <div class="tweets" :class="{ 'preview': show }" @click="test">
+  <div class="tweets" :class="{ 'preview': show }">
     <!--<inf-circle-loader color="blue"></inf-circle-loader>-->
     <img-pre-viewer
       :show="show"
@@ -95,7 +95,6 @@
         show(val, oldVal) {
           let body = document.querySelector('body')
           if (val) {
-            console.log(val)
             body.classList.add('preview')
           }
           else {
@@ -117,10 +116,6 @@
             this.currentIndex = payload['index']
             this.show = true
           }
-        },
-        test() {
-          console.log('test')
-          this.$router.push({path: '/loginin/phonelogin', query: {transition: 'pop-up'}})
         }
       },
     }

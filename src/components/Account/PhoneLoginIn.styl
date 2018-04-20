@@ -23,6 +23,8 @@
   height: 100%
   background-color: white
   position: absolute
+  top: 0
+  left: 0
   z-index: 2
   .phone-login-forms
     width: 704px
@@ -65,3 +67,19 @@
       input:focus::-moz-input-placeholder
         color:#fff
 
+.toast-wrapper
+  position: absolute
+  left: 0
+  bottom: 90px
+  display: flex
+  width: 100%
+  justify-content: center
+
+.toast-popup-enter-active, .toast-popup-leave-active
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  bottom: 90px
+  opacity: 1;
+
+.toast-popup-enter, .toast-popup-leave-active
+  bottom: -50px
+  opacity: 0;

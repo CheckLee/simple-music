@@ -35,9 +35,14 @@
           <collect-item header-icon-name="email" item-name="邮件" tail-icon-name="keyboard_arrow_right" item-type="text" :badge-num="5"></collect-item>
         </section>
         <section class="collections account-action-login">
-          <router-link tag="div" to="/account/unloginaccount">
-            <main-button :toggle="true" :button-name-list="['登录', '退出登录']" button-size="large" :button-status="false"></main-button>
-          </router-link>
+          <main-button
+            @getClickStatus="_loginOrOut"
+            secondary-color="white"
+            :toggle="true"
+            :button-name-list="['登录', '退出登录']"
+            button-size="large"
+            :button-status="false">
+          </main-button>
         </section>
         <div class="blank"></div>
       </div>
@@ -55,7 +60,23 @@
         Scroll,
         MainButton,
         CollectItem},
-      name: "Account"
+      name: "Account",
+      data() {
+        return {
+          path: '/account/unloginaccount'
+        }
+      },
+      methods: {
+        _loginOrOut(status) {
+          if (status) {
+            // this.$router.push({path: '/loginin/phonelogin', query: {transition: 'pop-up'}})
+            this.$router.push({path: '/loginin', query: {transition: 'pop-up'}})
+          }
+          else {
+            this.$router.push({path: '/account/unloginaccount'})
+          }
+        }
+      }
     }
 </script>
 

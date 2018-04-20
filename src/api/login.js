@@ -39,5 +39,12 @@ export default {
   },
   LoginRefresh() {
     return axios.get('/login/refresh')
+  },
+  GetAccountDetail(uid) {
+    return axios.get('/user/detail', {
+      params: {
+        uid: uid
+      }
+    })
   }
 }

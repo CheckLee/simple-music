@@ -34,6 +34,7 @@ export const updateLoginStatus = function ({ commit, state }) {
     .then((res) => {
       let currentUser= JSON.parse(localStorage.getItem('simplemusicUserInfo')),
         uid = currentUser.uid
+      console.log(res)
       commit(types.SET_CURRENT_USER_STATUS, true)
       commit(types.SET_CURRENT_USER_ID, uid)
       return Promise.resolve(true)

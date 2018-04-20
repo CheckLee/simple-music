@@ -2,7 +2,7 @@
   <div class="phone-loginin">
     <div class="nav-panel-wrapper">
       <div class="nav-panel">
-        <span class="nav-header action-add">
+        <span class="nav-header action-backward" @click="_backward">
           <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
         </span>
         <div class="nav-body panel">
@@ -31,11 +31,15 @@
           placeholder="请输入密码">
       </div>
       <span class="button login-action-login" @click="_submit">登录</span>
-      <span class="button login-action-reset">重设密码</span>
-      <toast
-        :content="errorMsg">
-      </toast>
+      <span class="button login-action-reset" @click="_noImplement">重设密码</span>
     </section>
+    <transition name="toast-popup">
+      <div class="toast-wrapper" v-show="isToast">
+        <toast
+          :content="errorMsg">
+        </toast>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -53,15 +57,28 @@
         account: '',
         password: '',
         errorMsg: '',
-        errorSelector: ['请输入正确的手机号', '请输入正确的密码']
+        isToast: false,
+        fromPath: ''
+      }
+    },
+    watch: {
+      isToast(val, oldVal) {
+        if (val) {
+          setTimeout(() => {
+            this.isToast = false
+          }, 1000)
+        }
+      },
+      '$route'(to, from) {
+        this.fromPath = from.path
       }
     },
     methods: {
       _submit() {
         this.$validator.validateAll().then((result) => {
           if (result) {
-            // eslint-disable-next-line
-            api.LoginByPhone(this.account, this.password).then(res => {
+            api.LoginByPhone(this.account, this.password)
+              .then(res => {
                 if (res.data.code === 200) {
                   this.$store.dispatch('setCurrentUser',
                     {
@@ -72,11 +89,33 @@
                     })
                   this.$router.push({path: '/', query: {transition: 'pop-down'}})
                 }
-            })
+                else {
+                  this.errorMsg = res.data.msg
+                  this.isToast = true
+                }})
+              .catch((error) => {
+                this.errorMsg = "网络连接失败"
+                this.isToast = true
+              })
             return;
           }
-          this.errorMsg = this.errors.has('phone')? this.errorSelector[0]:this.errorSelector[1]
+
+          // let errorMsg = this.errors.has('phone')? this.errorSelector[0]:this.errorSelector[1]
+          if (this.errors.has('phone')) {
+            this.errorMsg = '请输入正确手机号'
+          }
+          else {
+            this.errorMsg = '请输入正确密码'
+          }
+          this.isToast = true
         });
+      },
+      _backward() {
+        this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
+      },
+      _noImplement() {
+        this.errorMsg = '该功能还未实现'
+        this.isToast = true
       }
     }
   }

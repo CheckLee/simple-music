@@ -3,6 +3,7 @@
 .loginin
   display: flex
   flex-direction: column
+  position: relative
   .loginin-avatar
     display: flex
     width: 100%
@@ -80,16 +81,21 @@
   display: flex
   height: 104px
   width: 100%
-  justify-content: space-evenly
-  align-items: center
-  .nav-header
-    .material-icons
-      color: $color-icon
-  .nav-body
-    width: 540px
-    display: flex
-    justify-content: center
-    align-content: center
-  .nav-tail.blank
-    width: 56px
-    height: 56px
+
+.toast-wrapper
+  position: absolute
+  left: 0
+  bottom: 90px
+  display: flex
+  width: 100%
+  justify-content: center
+  z-index: 2001
+
+.toast-popup-enter-active, .toast-popup-leave-active
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  bottom: 90px
+  opacity: 1;
+
+.toast-popup-enter, .toast-popup-leave-active
+  bottom: -50px
+  opacity: 0;
