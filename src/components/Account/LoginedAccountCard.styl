@@ -17,6 +17,7 @@
       height: 140px
       border-radius: 100%
       margin: 0 24px 0 36px
+      overflow: hidden
       img
         width: inherit
         height: inherit
@@ -29,9 +30,19 @@
       font-size: $font-size-large-xxxll
     .account-level
       font-size: $font-size-large-xxx
+      i
+        color: $color-icon
   .account-action-daily
     width: 164px
     margin-right: 36px
+    position: relative
+    .toast-wrapper
+      position: absolute
+      left: -100%
+      bottom: 34px
+      display: flex
+      width: 100%
+      justify-content: center
   .account-detail
     display: flex
     text-align: center
@@ -51,3 +62,14 @@
     width: 164px
     text-align: center
     margin-right: 36px
+
+
+
+.toast-popup-enter-active, .toast-popup-leave-active
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  bottom: 34px
+  opacity: 1;
+
+.toast-popup-enter, .toast-popup-leave-active
+  bottom: -50px
+  opacity: 0;

@@ -46,5 +46,8 @@ export default {
         uid: uid
       }
     })
+  },
+  DailySignMeIn() {
+    return axios.get('/daily_signin')
   }
 }

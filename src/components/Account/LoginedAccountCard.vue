@@ -5,11 +5,24 @@
           <div class="account-avatar"><img :src="accountAvatarUrl" alt="account-avatar"></div>
           <div>
             <h1 class="account-name">{{ accountName }}</h1>
-            <span class="account-level">{{ accountLevel }}</span>
+            <span class="account-level"><i>Lv </i>{{ accountLevel }}</span>
           </div>
         </div>
         <div class="account-action-daily">
-          <main-button :toggle="false" :button-name-list="['签到', '已签到']" button-size="medium" :button-status="false"></main-button>
+          <main-button
+            @getClickStatus="_signMeIn"
+            :toggle="false"
+            :button-name-list="['签到', '已签到']"
+            button-size="medium"
+            :button-status="false">
+          </main-button>
+          <transition name="toast-popup">
+            <div class="toast-wrapper" v-show="isToast">
+              <toast
+                :content="errorMsg">
+              </toast>
+            </div>
+          </transition>
         </div>
       </div>
       <div class="row">
@@ -36,21 +49,33 @@
 
 <script>
   import MainButton from "../base/Button/MainButton";
+  import Toast from '../base/Toast/Toast'
   import { mapGetters } from 'vuex'
   import api from '../../api/login'
 
   export default {
-    components: {MainButton},
+    components: {MainButton, Toast},
     name: "logined-account-card",
     data() {
       return {
         accountAvatarUrl: require('../../assets/img/default_avatar.png'),
-        accountName: '姜维',
-        accountLevel: '99',
-        accountFans: '1000',
-        accountFollowers: '1000',
-        accountTweetsNum: '99'
+        accountName: '网易云音乐用户',
+        accountLevel: '9',
+        accountFans: '0',
+        accountFollowers: '0',
+        accountTweetsNum: '0',
+        errorMsg: '积分+3',
+        isToast: false
       }
+    },
+    watch: {
+      isToast(val, oldVal) {
+        if (val) {
+          setTimeout(() => {
+            this.isToast = false
+          }, 1000)
+        }
+      },
     },
     computed: {
       ...mapGetters(['uId'])
@@ -61,13 +86,36 @@
           .then((res) => {
             console.log(res)
           })
+      },
+      _formatAccountInfo(profile) {
+        this.accountAvatarUrl = profile.avatarUrl
+        this.accountTweetsNum = profile.eventCount
+        this.accountFans = profile.followeds
+        this.accountFollowers = profile.follows
+        this.accountName = profile.nickname
+      },
+      _signMeIn() {
+        api.DailySignMeIn()
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.errorMsg = `积分+${res.data.msg}`
+              this.isToast = true
+            }
+            else if(res.data.code === -2) {
+              this.errorMsg = res.data.msg
+              this.isToast = true
+            }
+          })
       }
     },
     created() {
       api.GetAccountDetail(this.uId)
           .then((res) => {
-            console.log(res)
+            this._formatAccountInfo(res.data.profile)
           })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 </script>

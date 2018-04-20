@@ -1,6 +1,6 @@
 <template>
   <div class="collect-item" :class="collectItemClassName">
-    <p class="collect-item-header" v-if="itemType === 'icon'"><i class="material-icons md-56">{{ headerIconName }}</i></p>
+    <p class="collect-item-header" v-if="itemType === 'icon'"><i class="material-icons md-48">{{ headerIconName }}</i></p>
     <div class="collect-item-body">
       <p>{{ itemName }}</p>
       <span class="badge" v-if="badgeNum > 0">{{ badgeNum }}</span>
