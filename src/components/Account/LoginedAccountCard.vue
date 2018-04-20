@@ -36,7 +36,8 @@
 
 <script>
   import MainButton from "../base/Button/MainButton";
-  import api from '../../api/song'
+  import { mapGetters } from 'vuex'
+  import api from '../../api/login'
 
   export default {
     components: {MainButton},
@@ -51,17 +52,22 @@
         accountTweetsNum: '99'
       }
     },
+    computed: {
+      ...mapGetters(['uId'])
+    },
     methods: {
       test() {
-        // api.FetchAccountDetail('9861246')
-        //   .then((res) => {
-        //     console.log(res)
-        //   })
-        api.GetPersonalFM()
+        api.GetAccountDetail('9861246')
           .then((res) => {
             console.log(res)
           })
       }
+    },
+    created() {
+      api.GetAccountDetail(this.uId)
+          .then((res) => {
+            console.log(res)
+          })
     }
   }
 </script>
