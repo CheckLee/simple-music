@@ -23,6 +23,8 @@
 <script>
   import BScroll from 'better-scroll'
   import InfCircleLoader from 'base/Loader/InfCircleLoader'
+  
+  
 
   export default {
     name: "scroll",

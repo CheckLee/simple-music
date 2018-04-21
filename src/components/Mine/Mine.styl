@@ -1,7 +1,9 @@
 .mine
   height: 100%
   z-index: 0
+  position: relative
   .header
+    position: relative
     z-index: 1
     .search
       position: relative
@@ -25,6 +27,7 @@
   .mine-content
     height: 100%
     overflow: hidden
+    position: relative
     section
       background: $color-background-d
     .mine-info
@@ -54,7 +57,80 @@
             left: 0
           .desc
             font-size: 28px
-            color: #cccccc
+            color: $color-text
           i
             font-size: 52px
             color: #cccccc
+    .playlists
+      .panel
+        height: 50px
+        background: #ccc
+        color: $color-text
+        display: flex
+        align-items: center
+        position: relative
+        .show
+          font-size: 50px
+          margin: 0 10px
+        .text
+          font-size: 24px
+          height: 50px
+          line-height: 50px
+        .more
+          position: absolute
+          font-size: 50px
+          right: 10px
+      .lists
+        .list-item
+          height: 130px
+          display: flex
+          &:last-child
+            .right
+              border-bottom: none
+          .left
+            height: 130px
+            width: 130px
+            margin-right: 10px
+            img
+              height: 118px
+              width: 118px
+              margin: 6px
+          .right
+            flex: 1
+            box-sizing: content-box
+            border-bottom: 1px solid #ccc
+            padding-top: 6px
+            .name
+              display: block
+              height: 72px
+              line-height: 72px
+              width: 610px
+              font-size: 32px
+              overflow: hidden
+              white-space: nowrap
+              text-overflow: ellipsis
+            .count
+              font-size: 24px
+              color: $color-text
+
+  .fixed-panel
+    height: 50px
+    width: 100%
+    background: #ccc
+    color: $color-text
+    display: flex
+    align-items: center
+    position: fixed
+    top: 104px
+    z-index: 0
+    .show
+      font-size: 50px
+      margin: 0 10px
+    .text
+      font-size: 24px
+      height: 50px
+      line-height: 50px
+    .more
+      position: absolute
+      font-size: 50px
+      right: 10px
