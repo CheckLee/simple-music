@@ -1,6 +1,6 @@
 <template>
     <div class="logined-account-card">
-      <div class="row" @click="test">
+      <div class="row">
         <div class="account-brief">
           <div class="account-avatar"><img :src="accountAvatarUrl" alt="account-avatar"></div>
           <div>
@@ -31,11 +31,11 @@
             <p>动态</p>
             <span>{{ accountTweetsNum }}</span>
           </li>
-          <li>
+          <li @click="_link('/account/followers')">
             <p>关注</p>
             <span>{{ accountFollowers }}</span>
           </li>
-          <li>
+          <li @click="_link('/account/fans')">
             <p>粉丝</p>
             <span>{{ accountFans }}</span>
           </li>
@@ -81,12 +81,6 @@
       ...mapGetters(['uId'])
     },
     methods: {
-      test() {
-        api.GetAccountDetail('9861246')
-          .then((res) => {
-            console.log(res)
-          })
-      },
       _formatAccountInfo(profile) {
         this.accountAvatarUrl = profile.avatarUrl
         this.accountTweetsNum = profile.eventCount
@@ -98,7 +92,7 @@
         api.DailySignMeIn()
           .then((res) => {
             if (res.data.code === 200) {
-              this.errorMsg = `积分+${res.data.msg}`
+              this.errorMsg = `积分+${res.data.point}`
               this.isToast = true
             }
             else if(res.data.code === -2) {
@@ -106,6 +100,9 @@
               this.isToast = true
             }
           })
+      },
+      _link(url) {
+        this.$router.push({path: url, query: {transition: 'slide-right'}})
       }
     },
     created() {

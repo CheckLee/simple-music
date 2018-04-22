@@ -11,31 +11,36 @@
         <div class="nav-tail blank"></div>
       </div>
     </div>
-    <li 
-      v-for="item in fansData" 
-      is="ImgCollectItem"
-      :key="item.nickname"
-      :img-url="item.avatarUrl"
-      :item-name="item.nickname"
-      :item-intro="item.signature"
-      item-type="fans">
-      <i class="material-icons md-56">{{ tailIconName }}</i>
-    </li>
+    <scroll class="fans-content">
+      <li
+        v-for="item in fansData"
+        is="ImgCollectItem"
+        :key="item.nickname"
+        :img-url="item.avatarUrl"
+        :item-name="item.nickname"
+        :item-intro="item.signature"
+        item-type="fans">
+      </li>
+    </scroll>
   </div>
 </template>
 
 <script>
   import ImgCollectItem from "../base/CollectItem/ImgCollectItem";
+  import Scroll from "../base/Scroll/Scroll"
   import api from '../../api/login'
   import { mapGetters } from 'vuex'
 
   export default {
-    components: {ImgCollectItem},
+    components: {
+      ImgCollectItem,
+      Scroll
+    },
     name: "fans",
     data() {
       return {
         tailIconName: 'more_horiz',
-        fromPath: '/account/loginedaccount',
+        fromPath: '/account',
         fansData: []
       }
     },
@@ -59,6 +64,6 @@
   }
 </script>
 
-<style scoped>
-
+<style type="text/stylus" rel="stylesheet/stylus" lang="stylus" scoped>
+  @import "./Fans.styl"
 </style>

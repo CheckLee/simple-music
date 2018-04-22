@@ -1,5 +1,4 @@
 @import '~assets/stylus/variable.styl'
-@import '~assets/stylus/mixin.styl'
 
 .img-collect-item
   display: flex
@@ -9,8 +8,9 @@
   justify-content: space-between
   align-items: center
   .img-collect-item-body
-    align-self: stretch
     width: 100%
+    align-self: stretch
+    overflow: hidden
     text-indent: 28px
     display: flex
     flex-direction: column
@@ -22,8 +22,12 @@
     p
       font-size: $font-size-large-xx
       color: $color-icon
+      width: inherit
       height: 32px
       line-height: 32px
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
   .img-collect-item-tail
     margin-right: 24px
     .material-icons

@@ -8,13 +8,6 @@ export default {
   LoginRefresh() {
     return axios.get('/login/refresh')
   },
-  GetFansData(uid) {
-    return axios.get('/user/followeds', {
-      params: {
-        uid: uid
-      }
-    })
-  },
   GetUserDetail(uid) {
     return axios.get('/user/detail', {
       params: {
@@ -27,6 +20,23 @@ export default {
   },
   GetUserPlayList(uid) {
     return axios.get('/user/playlist', {
+      params: {
+        uid: uid
+      }
+    })
+  },
+  GetFansData(uid) {
+    return axios.get('/user/followeds', {
+      params: {
+        uid: uid
+      }
+    })
+  },
+  DailySignMeIn() {
+    return axios.get('/daily_signin')
+  },
+  GetFollowsData(uid) {
+    return axios.get('/user/follows', {
       params: {
         uid: uid
       }
