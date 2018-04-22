@@ -15,46 +15,34 @@
             @scroll="scroll">
       <div>
         <section class="mine-info">
-          <div class="mine-info-item">
-            <div class="left">
-              <i class="material-icons">music_note</i>
-            </div>
-            <div class="right">
-              <span class="text">本地音乐</span>
-              <span class="desc">23</span>
-              <i class="material-icons">chevron_right</i>
-            </div>
-          </div>
-          <div class="mine-info-item">
-            <div class="left">
-              <i class="material-icons">play_circle_outline</i>
-            </div>
-            <div class="right">
-              <span class="text">最近播放</span>
-              <span class="desc">100</span>
-              <i class="material-icons">chevron_right</i>
-            </div>
-          </div>
-          <div class="mine-info-item">
-            <div class="left">
-              <i class="material-icons">queue_music</i>
-            </div>
-            <div class="right">
-              <span class="text">我的电台</span>
-              <span class="desc">2</span>
-              <i class="material-icons">chevron_right</i>
-            </div>
-          </div>
-          <div class="mine-info-item">
-            <div class="left">
-              <i class="material-icons">star_border</i>
-            </div>
-            <div class="right">
-              <span class="text">我的收藏</span>
-              <span class="desc">专辑/歌手/视频/专栏</span>
-              <i class="material-icons">chevron_right</i>
-            </div>
-          </div>
+          <collect-item
+            header-icon-name="music_note"
+            item-name="本地音乐"
+            tail-icon-name="keyboard_arrow_right"
+            badge-num="23"
+            item-type="icon">
+          </collect-item>
+          <collect-item
+            header-icon-name="play_circle_outline"
+            item-name="最近播放"
+            tail-icon-name="keyboard_arrow_right"
+            badge-num="100"
+            item-type="icon">
+          </collect-item>
+          <collect-item
+            header-icon-name="queue_music"
+            item-name="我的电台"
+            tail-icon-name="keyboard_arrow_right"
+            badge-num="2"
+            item-type="icon">
+          </collect-item>
+          <collect-item
+            header-icon-name="star_border"
+            item-name="我的收藏"
+            tail-icon-name="keyboard_arrow_right"
+            badge-num="专辑/歌手/视频/专栏"
+            item-type="icon">
+          </collect-item>
         </section>
         <section class="playlists created-playlist" v-if="createdPlaylist" ref="createdPlaylist">
           <div class="panel" @click="toggleCreatedPlaylistShow">
@@ -64,16 +52,16 @@
             <i class="material-icons more" @click.stop="manageCreated">more_horiz</i>
           </div>
           <div class="lists" v-if="isCreatedPlaylistShow">
-            <div class="list-item" v-for="item in createdPlaylist" :key="item.id">
-              <div class="left">
-                <img v-lazy="item.coverImgUrl" alt="item.coverImgId">
-              </div>
-              <div class="right">
-                <span class="name">{{ item.name }}</span>
-                <span class="count">{{ item.trackCount }}首</span>
-                <i class="material-icons" style="display: none;">hearing</i>
-              </div>
-            </div>
+            <li
+              v-for="item in createdPlaylist"
+              is="ImgCollectItem"
+              :key="item.id"
+              :img-url="item.coverImgUrl"
+              :item-name="item.name"
+              :item-intro="`${item.trackCount}首`"
+              item-type="musiclist">
+              <i class="material-icons md-56">{{ tailIconName }}</i>
+            </li>
           </div>
         </section>
         <section class="playlists sub-playlist" v-if="subPlaylist" ref="subPlaylist">
@@ -84,16 +72,16 @@
             <i class="material-icons more" @click.stop="manageSub">more_horiz</i>
           </div>
           <div class="lists" v-if="isSubPlaylistShow">
-            <div class="list-item" v-for="item in subPlaylist" :key="item.id">
-              <div class="left">
-                <img v-lazy="item.coverImgUrl" alt="item.coverImgId">
-              </div>
-              <div class="right">
-                <span class="name">{{ item.name }}</span>
-                <span class="count">{{ item.trackCount }}首</span>
-                <i class="material-icons" style="display: none;">hearing</i>
-              </div>
-            </div>
+            <li
+              v-for="item in subPlaylist"
+              is="ImgCollectItem"
+              :key="item.id"
+              :img-url="item.coverImgUrl"
+              :item-name="item.name"
+              :item-intro="`${item.trackCount}首`"
+              item-type="musiclist">
+              <i class="material-icons md-56">{{ tailIconName }}</i>
+            </li>
           </div>
         </section>
         <section class="blank" style="height: 112px;"></section>
@@ -116,15 +104,17 @@
 
 <script>
   import Scroll from 'base/Scroll/Scroll'
+  import CollectItem from '../base/CollectItem/CollectItem'
+  import ImgCollectItem from "../base/CollectItem/ImgCollectItem";
   import api from 'api/login'
   import { mapGetters } from 'vuex'
-  
+
   console.log(window.innerHeight)
   const INFO_HEIGHT = 188 / 667 * window.innerHeight
   console.log(INFO_HEIGHT)
   const PANEL_HEIGHT = 25 / 667 * window.innerHeight
   const ITEM_HEIGHT = 65 / 667 * window.innerHeight
-  
+
   export default {
     name: "mine",
     data() {
@@ -151,13 +141,15 @@
         isCreatedPanelShow: false,
         // 判断收藏歌单panel是否出现
         isSubPanelShow: false,
-  
+
         createdPlaylistHeight: 0,
         subPlaylistHeight: 0
       }
     },
     components: {
-      Scroll
+      Scroll,
+      CollectItem,
+      ImgCollectItem
     },
     computed: {
       ...mapGetters(['currentUid'])
@@ -186,14 +178,14 @@
         } else {
           this.scrollY = -INFO_HEIGHT - this.createdPlaylistHeight + 1
         }
-        
+
         this.isSubPlaylistShow = !this.isSubPlaylistShow
         // this.$refs.mineContent.refresh()
         this.$refs.mineContent.scrollTo(0, this.scrollY)
       },
       manageCreated() {},
       manageSub() {}
-      
+
     },
     watch: {
       scrollY(newY) {
@@ -256,7 +248,7 @@
       }
       this.createdPlaylistHeight = PANEL_HEIGHT + ITEM_HEIGHT * this.createdPlaylistCount
       this.subPlaylistHeight = PANEL_HEIGHT + ITEM_HEIGHT * this.subPlaylistCount*/
-      
+
       let userInfo = JSON.parse(localStorage.getItem('simplemusicUserInfo'))
       let uid = this.currentUid || userInfo.uid
       console.log(this.currentUid)
@@ -277,7 +269,7 @@
           this.subPlaylistHeight = PANEL_HEIGHT + ITEM_HEIGHT * this.subPlaylistCount
         }
       })
-      
+
     }
   }
 </script>

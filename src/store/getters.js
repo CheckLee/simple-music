@@ -1,5 +1,7 @@
 export const isLogin = state => state.isLogin
 
+export const uId = state => state.currentUser.uid
+
 export const isPlayer = state => state.isPlayer
 
 export const isFM = state => state.isFM

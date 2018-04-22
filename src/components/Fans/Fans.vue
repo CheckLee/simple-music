@@ -1,50 +1,69 @@
 <template>
   <div class="fans">
-    <img-collect-item
-      img-url="https://raw.githubusercontent.com/CheckLee/simple-music/dev/src/assets/img/default_avatar.png"
-      item-name="姜维"
-      item-intro="昨天成为你的粉丝"
-      item-type="fans">
-      <i class="material-icons md-56">{{ tailIconName }}</i>
-    </img-collect-item>
-    <img-collect-item
-      img-url="https://raw.githubusercontent.com/CheckLee/simple-music/dev/src/assets/img/default_avatar.png"
-      item-name="姜维"
-      item-intro="昨天成为你的粉丝"
-      item-type="fans">
-      <i class="material-icons md-56">{{ tailIconName }}</i>
-    </img-collect-item>
-    <img-collect-item
-      img-url="https://raw.githubusercontent.com/CheckLee/simple-music/dev/src/assets/img/default_avatar.png"
-      item-name="姜维"
-      item-intro="昨天成为你的粉丝"
-      item-type="fans">
-      <i class="material-icons md-56">{{ tailIconName }}</i>
-    </img-collect-item>
-    <img-collect-item
-      img-url="https://raw.githubusercontent.com/CheckLee/simple-music/dev/src/assets/img/default_avatar.png"
-      item-name="姜维"
-      item-intro="昨天成为你的粉丝"
-      item-type="fans">
-      <i class="material-icons md-56">{{ tailIconName }}</i>
-    </img-collect-item>
+    <div class="nav-panel-wrapper">
+      <div class="nav-panel">
+        <span class="nav-header action-backward" @click="_backward">
+          <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
+        </span>
+        <div class="nav-body panel">
+          <p>粉丝</p>
+        </div>
+        <div class="nav-tail blank"></div>
+      </div>
+    </div>
+    <scroll class="fans-content">
+      <li
+        v-for="item in fansData"
+        is="ImgCollectItem"
+        :key="item.nickname"
+        :img-url="item.avatarUrl"
+        :item-name="item.nickname"
+        :item-intro="item.signature"
+        item-type="fans">
+      </li>
+    </scroll>
   </div>
 </template>
 
 <script>
-    import ImgCollectItem from "../base/CollectItem/ImgCollectItem";
+  import ImgCollectItem from "../base/CollectItem/ImgCollectItem";
+  import Scroll from "../base/Scroll/Scroll"
+  import api from '../../api/login'
+  import { mapGetters } from 'vuex'
 
-    export default {
-      components: {ImgCollectItem},
-      name: "fans",
-      data() {
-        return {
-          tailIconName: 'more_horiz'
-        }
+  export default {
+    components: {
+      ImgCollectItem,
+      Scroll
+    },
+    name: "fans",
+    data() {
+      return {
+        tailIconName: 'more_horiz',
+        fromPath: '/account',
+        fansData: []
       }
+    },
+    computed: {
+      ...mapGetters(['uId'])
+    },
+    methods: {
+      _formatFans(fans) {
+        this.fansData = fans
+      },
+      _backward() {
+        this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
+      },
+    },
+    created() {
+      api.GetFansData(this.uId)
+      .then((res) => {
+        this._formatFans(res.data.followeds)
+      })
     }
+  }
 </script>
 
-<style scoped>
-
+<style type="text/stylus" rel="stylesheet/stylus" lang="stylus" scoped>
+  @import "./Fans.styl"
 </style>

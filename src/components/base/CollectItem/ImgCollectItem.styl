@@ -1,14 +1,39 @@
 @import '~assets/stylus/variable.styl'
-@import '~assets/stylus/mixin.styl'
 
 .img-collect-item
-.fans-img-collect-item
   display: flex
   width: 100%
   height: 140px
   flex-direction: row
   justify-content: space-between
   align-items: center
+  .img-collect-item-body
+    width: 100%
+    align-self: stretch
+    overflow: hidden
+    text-indent: 28px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    h2
+      font-size: $font-size-large-xxxl
+      height: 58px
+      line-height: 58px
+    p
+      font-size: $font-size-large-xx
+      color: $color-icon
+      width: inherit
+      height: 32px
+      line-height: 32px
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+  .img-collect-item-tail
+    margin-right: 24px
+    .material-icons
+      color: $color-icon
+
+.fans-img-collect-item
   .img-collect-item-header
     margin-left: 24px
     width: 92px
@@ -16,23 +41,13 @@
     img
       width: inherit
       height: inherit
+      border-radius: 100%
       object-fit: fill
-  .img-collect-item-body
-    align-self: stretch
-    width: 100%
-    text-indent: 28px
-    h2
-      margin-top: 24px
-      font-size: $font-size-large-xxxl
-      height: 58px
-      line-height: 58px
-    p
-      font-size: $font-size-large-xx
-      color: $color-icon
-      height: 32px
-      line-height: 32px
-  .img-collect-item-tail
-    margin-right: 24px
-    .material-icons
-      color: $color-icon
 
+.musiclist-img-collect-item
+  .img-collect-item-header
+    width: 118px
+    height: 118px
+    img
+      width: inherit
+      height: inherit

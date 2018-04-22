@@ -5,7 +5,7 @@ const state = {
     uid: ''
   },
   maxAge: 7*24*60*60*100,
-  isLogin: true,
+  isLogin: false,
 
   //界面 state
   // Recommend 页面顺序列表

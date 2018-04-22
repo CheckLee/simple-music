@@ -38,7 +38,6 @@
     watch: {
       '$route'(to, from) {
         this.transitionName = to.query['transition']
-        console.log(this.transitionName)
         this.playButtonShow = this.routerMap.indexOf(to.path.split('/')[1].toLowerCase()) > -1? false:true
       }
     },
@@ -46,20 +45,16 @@
       BottomPanel, JustifyOrder, PlayerButton, Fm
     },
     created() {
+      this.playButtonShow = this.routerMap.indexOf(this.$route.path.split('/')[1].toLowerCase()) > -1? false:true
       if (! this.isLogin ) {
         this.$store.dispatch('updateLoginStatus')
           .then((success) => {
             console.log('login success')
           }
           , (error) => {
-            this.$router.push({path: '/loginin/phonelogin', query: {transition: 'pop-up'}})
+            this.$router.push({path: '/loginin', query: {transition: 'pop-up'}})
             })
       }
-      // api.Login('18810712875', 'L2907685').then(res => {
-      //   if (res.data.code === 200) {
-      //     this.setCurrentUserId(res.data.account.id)
-      //   }
-      // })
     },
     computed: {
       ...mapGetters([ 'isLogin', 'isJustifyOrder', 'isPlayer', 'isFM', 'currentPlayer' ])
@@ -147,12 +142,41 @@
 
   .pop-up-enter-active, .pop-up-leave-active {
     transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transform: translateY(-104px);
+    transform: translateY(0px);
     opacity: 1;
   }
 
   .pop-up-enter, .pop-up-leave-active {
     transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .slide-left-enter-active, .slide-left-leave-active {
+    transition: transform .5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateX(0);
+    opacity: 1;
+  }
+  .slide-right-enter-active, .slide-right-leave-active {
+    transition: transform .5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .slide-left-enter, .slide-left-leave-active {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  .slide-right-enter, .slide-right-leave-active {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  .display-enter-active, .display-leave-active {
+    transition: opacity 0s 0s;
+    opacity: 1;
+  }
+
+  .display-enter, .display-leave-active {
     opacity: 0;
   }
 </style>
