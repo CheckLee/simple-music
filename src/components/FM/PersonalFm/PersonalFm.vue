@@ -3,13 +3,18 @@
     <div class="blur-wrapper" v-if="this.currentSong">
       <img :src="currentSong.picUrl" class="blur-pic" alt="">
     </div>
-    <div class="pic-wrapper">
-      <img :src="currentSong.picUrl" class="pic" alt="">
+    <div class="song-info-wrapper">
+      <div class="pic-wrapper">
+        <img :src="currentSong.picUrl" class="pic" alt="">
+      </div>
+      <div class="song">{{ currentSong.name }}</div>
+      <div class="singer">
+        <span class="name">{{ currentSong.singers }}</span>
+        <i class="material-icons">chevron_right</i>
+      </div>
     </div>
-    <div class="song">{{ currentSong.name }}</div>
-    <div class="singer">
-      <span class="name">{{ currentSong.singers }}</span>
-      <i class="material-icons">chevron_right</i>
+    <div class="lyric-wrapper">
+    
     </div>
     <div class="progress-wrapper">
       <span class="cur-time">{{ curTime }}</span>

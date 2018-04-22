@@ -109,7 +109,7 @@
       }
     },
     created() {
-      api.GetAccountDetail(this.uId)
+      api.GetUserDetail(this.uId)
           .then((res) => {
             this._formatAccountInfo(res.data.profile)
           })

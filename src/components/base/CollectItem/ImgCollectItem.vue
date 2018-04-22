@@ -1,7 +1,7 @@
 <template>
   <div class="img-collect-item" :class="collectItemClassName">
     <div class="img-collect-item-header">
-      <img :src="imgUrl" alt="itemImg">
+      <img v-lazy="imgUrl" alt="itemImg">
     </div>
     <div class="img-collect-item-body">
       <h2>{{ itemName }}</h2>

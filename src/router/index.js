@@ -80,6 +80,13 @@ const FoundMusic = (resolve) => {
     resolve(module)
   })
 }
+
+const Mine = (resolve) => {
+  import('components/Mine/Mine').then((module) => {
+    resolve(module)
+  })
+}
+
 const Radio = (resolve) => {
   import('components/Radio/Radio').then((module) => {
     resolve(module)
@@ -172,6 +179,11 @@ export default new Router({
           component: PushTweets
         }
       ]
+    },
+    {
+      path: '/mine',
+      name: 'Mine',
+      component: Mine
     },
     {
       path: '/foundmusic',

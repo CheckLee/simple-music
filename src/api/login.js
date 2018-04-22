@@ -8,18 +8,25 @@ export default {
   LoginRefresh() {
     return axios.get('/login/refresh')
   },
-  GetAccountDetail(uid) {
+  GetFansData(uid) {
+    return axios.get('/user/followeds', {
+      params: {
+        uid: uid
+      }
+    })
+  },
+  GetUserDetail(uid) {
     return axios.get('/user/detail', {
       params: {
         uid: uid
       }
     })
   },
-  DailySignMeIn() {
-    return axios.get('/daily_signin')
+  GetUserSubCount() {
+    return axios.get('/user/subcount')
   },
-  GetFansData(uid) {
-    return axios.get('/user/followeds', {
+  GetUserPlayList(uid) {
+    return axios.get('/user/playlist', {
       params: {
         uid: uid
       }
