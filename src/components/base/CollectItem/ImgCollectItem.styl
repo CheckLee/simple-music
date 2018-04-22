@@ -2,13 +2,13 @@
 @import '~assets/stylus/mixin.styl'
 
 .img-collect-item
-.fans-img-collect-item
   display: flex
   width: 100%
   height: 140px
   flex-direction: row
   justify-content: space-between
   align-items: center
+.fans-img-collect-item
   .img-collect-item-header
     margin-left: 24px
     width: 92px
@@ -16,13 +16,16 @@
     img
       width: inherit
       height: inherit
+      border-radius: 100%
       object-fit: fill
   .img-collect-item-body
     align-self: stretch
     width: 100%
     text-indent: 28px
+    display: flex
+    flex-direction: column
+    justify-content: center
     h2
-      margin-top: 24px
       font-size: $font-size-large-xxxl
       height: 58px
       line-height: 58px

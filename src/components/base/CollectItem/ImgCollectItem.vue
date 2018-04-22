@@ -5,7 +5,7 @@
     </div>
     <div class="img-collect-item-body">
       <h2>{{ itemName }}</h2>
-      <p>{{ itemIntro }}</p>
+      <p v-show="isItemIntro">{{ itemIntro }}</p>
     </div>
     <div class="img-collect-item-tail">
       <slot></slot>
@@ -34,6 +34,9 @@
       computed: {
         collectItemClassName() {
           return `${this.itemType}-img-collect-item`
+        },
+        isItemIntro() {
+          return !!this.itemIntro
         }
       }
     }
