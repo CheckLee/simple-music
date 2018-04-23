@@ -46,7 +46,7 @@
     },
     created() {
       this.playButtonShow = this.routerMap.indexOf(this.$route.path.split('/')[1].toLowerCase()) > -1? false:true
-      if (! this.isLogin ) {
+      if (!this.isLogin ) {
         this.$store.dispatch('updateLoginStatus')
           .then((success) => {
             console.log('login success')

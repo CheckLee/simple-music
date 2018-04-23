@@ -1,6 +1,6 @@
 <template>
   <div class="friends">
-    <div class="nav-panel-wrapper">
+    <div class="nav-panel-wrapper" @click="_test">
       <div class="nav-panel">
         <span class="nav-header action-add">
           <i class="material-icons md-56 md-light">person_add</i>
@@ -31,33 +31,51 @@
 </template>
 
 <script>
-    export default {
-      name: "friends",
-      data() {
-        return {
-          routerMap: ['tweets', 'pushtweets'],
-          slideType: 'slide-right'
-        }
-      },
-      watch: {
-        '$route' (to, from) {
-          if (this.routerMap.indexOf(from.name.toLowerCase()) > - 1) {
-            let slideType = this.routerMap.indexOf(to.name.toLowerCase()) > this.routerMap.indexOf(from.name.toLowerCase())
-              ? 'slide-left'
-              : 'slide-right'
-            this.slideType = slideType
-          }
-        }
-      },
-      computed: {
-        isSlide() {
-          return this.slideType === 'slide-left'? true:false
-        }
-      },
-      created() {
-        this.slideType = this.$route.name.toLowerCase() === 'tweets'? 'slide-right': 'slide-left'
+  import api from '../../api/tweets'
+
+  export default {
+    name: "friends",
+    data() {
+      return {
+        routerMap: ['tweets', 'pushtweets'],
+        slideType: 'slide-right'
       }
+    },
+    watch: {
+      '$route' (to, from) {
+        if (this.routerMap.indexOf(from.name.toLowerCase()) > - 1) {
+          let slideType = this.routerMap.indexOf(to.name.toLowerCase()) > this.routerMap.indexOf(from.name.toLowerCase())
+            ? 'slide-left'
+            : 'slide-right'
+          this.slideType = slideType
+        }
+      }
+    },
+    computed: {
+      isSlide() {
+        return this.slideType === 'slide-left'? true:false
+      }
+    },
+    methods: {
+      _test() {
+        // api.GetTweets()
+        //   .then((res) => {
+        //     console.log(res)
+        //   })
+        api.GetUserDetail(9861246)
+        .then((res) => {
+          console.log(res)
+        })
+      }
+    },
+    created() {
+      this.slideType = this.$route.name.toLowerCase() === 'tweets'? 'slide-right': 'slide-left'
+      api.GetEvent()
+      .then((res) => {
+        console.log(res)
+      })
     }
+  }
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
