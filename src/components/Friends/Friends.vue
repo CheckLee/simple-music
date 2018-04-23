@@ -58,14 +58,14 @@
     },
     methods: {
       _test() {
-        // api.GetTweets()
-        //   .then((res) => {
-        //     console.log(res)
-        //   })
-        api.GetUserDetail(9861246)
-        .then((res) => {
-          console.log(res)
-        })
+        api.GetEvent()
+          .then((res) => {
+            console.log(res)
+          })
+        // api.GetUserDetail(9861246)
+        // .then((res) => {
+        //   console.log(res)
+        // })
       }
     },
     created() {
