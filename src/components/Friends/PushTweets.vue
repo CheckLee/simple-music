@@ -43,6 +43,7 @@
   import Scroll from "../base/Scroll/Scroll";
   import { swiper, swiperSlide } from 'vue-awesome-swiper';
   import api from '../../api/tweets'
+  import music from '../../api/song'
 
   export default {
     components: {
@@ -163,10 +164,71 @@
         let localeDateString = new Date(date).toLocaleDateString().split('/').join('-')
         return localeDateString
       },
-      _isShared(tweetsBody) {
-        let shareType = ["json", 'song', "playlist", "video", "resource"]
-        return tweetsBody.hasOwnProperty('json')
-          || tweetsBody.hasOwnProperty('song')
+      _formatCreator(data) {
+        return {
+          accountName: data.nickname,
+          accountId: data.userId
+        }
+      },
+      _formatTweet(data, type) {
+        let tweet = JSON.parse(data.json),
+          creator = this._formatCreator(data.user)
+        
+        return {
+          type: shareType,
+          title: tweet.msg,
+          creator: creator,
+          event: {
+            avatar: data.user.avatar
+          }
+        }
+      },
+      _formatSong(data, type) {
+        let title = data.hasOwnProperty('transName')? `${data.name}(${data.transName[0]})`:data.name
+        return {
+          type: type,
+          title: title,
+          creator: {
+            accountName: data.artists.name,
+            accountId: data.artists.id
+          },
+          song: {
+            id: data.id,
+            avatar: data.album.img80x80
+          }
+        }
+      },
+      __formatPlayList(data, type) {
+        return {
+          type: type,
+          title: data.name,
+          creator: this._formatCreator(data.creator),
+          playlist: {
+            id: data.id,
+            avatar: data.img80x80
+          }
+        }
+      },
+      _formatShared(tweetsBody) {
+        let shareKeys = ["event", "song", "playlist", "video", "resource"],
+          keys = Object.keys(tweetsBody),
+          intersection = this._.intersection(keys, shareKeys),
+          isShared = intersection.length,
+          sharedContent = {}
+        if (isShared) {
+          let shareType =intersection[0] 
+          switch(shareType) {
+            case "event":
+              sharedContent = this._formatTweet(tweetsBody[shareType], shareType)
+              break
+            case "song":
+              sharedContent = this._formatSong(tweetsBody[shareType], shareType)
+              break
+            case "playlist":
+              sharedContent = this._formatPlayList(tweetsBody[shareType], shareType)
+              break
+          }
+        }   
       },
       _formatEvents(events) {
         events.forEach((item) => {
@@ -178,12 +240,14 @@
               avatarUrl: item.user.avatarUrl,
             },
             tweetsTime: this._formatDate(item.eventTime),
+            actName: item.actName,
             forwardNum: item.forwardCount,
             commitNum: item.info.commentCount,
             thumbupNum: item.info.likedCount,
+            msg: tweetBody.msg,
             isShared: false
           }
-          console.log(tweetBody.resource)
+          console.log(tweetBody)
         })
       }
     },
@@ -191,6 +255,10 @@
       api.GetTweets()
       .then((res) => {
         this._formatEvents(res.data.events)
+      })
+      music.GetSongDetail(16426514)
+      .then((res)=> {
+        console.log(res)
       })
     }
   }

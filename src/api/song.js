@@ -6,5 +6,12 @@ export default {
   },
   GetSong(id) {
     return axios.get(`/music/url?id=${id}`)
+  },
+  GetSongDetail(id) {
+    return axios.get('/song/detail', {
+      params: {
+        ids: id
+      }
+    })
   }
 }

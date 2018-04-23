@@ -23,11 +23,11 @@
       data() {
         return {
           iconMap: {
-            'musicList': 'assignment',
-            'commits': 'chat',
+            'playlist': 'assignment',
+            'resource': 'chat',
             'video': 'videocam',
-            'tweets': 'textsms',
-            'music': 'album',
+            'event': 'textsms',
+            'song': 'album',
             'third': 'link',
             'error': 'error'
           }
