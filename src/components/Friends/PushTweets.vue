@@ -42,6 +42,7 @@
   import TweetsCard from "../base/CollectItem/TweetsCard";
   import Scroll from "../base/Scroll/Scroll";
   import { swiper, swiperSlide } from 'vue-awesome-swiper';
+  import api from '../../api/tweets'
 
   export default {
     components: {
@@ -70,6 +71,7 @@
           slidesOffsetAfter : 20,
           centeredSlides : false,
         },
+        pushTweets: [],
         hotTopicsImageList:[
           { content: '来欣赏樱花', type: '音乐', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
           { content: '来欣赏樱花', type: '音乐', index: 1, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
@@ -156,7 +158,40 @@
           this.currentIndex = payload['index']
           this.show = true
         }
+      },
+      _formatDate(date) {
+        let localeDateString = new Date(date).toLocaleDateString().split('/').join('-')
+        return localeDateString
+      },
+      _isShared(tweetsBody) {
+        let shareType = ["json", 'song', "playlist", "video", "resource"]
+        return tweetsBody.hasOwnProperty('json')
+          || tweetsBody.hasOwnProperty('song')
+      },
+      _formatEvents(events) {
+        events.forEach((item) => {
+          let tweetBody = JSON.parse(item.json),
+            pushTweetsEvent = {
+            user: {
+              accountName: item.user.nickname,
+              accountId: item.user.userId,
+              avatarUrl: item.user.avatarUrl,
+            },
+            tweetsTime: this._formatDate(item.eventTime),
+            forwardNum: item.forwardCount,
+            commitNum: item.info.commentCount,
+            thumbupNum: item.info.likedCount,
+            isShared: false
+          }
+          console.log(tweetBody.resource)
+        })
       }
+    },
+    created() {
+      api.GetTweets()
+      .then((res) => {
+        this._formatEvents(res.data.events)
+      })
     }
   }
 </script>

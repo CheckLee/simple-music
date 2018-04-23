@@ -58,7 +58,7 @@
     },
     methods: {
       _test() {
-        api.GetEvent()
+        api.GetTweets()
           .then((res) => {
             console.log(res)
           })
@@ -70,10 +70,10 @@
     },
     created() {
       this.slideType = this.$route.name.toLowerCase() === 'tweets'? 'slide-right': 'slide-left'
-      api.GetEvent()
-      .then((res) => {
-        console.log(res)
-      })
+      // api.GetEvent()
+      // .then((res) => {
+      //   console.log(res)
+      // })
     }
   }
 </script>

@@ -72,7 +72,8 @@
           <share-item
             :item-type="data.shared.type"
             :item-title="data.shared.breif"
-            :item-sub-title="data.shared.author"></share-item>
+            :item-sub-title="data.shared.author">
+          </share-item>
         </div>
       </div>
     </div>
