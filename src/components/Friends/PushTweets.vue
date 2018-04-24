@@ -173,12 +173,13 @@
       _formatTweet(data, type) {
         let tweet = JSON.parse(data.json),
           creator = this._formatCreator(data.user)
-        
+
         return {
-          type: shareType,
+          type: type,
           title: tweet.msg,
           creator: creator,
           event: {
+            id: creator.accountId,
             avatar: data.user.avatar
           }
         }
@@ -198,7 +199,7 @@
           }
         }
       },
-      __formatPlayList(data, type) {
+      _formatPlayList(data, type) {
         return {
           type: type,
           title: data.name,
@@ -209,6 +210,25 @@
           }
         }
       },
+      _formatCommit(data, type) {
+        let resource = JSON.parse(data.resourceJson),
+          creator = this._formatCreator(data.user)
+        return {
+          type: type,
+          title: data.content,
+          creator: creator,
+          resource: {
+            id: resource.id,
+            avatar: resource.imgUrl
+          }
+        }
+      },
+      _formatVideo(data, type) {
+        return {
+          type: type,
+          title: type
+        }
+      },
       _formatShared(tweetsBody) {
         let shareKeys = ["event", "song", "playlist", "video", "resource"],
           keys = Object.keys(tweetsBody),
@@ -216,7 +236,7 @@
           isShared = intersection.length,
           sharedContent = {}
         if (isShared) {
-          let shareType =intersection[0] 
+          let shareType = intersection[0]
           switch(shareType) {
             case "event":
               sharedContent = this._formatTweet(tweetsBody[shareType], shareType)
@@ -227,13 +247,40 @@
             case "playlist":
               sharedContent = this._formatPlayList(tweetsBody[shareType], shareType)
               break
+            case "resource":
+              sharedContent = this._formatCommit(tweetsBody[shareType], shareType)
+              break
+            case "video":
+              sharedContent = this._formatVideo(tweetsBody[shareType], shareType)
+              break
+            default:
+              break
           }
-        }   
+        }
+        return {
+          isShared: isShared,
+          sharedContent: sharedContent
+        }
+      },
+      _formatPics(data) {
+        let pics = []
+        data.forEach((pic) => {
+          //获取宽高，拉升成宽度750之后，并和屏幕高度比较
+          //获取index
+          //获取url
+        })
+      },
+      _formatMv(data) {
+        //返回
       },
       _formatEvents(events) {
+        let pushTweets = []
+        console.log(events)
         events.forEach((item) => {
           let tweetBody = JSON.parse(item.json),
-            pushTweetsEvent = {
+            {isShared, sharedContent} = this._formatShared(tweetBody),
+            pushTweetsEvent = {}
+          pushTweetsEvent = {
             user: {
               accountName: item.user.nickname,
               accountId: item.user.userId,
@@ -245,20 +292,19 @@
             commitNum: item.info.commentCount,
             thumbupNum: item.info.likedCount,
             msg: tweetBody.msg,
-            isShared: false
+            pics: item.pics,
+            isShared: isShared,
+            sharedContent: sharedContent
           }
-          console.log(tweetBody)
+          pushTweets.push(pushTweetsEvent)
         })
+        this.pushTweets = pushTweets
       }
     },
     created() {
       api.GetTweets()
       .then((res) => {
         this._formatEvents(res.data.events)
-      })
-      music.GetSongDetail(16426514)
-      .then((res)=> {
-        console.log(res)
       })
     }
   }

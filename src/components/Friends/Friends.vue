@@ -58,7 +58,7 @@
     },
     methods: {
       _test() {
-        api.GetTweets()
+        api.GetEvent()
           .then((res) => {
             console.log(res)
           })
