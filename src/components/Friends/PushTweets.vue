@@ -72,6 +72,8 @@
           slidesOffsetAfter : 20,
           centeredSlides : false,
         },
+        screenWidth: 0,
+        screenHeight: 0,
         pushTweets: [],
         hotTopicsImageList:[
           { content: '来欣赏樱花', type: '音乐', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
@@ -263,12 +265,18 @@
         }
       },
       _formatPics(data) {
-        let pics = []
-        data.forEach((pic) => {
-          //获取宽高，拉升成宽度750之后，并和屏幕高度比较
-          //获取index
-          //获取url
-        })
+        let pics = [],
+          isPics = false
+        if (data !== []) {
+          data.forEach((pic) => {
+            //获取宽高，拉升成宽度750之后，并和屏幕高度比较
+            //获取index
+            //获取url
+          })
+        }
+        function isLong(w, h) {
+          let ratio = w/this.screenWidth
+        }
       },
       _formatMv(data) {
         //返回
@@ -306,6 +314,8 @@
       .then((res) => {
         this._formatEvents(res.data.events)
       })
+      this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
+      this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
     }
   }
 </script>
