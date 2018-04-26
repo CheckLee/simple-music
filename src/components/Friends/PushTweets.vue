@@ -12,25 +12,14 @@
       @clickit="_previewImg">
     </img-pre-viewer>
     <scroll class="push-tweets-content">
-      <div class="hottopics">
-        <swiper :options="swiperOption" class="hottopics-swiper">
-          <swiper-slide v-for="slide in hotTopicsImageList" :key="slide.index" class="hottopics-slide">
-            <div class="hottopics-content-wrapper">
-              <div class="hottopics-content">
-                <p class="content">{{ slide.content }}</p>
-                <span class="type">{{ slide.type }}</span>
-              </div>
-              <img :data-src="slide.url" class="swiper-lazy">
-            </div>
-            <div class="swiper-lazy-preloader-imgview">
-              <inf-circle-loader class="inf-preloader" size="large" color="white"></inf-circle-loader>
-            </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-      <tweets-card @getTargetInfo="_getTargetInfo" :data="data1"></tweets-card>
-      <tweets-card @getTargetInfo="_getTargetInfo" :data="data2"></tweets-card>
-      <tweets-card @getTargetInfo="_getTargetInfo" :data="data3"></tweets-card>
+      <li v-for="item in pushTweets"
+          is="TweetsCard"
+          :key="item.tweetsTime"
+          :data="item">
+      </li>
+      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data1"></tweets-card>-->
+      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data2"></tweets-card>-->
+      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data3"></tweets-card>-->
       <div class="blank"></div>
     </scroll>
   </div>
@@ -41,7 +30,6 @@
   import InfCircleLoader from "../base/Loader/InfCircleLoader";
   import TweetsCard from "../base/CollectItem/TweetsCard";
   import Scroll from "../base/Scroll/Scroll";
-  import { swiper, swiperSlide } from 'vue-awesome-swiper';
   import api from '../../api/tweets'
   import music from '../../api/song'
 
@@ -50,40 +38,14 @@
       Scroll,
       TweetsCard,
       InfCircleLoader,
-      ImgPreViewer,
-      swiper,
-      swiperSlide},
+      ImgPreViewer},
     name: "pushtweets",
     data() {
       return {
         show: false,
-        swiperOption: {
-          pagination: {
-            el: '.swiper-pagination',
-          },
-          lazy: {
-            loadPrevNext: true,
-            preloaderClass: 'swiper-lazy-preloader-imgview',
-          },
-          initialSlide : 0,
-          slidesPerView : 3,
-          spaceBetween : 20,
-          slidesOffsetBefore : 20,
-          slidesOffsetAfter : 20,
-          centeredSlides : false,
-        },
         screenWidth: 0,
         screenHeight: 0,
         pushTweets: [],
-        hotTopicsImageList:[
-          { content: '来欣赏樱花', type: '音乐', index: 0, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
-          { content: '来欣赏樱花', type: '音乐', index: 1, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
-          { content: '来欣赏樱花', type: '音乐', index: 3, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
-          { content: '来欣赏樱花', type: '音乐', index: 4, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
-          { content: '来欣赏樱花', type: '音乐', index: 6, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
-          { content: '来欣赏樱花', type: '音乐', index: 7, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' },
-          { content: '来欣赏樱花', type: '音乐', index: 8, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/hottopics.png' }
-        ],
         data1: {
           type: 'images',
           follow: true,
@@ -162,10 +124,6 @@
           this.show = true
         }
       },
-      _formatDate(date) {
-        let localeDateString = new Date(date).toLocaleDateString().split('/').join('-')
-        return localeDateString
-      },
       _formatCreator(data) {
         return {
           accountName: data.nickname,
@@ -182,7 +140,7 @@
           creator: creator,
           event: {
             id: creator.accountId,
-            avatar: data.user.avatar
+            avatarUrl: data.user.avatar
           }
         }
       },
@@ -192,12 +150,12 @@
           type: type,
           title: title,
           creator: {
-            accountName: data.artists.name,
-            accountId: data.artists.id
+            accountName: data.artists[0].name,
+            accountId: data.artists[0].id
           },
           song: {
             id: data.id,
-            avatar: data.album.img80x80
+            avatarUrl: data.album.img80x80
           }
         }
       },
@@ -208,7 +166,7 @@
           creator: this._formatCreator(data.creator),
           playlist: {
             id: data.id,
-            avatar: data.img80x80
+            avatarUrl: data.img80x80
           }
         }
       },
@@ -221,14 +179,19 @@
           creator: creator,
           resource: {
             id: resource.id,
-            avatar: resource.imgUrl
+            avatarUrl: resource.imgUrl
           }
         }
       },
       _formatVideo(data, type) {
         return {
           type: type,
-          title: type
+          title: data.title,
+          creator: this._formatCreator(data.creator),
+          video: {
+            id: data.videoId,
+            avatarUrl: data.coverUrl
+          }
         }
       },
       _formatShared(tweetsBody) {
@@ -266,16 +229,30 @@
       },
       _formatPics(data) {
         let pics = [],
-          isPics = false
+          isPics = false,
+          screenWidth = this.screenWidth,
+          screenHeight = this.screenHeight
         if (data !== []) {
-          data.forEach((pic) => {
-            //获取宽高，拉升成宽度750之后，并和屏幕高度比较
-            //获取index
-            //获取url
+          isPics = true
+          data.forEach((pic, index) => {
+            let isLong = _isLong(pic.width, pic.height),
+              formatPic = {}
+            formatPic = {
+              type: isLong? 'long':'normal',
+              url: pic.originUrl,
+              index: index
+            }
+            pics.push(formatPic)
           })
         }
-        function isLong(w, h) {
-          let ratio = w/this.screenWidth
+        function _isLong(w, h) {
+          let ratio = w/screenWidth,
+            resizeWitdth = h/ratio
+          return resizeWitdth > screenHeight
+        }
+        return {
+          isPics: isPics,
+          pics: pics
         }
       },
       _formatMv(data) {
@@ -287,25 +264,29 @@
         events.forEach((item) => {
           let tweetBody = JSON.parse(item.json),
             {isShared, sharedContent} = this._formatShared(tweetBody),
+            {isPics, pics} = this._formatPics(item.pics),
             pushTweetsEvent = {}
+          console.log(tweetBody)
           pushTweetsEvent = {
             user: {
               accountName: item.user.nickname,
               accountId: item.user.userId,
               avatarUrl: item.user.avatarUrl,
             },
-            tweetsTime: this._formatDate(item.eventTime),
+            tweetsTime: item.eventTime,
             actName: item.actName,
             forwardNum: item.forwardCount,
             commitNum: item.info.commentCount,
             thumbupNum: item.info.likedCount,
             msg: tweetBody.msg,
-            pics: item.pics,
+            isPics: isPics,
+            pics: pics,
             isShared: isShared,
-            sharedContent: sharedContent
+            shared: sharedContent
           }
           pushTweets.push(pushTweetsEvent)
         })
+        console.log(pushTweets)
         this.pushTweets = pushTweets
       }
     },

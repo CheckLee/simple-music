@@ -3,16 +3,16 @@
     <div class="tweets-header">
       <div class="tweets-account-avatar">
         <div class="img">
-          <img src="../../../assets/img/default_avatar.png" alt="avatar">
+          <img :src="data.user.avatarUrl" :alt="data.user.accountName">
         </div>
       </div>
       <div class="tweets-header-brief">
-        <p class="tweets-account-name">{{ accountName }}</p>
-        <span class="tweets-time">{{ tweetsTime }}</span>
+        <p class="tweets-account-name">{{ data.user.accountName }}</p>
+        <span class="tweets-time">{{ this._formatDate(data.tweetsTime) }}</span>
       </div>
       <div class="tweets-actions">
         <main-button
-          v-if="data.follow"
+          v-if="false"
           :toggle="true"
           :button-name-list="['关注+', '取消关注']"
           button-size="small">
@@ -43,8 +43,8 @@
       </div>
     </div>
     <div class="tweets-body">
-      <div class="tweets-body-brief" :class="[isMore? 'more':'less']">
-        <p ref="bodyBrief">{{ tweetsBrief }}</p>
+      <div class="tweets-body-brief" :class="{ more: isMore, less: !isMore && isLongBrief }">
+        <p ref="bodyBrief">{{ data.msg }}</p>
       </div>
       <flat-button
         class="more-or-less"
@@ -56,7 +56,7 @@
         :toggle="true"></flat-button>
       <div class="tweets-body-content">
         <ul class="images" v-if="isImageList">
-          <li v-for="item in data.imageList" @click="_emitTargetInfo($event)">
+          <li v-for="item in data.pics" @click="_emitTargetInfo($event)">
             <img v-lazy="item.url" :alt="item.index" :index="item.index">
           </li>
         </ul>
@@ -71,8 +71,8 @@
         <div class="shared" v-if="isShared">
           <share-item
             :item-type="data.shared.type"
-            :item-title="data.shared.breif"
-            :item-sub-title="data.shared.author">
+            :item-title="data.shared.title"
+            :item-sub-title="data.shared.creator.accountName">
           </share-item>
         </div>
       </div>
@@ -81,15 +81,15 @@
       <ul class="tweets-actions">
         <li class="tweets-action tweets-action-thumbup" @click="_thumbup">
           <i class="material-icons md-36" :class="{active: isThumbUp}">thumb_up</i>
-          <span class="thumbup-num">{{ thumbupNum }}</span>
+          <span class="thumbup-num">{{ data.thumbupNum }}</span>
         </li>
         <li class="tweets-action tweets-action-commits" @click="_checkCommit">
           <i class="material-icons md-36">chat</i>
-          <span class="commits-num">{{ commitsNum }}</span>
+          <span class="commits-num">{{ data.commitNum }}</span>
         </li>
         <li class="tweets-action tweets-action-forward" @click="_forwardTweets">
           <i class="material-icons md-36">launch</i>
-          <span class="forward-num">{{ forwardNum }}</span>
+          <span class="forward-num">{{ data.forwardNum }}</span>
         </li>
       </ul>
       <div class="tweets-api">
@@ -137,9 +137,7 @@
       },
       computed: {
         isImageList() {
-          return this.data.type === 'images'
-            ? true
-            : false
+          return this.data.isPics
         },
         isVideo() {
           return this.data.type === 'video'
@@ -147,9 +145,7 @@
             : false
         },
         isShared() {
-          return this._.isEmpty(this.data.shared)
-            ? false
-            : true
+          return this.data.isShared
         }
       },
       methods: {
@@ -168,6 +164,10 @@
               imageList: this.data.imageList}
             : {}
           this.$emit('getTargetInfo',data)
+        },
+        _formatDate(date) {
+          let localeDateString = new Date(date).toLocaleDateString().split('/').join('-')
+          return localeDateString
         },
         _dropdown() {
           this.isDropdown = true
@@ -189,7 +189,7 @@
       },
       mounted() {
         this.$nextTick(function () {
-          this.isLongBrief = this.$refs.bodyBrief.offsetHeight > 65? true:false
+          this.isLongBrief = this.$refs.bodyBrief.offsetHeight > 63? true:false
           console.log(this.isLongBrief)
         })
       }

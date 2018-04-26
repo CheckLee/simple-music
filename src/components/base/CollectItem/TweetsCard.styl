@@ -23,11 +23,16 @@
         width: 92px
         height: 92px
         border-radius: 100%
+        overflow: hidden
         img
           width: inherit
           object-fit: fill
     .tweets-header-brief
       width: 448px
+      height: 140px
+      display: flex
+      flex-direction: column
+      justify-content: center
       .tweets-account-name
         font-size: $font-size-large-xxxl
         height: 42px
@@ -79,13 +84,14 @@
   .tweets-body
     .tweets-body-brief
       font-size: $font-size-large-xxxl
-      line-height: 28px
+      line-height: 42px
+      margin-bottom: 24px
       overflow: hidden
       position: relative
     .tweets-body-brief.more
       height: 100%
     .tweets-body-brief.less
-      height: 130px
+      max-height: 126px
       &::after
         content:"...";
         font-weight:bold;
