@@ -6,5 +6,8 @@ export default {
   },
   GetSong(id) {
     return axios.get(`/music/url?id=${id}`)
+  },
+  GetSongListDetail(id) {
+    return axios.get(`/playlist/detail?id=${id}`)
   }
 }

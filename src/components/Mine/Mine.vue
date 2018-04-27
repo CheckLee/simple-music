@@ -99,6 +99,11 @@
       <span class="text">我收藏的歌单({{ subPlaylistCount }})</span>
       <i class="material-icons more">more_horiz</i>
     </div>
+    <transition name="slide">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -184,8 +189,12 @@
         this.$refs.mineContent.scrollTo(0, this.scrollY)
       },
       manageCreated() {},
-      manageSub() {}
 
+      manageSub() {},
+      selectItem(item) {
+        this.$router.push(`/mine/songlist/${item.id}`)
+      }
+      
     },
     watch: {
       scrollY(newY) {
