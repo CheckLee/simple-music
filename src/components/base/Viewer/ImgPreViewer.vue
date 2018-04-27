@@ -1,7 +1,7 @@
 <template>
   <div v-show="show" class="img-view" >
     <v-touch v-on:doubletap="_doubleTap" v-on:tripletap="_tripleTap" v-on:tap="_singleTap" class="swiper-touch-contanier">
-      <div v-show="show" class="img-layer">
+      <div v-show="false" class="img-layer">
         <div class="swiper-pagination" slot="pagination"></div>
       </div>
       <transition
@@ -76,16 +76,18 @@
           screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight,
           scrollX = document.documentElement.scrollTop || document.body.scrollTop,
           midXLine = screenWidth / 2.0,
-          midYLine = screenHeight / 2.0 + scrollX,
+          midYLine = (screenHeight + scrollX) / 2 ,
           radio = 750/midXLine
         this.deletaX = -( midXLine - (this.offsetX + this.width/2) ) * radio
         this.deletaY = -( midYLine - (this.offsetY + this.width/2) ) * radio
-        Velocity(el, { scaleX: this.scale/2, scaleY: this.scale/2, translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px` }, { duration: 0 })
+        Velocity(el, { scaleX: this.scale, scaleY: this.scale}, { duration: 0 })
+        // Velocity(el, { scaleX: this.scale/2, scaleY: this.scale/2, translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px` }, { duration: 0 })
       },
       _enter(el, done) {
         // Velocity(el, { translateX: `${this.deletaX/2}px`, translateY: `${this.deletaY/2}px`,  scaleX: 0.5, scaleY: 0.5}, { duration: 50, easing: 'ease' })
-        Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
-        Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
+        // Velocity(el, { scaleX: this.scale/2, scaleY: this.scale/2, translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px` }, { duration: 0 })
+        // Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
+        // Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
       }
     },
     components: {

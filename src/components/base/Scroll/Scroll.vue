@@ -1,5 +1,5 @@
 <template>
-	<div ref="wrapper" class="list-wrapper">
+	<div ref="wrapper" class="list-wrapper" @click="_emitCurrentY">
     <div class="scroll-content">
       <div ref="listWrapper">
         <slot></slot>
@@ -23,8 +23,8 @@
 <script>
   import BScroll from 'better-scroll'
   import InfCircleLoader from 'base/Loader/InfCircleLoader'
-  
-  
+
+
 
   export default {
     name: "scroll",
@@ -143,6 +143,9 @@
           this.isPullUpLoad = true
           this.$emit('pullingUp')
         })
+      },
+      _emitCurrentY() {
+        this.$emit('getCurrentY', this.scroll.y)
       }
     },
     mounted() {

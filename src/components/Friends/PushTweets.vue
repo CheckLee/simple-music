@@ -11,9 +11,13 @@
       :offset-y="currentOffsetY"
       @clickit="_previewImg">
     </img-pre-viewer>
-    <scroll class="push-tweets-content">
+    <scroll
+      class="push-tweets-content"
+      @getCurrentY="_getCurrentY"
+      :listen-scroll="true">
       <li v-for="item in pushTweets"
           is="TweetsCard"
+          @getTargetInfo="_getTargetInfo"
           :key="item.tweetsTime"
           :data="item">
       </li>
@@ -45,6 +49,7 @@
         show: false,
         screenWidth: 0,
         screenHeight: 0,
+        scrollY: 0,
         pushTweets: [],
         data1: {
           type: 'images',
@@ -77,6 +82,8 @@
             breif: '床前明月光，疑是地上霜。 举头望明月，低头思故乡。床前明月光，疑是地上霜。 举头望明月，低头思故乡。'
           }
         },
+        currentMidLineX: 0,
+        currentMidLineY: 0,
         currentImgScale: 0.5,
         currentWidth: 0,
         currentOffsetX: 0,
@@ -113,15 +120,25 @@
       _previewImg() {
         this.show = false
       },
+      _getCurrentY(y) {
+        this.scrollY = y
+      },
       _getTargetInfo(payload) {
-        if (payload['type'] === 'images') {
+        console.log(payload)
+        if (payload['isImageList']) {
+          let midLineX = this.screenWidth / 2,
+            midLineY = (this.screenHeight + -this.scrollY)/2
           this.currentImageList = payload['imageList']
           this.currentWidth = payload['width']
           this.currentOffsetX = payload['left']
           this.currentHeight = payload['height']
           this.currentOffsetY = payload['top']
           this.currentIndex = payload['index']
+          this.currentImgScale = payload['scale']
+          this.currentMidLineX = midLineY
+          this.currentMidLineY = midLineX
           this.show = true
+          console.log(midLineX, midLineY)
         }
       },
       _formatCreator(data) {
@@ -297,6 +314,8 @@
       })
       this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
       this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
+      this.currentMidLineX = this.screenWidth / 2
+      this.currentMidLineY = this.screenHeight / 2
     }
   }
 </script>

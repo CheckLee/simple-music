@@ -1,18 +1,18 @@
 <template>
   <div class="tweets" :class="{ 'preview': show }">
     <!--<inf-circle-loader color="blue"></inf-circle-loader>-->
-    <img-pre-viewer
-      :show="show"
-      :index="currentIndex"
-      :img-arr="currentImageList"
-      :scale="currentImgScale"
-      :width="currentWidth"
-      :offset-x="currentOffsetX"
-      :height="currentHeight"
-      :offset-y="currentOffsetY"
-      @clickit="_previewImg">
-    </img-pre-viewer>
     <scroll class="tweets-content">
+      <img-pre-viewer
+        :show="show"
+        :index="currentIndex"
+        :img-arr="currentImageList"
+        :scale="currentImgScale"
+        :width="currentWidth"
+        :offset-x="currentOffsetX"
+        :height="currentHeight"
+        :offset-y="currentOffsetY"
+        @clickit="_previewImg">
+      </img-pre-viewer>
       <tweets-card @getTargetInfo="_getTargetInfo" :data="data1"></tweets-card>
       <tweets-card @getTargetInfo="_getTargetInfo" :data="data2"></tweets-card>
       <tweets-card @getTargetInfo="_getTargetInfo" :data="data3"></tweets-card>

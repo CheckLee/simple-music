@@ -1,5 +1,5 @@
 <template>
-  <div class="card tweets-card" @click="_dropup">
+  <div class="card tweets-card" @click="_dropup" ref="tweetsCard">
     <div class="tweets-header">
       <div class="tweets-account-avatar">
         <div class="img">
@@ -10,7 +10,7 @@
         <p class="tweets-account-name">{{ data.user.accountName }}</p>
         <span class="tweets-time">{{ this._formatDate(data.tweetsTime) }}</span>
       </div>
-      <div class="tweets-actions">
+      <div class="tweets-actions" v-if="false">
         <main-button
           v-if="false"
           :toggle="true"
@@ -150,18 +150,19 @@
       },
       methods: {
         _emitTargetInfo(e) {
-          let screeWith = document.documentElement.offsetWidth || document.body.offsetWidth,
+          let screeWidth = document.documentElement.offsetWidth || document.body.offsetWidth,
             target = e.target,
             data = {}
+          console.log(this.$refs.tweetsCard.offsetTop)
           data = this.isImageList
             ? {index: e.target.getAttribute('index'),
               left: target.offsetLeft,
               top: target.offsetTop,
               width:target.offsetWidth,
               height: target.offsetHeight,
-              scale: target.offsetWidth/screeWith,
-              type: this.data.type,
-              imageList: this.data.imageList}
+              scale: target.offsetWidth/screeWidth,
+              isImageList: this.isImageList,
+              imageList: this.data.pics}
             : {}
           this.$emit('getTargetInfo',data)
         },
@@ -190,7 +191,6 @@
       mounted() {
         this.$nextTick(function () {
           this.isLongBrief = this.$refs.bodyBrief.offsetHeight > 63? true:false
-          console.log(this.isLongBrief)
         })
       }
     }
