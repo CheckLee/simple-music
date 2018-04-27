@@ -23,11 +23,11 @@
       data() {
         return {
           iconMap: {
-            'playlist': 'assignment',
+            'playlist': 'album',
             'resource': 'chat',
             'video': 'videocam',
             'event': 'textsms',
-            'song': 'album',
+            'song': 'play_arrow',
             'third': 'link',
             'error': 'error'
           }
@@ -56,6 +56,11 @@
           return this.itemType
             ? this.iconMap[this.itemType]
             : this.iconMap['error']
+        }
+      },
+      methods: {
+        _link() {
+          console.log(this.itemType)
         }
       }
     }

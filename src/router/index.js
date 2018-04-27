@@ -57,6 +57,12 @@ const Followers = (resolve) => {
   })
 }
 
+const PersonalTweets = (resolve) => {
+  import('components/Friends/PersonalTweets').then((module) => {
+    resolve(module)
+  })
+}
+
 const Friends = (resolve) => {
   import('components/Friends/Friends').then((module) => {
     resolve(module)
@@ -161,6 +167,11 @@ export default new Router({
       path: '/account/followers',
       name: 'Followers',
       component: Followers
+    },
+    {
+      path: '/account/tweets',
+      name: 'PersonalTweets',
+      component: PersonalTweets
     },
     {
       path: '/friends',

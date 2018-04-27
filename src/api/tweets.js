@@ -4,8 +4,12 @@ export default {
   GetEvent() {
     return axios.get('/event')
   },
-  GetTweets() {
-    return axios.get('/user/event?uid=9861246')
+  GetTweets(uid) {
+    return axios.get('/user/event', {
+      params: {
+        uid: uid,
+      }
+    })
   },
   GetUserDetail(uid) {
     return axios.get('/user/detail', {

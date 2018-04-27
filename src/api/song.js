@@ -13,5 +13,12 @@ export default {
         ids: id
       }
     })
+  },
+  GetMv(id) {
+    return axios.get('/mv', {
+      params: {
+        mvid: id
+      }
+    })
   }
 }

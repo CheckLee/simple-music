@@ -1,5 +1,16 @@
 <template>
-  <div class="push-tweets" :class="{ 'preview': show }">
+  <div class="personal-tweets" :class="{ 'preview': show }">
+    <div class="nav-panel-wrapper">
+      <div class="nav-panel">
+        <span class="nav-header action-backward" @click="_backward">
+          <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
+        </span>
+        <div class="nav-body panel">
+          <p>动态</p>
+        </div>
+        <div class="nav-tail blank"></div>
+      </div>
+    </div>
     <img-pre-viewer
       :show="show"
       :index="currentIndex"
@@ -14,7 +25,7 @@
       @clickit="_previewImg">
     </img-pre-viewer>
     <scroll
-      class="push-tweets-content"
+      class="personal-tweets-content"
       @getCurrentY="_getCurrentY"
       :listen-scroll="true">
       <li v-for="item in pushTweets"
@@ -23,9 +34,6 @@
           :key="item.tweetsTime"
           :data="item">
       </li>
-      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data1"></tweets-card>-->
-      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data2"></tweets-card>-->
-      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data3"></tweets-card>-->
       <div class="blank"></div>
     </scroll>
   </div>
@@ -36,8 +44,9 @@
   import InfCircleLoader from "../base/Loader/InfCircleLoader";
   import TweetsCard from "../base/CollectItem/TweetsCard";
   import Scroll from "../base/Scroll/Scroll";
-  import api from '../../api/tweets'
-  import music from '../../api/song'
+  import tweets from '../../api/tweets'
+  import song from '../../api/song'
+  import { mapGetters } from 'vuex'
 
   export default {
     components: {
@@ -45,7 +54,7 @@
       TweetsCard,
       InfCircleLoader,
       ImgPreViewer},
-    name: "pushtweets",
+    name: " PersonalTweets",
     data() {
       return {
         show: false,
@@ -71,7 +80,8 @@
           { width: 750, type: 'normal', index: 6, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
           { width: 750, type: 'normal', index: 7, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
           { width: 750, type: 'long', index: 8, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/test_longpics.jpg' }
-        ]
+        ],
+        fromPath: '/account',
       }
     },
     watch: {
@@ -87,7 +97,13 @@
         }
       }
     },
+    computed: {
+      ...mapGetters(['uId'])
+    },
     methods: {
+      _backward() {
+        this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
+      },
       _previewImg() {
         this.show = false
       },
@@ -242,15 +258,35 @@
         }
       },
       _formatMv(data) {
-        //返回
+        let isMv = !! data.mv,
+          mv = {}
+        if (isMv) {
+          song.GetMv(data.mv.id)
+            .then((res) => {
+              let mvData = res.data.data
+              mv = {
+                id: mvData.id,
+                videoUrls: mvData.brs,
+                duration: mvData.duration,
+                playCount: mvData.playCount,
+                title: mvData.desc
+              }
+            })
+        }
+        return {
+          isMv: isMv,
+          mv: mv
+        }
       },
       _formatEvents(events) {
         let pushTweets = []
+        console.log(events)
         events.forEach((item) => {
           let tweetBody = JSON.parse(item.json),
             {isShared, sharedContent} = this._formatShared(tweetBody),
             {isPics, pics} = this._formatPics(item.pics),
             pushTweetsEvent = {}
+          this._formatMv(tweetBody)
           pushTweetsEvent = {
             user: {
               accountName: item.user.nickname,
@@ -268,17 +304,16 @@
             isShared: isShared,
             shared: sharedContent
           }
-          console.log(this.color)
           pushTweets.push(pushTweetsEvent)
         })
         this.pushTweets = pushTweets
       }
     },
     created() {
-      api.GetTweets(9861246)
-      .then((res) => {
-        this._formatEvents(res.data.events)
-      })
+      tweets.GetTweets(this.uId)
+        .then((res) => {
+          this._formatEvents(res.data.events)
+        })
       this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
       this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
       this.currentMidLineX = this.screenWidth / 2
@@ -288,5 +323,5 @@
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./PushTweets.styl"
+  @import "./PersonalTweets.styl"
 </style>

@@ -70,6 +70,7 @@
         </div>
         <div class="shared" v-if="isShared">
           <share-item
+            :avatar-url="data.shared[data.shared.type].avatarUrl"
             :item-type="data.shared.type"
             :item-title="data.shared.title"
             :item-sub-title="data.shared.creator.accountName">
@@ -81,7 +82,7 @@
       <ul class="tweets-actions">
         <li class="tweets-action tweets-action-thumbup" @click="_thumbup">
           <i class="material-icons md-36" :class="{active: isThumbUp}">thumb_up</i>
-          <span class="thumbup-num">{{ data.thumbupNum }}</span>
+          <span class="thumbup-num">{{ thumbupNum }}</span>
         </li>
         <li class="tweets-action tweets-action-commits" @click="_checkCommit">
           <i class="material-icons md-36">chat</i>
@@ -117,12 +118,7 @@
       name: "tweets-card",
       data() {
         return {
-          accountName: '姜维',
-          tweetsTime: '2018-3-31',
-          thumbupNum: 50,
-          commitsNum: 50,
-          forwardNum: 1,
-          tweetsBrief: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid aperiam atque autem beatae delectus doloribus eaque eum facilis harum iste laboriosam natus non numquam, quas, reprehenderit sit suscipit tenetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid aperiam atque autem beatae delectus doloribus eaque eum facilis harum iste laboriosam natus non numquam, quas, reprehenderit sit suscipit tenetur.',
+          thumbupNum: 0,
           isThumbUp: false,
           isLongBrief: false,
           isMore: false,
@@ -148,16 +144,25 @@
           return this.data.isShared
         }
       },
+      watch: {
+        isThumbUp(val, oldVal) {
+          if (val) {
+            this.thumbupNum += 1
+          }
+          else {
+            this.thumbupNum -= 1
+          }
+        }
+      },
       methods: {
         _emitTargetInfo(e) {
           let screeWidth = document.documentElement.offsetWidth || document.body.offsetWidth,
             target = e.target,
             data = {}
-          console.log(this.$refs.tweetsCard.offsetTop)
           data = this.isImageList
             ? {index: e.target.getAttribute('index'),
               left: target.offsetLeft,
-              top: target.offsetTop,
+              top: this.$refs.tweetsCard.offsetTop + target.offsetTop + 52,
               width:target.offsetWidth,
               height: target.offsetHeight,
               scale: target.offsetWidth/screeWidth,
@@ -177,8 +182,6 @@
           this.isDropdown = false
         },
         _thumbup() {
-          let direction = this.isThumbUp? -1:1
-          this.thumbupNum += direction
           this.isThumbUp = !this.isThumbUp
         },
         _checkCommit() {},
@@ -192,6 +195,9 @@
         this.$nextTick(function () {
           this.isLongBrief = this.$refs.bodyBrief.offsetHeight > 63? true:false
         })
+      },
+      created() {
+        this.thumbupNum = this.data.thumbupNum
       }
     }
 </script>

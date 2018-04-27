@@ -27,7 +27,7 @@
       </div>
       <div class="row">
         <ul class="account-detail">
-          <li>
+          <li @click="_link('/account/tweets')">
             <p>动态</p>
             <span>{{ accountTweetsNum }}</span>
           </li>
