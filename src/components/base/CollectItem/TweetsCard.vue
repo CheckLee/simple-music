@@ -44,7 +44,12 @@
     </div>
     <div class="tweets-body">
       <div class="tweets-body-brief" :class="{ more: isMore, less: !isMore && isLongBrief }">
-        <p ref="bodyBrief">{{ data.msg }}</p>
+        <p ref="bodyBrief">
+          <span class="act" v-if="data.actName">
+            #{{ data.actName }}#
+          </span>
+          {{ data.msg }}
+        </p>
       </div>
       <flat-button
         class="more-or-less"
@@ -61,11 +66,6 @@
           </li>
         </ul>
         <div class="video" v-if="isVideo">
-          <!--<video controls="" autoplay="" name="media">-->
-            <!--<source-->
-              <!--src="/mv/url?url=http://v4.music.126.net/20180429042437/6a885275c74434c7ad72278849bcb97b/web/cloudmusic/mv/20180423085950/c22658ac-8310-4353-a5ed-8a18c3389f1d/45538ba07e16baecf1529a32b25e5035.mp4"-->
-              <!--type="video/mp4">-->
-          <!--</video>-->
           <video-pre-viewer
             width="293"
             :video-type="data.mv.type"

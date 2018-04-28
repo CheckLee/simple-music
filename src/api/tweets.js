@@ -11,11 +11,21 @@ export default {
       }
     })
   },
+
+  test(uids) {
+    let events = []
+    uids.forEach((id) => {
+      GetTweets(id)
+        .then((res) => {
+          events.push(res.data.events)
+        })
+    })
+  },
   GetUserDetail(uid) {
     return axios.get('/user/detail', {
       params: {
         uid: uid
       }
     })
-  },
+  }
 }

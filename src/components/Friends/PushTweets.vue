@@ -33,8 +33,10 @@
   import InfCircleLoader from "../base/Loader/InfCircleLoader";
   import TweetsCard from "../base/CollectItem/TweetsCard";
   import Scroll from "../base/Scroll/Scroll";
-  import api from '../../api/tweets'
-  import music from '../../api/song'
+  import login from '../../api/login'
+  import tweets from '../../api/tweets'
+  import song from '../../api/song'
+  import { mapGetters } from 'vuex'
 
   export default {
     components: {
@@ -83,6 +85,9 @@
           body.classList.remove('preview')
         }
       }
+    },
+    computed: {
+      ...mapGetters(['uId'])
     },
     methods: {
       _previewImg() {
@@ -239,7 +244,29 @@
         }
       },
       _formatMv(data) {
-        //返回
+        let isMv = !! data.mv,
+          mv = {}
+        if (isMv) {
+          return song.GetMv(data.mv.id)
+            .then((res) => {
+              console.log(res)
+              let mvData = res.data.data
+              console.log(mvData)
+              mv = {
+                id: mvData.id,
+                videoUrls: Object.values(mvData.brs),
+                duration: mvData.duration,
+                playCount: mvData.playCount,
+                title: mvData.desc,
+                posterSrc: mvData.cover,
+                type: 'video/mp4'
+              }
+              return Promise.resolve({ isMv: isMv, mv: mv })
+            })
+        }
+        else {
+          return Promise.resolve({ isMv: isMv, mv: mv })
+        }
       },
       _formatEvents(events) {
         let pushTweets = []
@@ -248,34 +275,47 @@
             {isShared, sharedContent} = this._formatShared(tweetBody),
             {isPics, pics} = this._formatPics(item.pics),
             pushTweetsEvent = {}
-          pushTweetsEvent = {
-            user: {
-              accountName: item.user.nickname,
-              accountId: item.user.userId,
-              avatarUrl: item.user.avatarUrl,
-            },
-            tweetsTime: item.eventTime,
-            actName: item.actName,
-            forwardNum: item.forwardCount,
-            commitNum: item.info.commentCount,
-            thumbupNum: item.info.likedCount,
-            msg: tweetBody.msg,
-            isPics: isPics,
-            pics: pics,
-            isShared: isShared,
-            shared: sharedContent
-          }
-          console.log(this.color)
-          pushTweets.push(pushTweetsEvent)
+          this._formatMv(tweetBody)
+            .then((mv) => {
+              pushTweetsEvent = {
+                user: {
+                  accountName: item.user.nickname,
+                  accountId: item.user.userId,
+                  avatarUrl: item.user.avatarUrl,
+                },
+                tweetsTime: item.eventTime,
+                actName: item.actName,
+                forwardNum: item.forwardCount,
+                commitNum: item.info.commentCount,
+                thumbupNum: item.info.likedCount,
+                msg: tweetBody.msg,
+                isPics: isPics,
+                pics: pics,
+                isMv: mv.isMv,
+                mv: mv.mv,
+                isShared: isShared,
+                shared: sharedContent
+              }
+              pushTweets.push(pushTweetsEvent)
+            })
         })
         this.pushTweets = pushTweets
       }
     },
     created() {
-      api.GetTweets(9861246)
-      .then((res) => {
-        this._formatEvents(res.data.events)
-      })
+      login.GetFollowsData(this.uId)
+        .then((res) => {
+          let followers = res.data.follow,
+            followersId = followers.map((item) => { return item.userId }),
+            events = []
+          followersId.forEach((id) => {
+            tweets.GetTweets(id)
+              .then((res) => {
+                events.push(res.data.events)
+              })
+          })
+          console.log(events)
+        })
       this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
       this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
       this.currentMidLineX = this.screenWidth / 2
