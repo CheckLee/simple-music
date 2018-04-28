@@ -20,5 +20,12 @@ export default {
         mvid: id
       }
     })
+  },
+  PlayMv(url) {
+    return axios.get('/mv/url', {
+      params: {
+        url: url
+      }
+    })
   }
 }

@@ -140,6 +140,11 @@
     top: 0px!important;
   }
 
+  .personal-tweets.preview {
+    z-index: 2000;
+    top: -104px!important;
+  }
+
   .pop-up-enter-active, .pop-up-leave-active {
     transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform: translateY(0px);

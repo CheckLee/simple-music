@@ -234,7 +234,7 @@
           isPics = false,
           screenWidth = this.screenWidth,
           screenHeight = this.screenHeight
-        if (data !== []) {
+        if (Array.isArray(data) && data.length > 0) {
           isPics = true
           data.forEach((pic, index) => {
             let isLong = _isLong(pic.width, pic.height),
@@ -261,50 +261,57 @@
         let isMv = !! data.mv,
           mv = {}
         if (isMv) {
-          song.GetMv(data.mv.id)
+          return song.GetMv(data.mv.id)
             .then((res) => {
+              console.log(res)
               let mvData = res.data.data
+              console.log(mvData)
               mv = {
                 id: mvData.id,
-                videoUrls: mvData.brs,
+                videoUrls: Object.values(mvData.brs),
                 duration: mvData.duration,
                 playCount: mvData.playCount,
-                title: mvData.desc
+                title: mvData.desc,
+                posterSrc: mvData.cover,
+                type: 'video/mp4'
               }
+              return Promise.resolve({ isMv: isMv, mv: mv })
             })
         }
-        return {
-          isMv: isMv,
-          mv: mv
+        else {
+          return Promise.resolve({ isMv: isMv, mv: mv })
         }
       },
       _formatEvents(events) {
         let pushTweets = []
-        console.log(events)
         events.forEach((item) => {
           let tweetBody = JSON.parse(item.json),
             {isShared, sharedContent} = this._formatShared(tweetBody),
             {isPics, pics} = this._formatPics(item.pics),
             pushTweetsEvent = {}
           this._formatMv(tweetBody)
-          pushTweetsEvent = {
-            user: {
-              accountName: item.user.nickname,
-              accountId: item.user.userId,
-              avatarUrl: item.user.avatarUrl,
-            },
-            tweetsTime: item.eventTime,
-            actName: item.actName,
-            forwardNum: item.forwardCount,
-            commitNum: item.info.commentCount,
-            thumbupNum: item.info.likedCount,
-            msg: tweetBody.msg,
-            isPics: isPics,
-            pics: pics,
-            isShared: isShared,
-            shared: sharedContent
-          }
-          pushTweets.push(pushTweetsEvent)
+            .then((mv) => {
+              pushTweetsEvent = {
+                user: {
+                  accountName: item.user.nickname,
+                  accountId: item.user.userId,
+                  avatarUrl: item.user.avatarUrl,
+                },
+                tweetsTime: item.eventTime,
+                actName: item.actName,
+                forwardNum: item.forwardCount,
+                commitNum: item.info.commentCount,
+                thumbupNum: item.info.likedCount,
+                msg: tweetBody.msg,
+                isPics: isPics,
+                pics: pics,
+                isMv: mv.isMv,
+                mv: mv.mv,
+                isShared: isShared,
+                shared: sharedContent
+              }
+              pushTweets.push(pushTweetsEvent)
+            })
         })
         this.pushTweets = pushTweets
       }

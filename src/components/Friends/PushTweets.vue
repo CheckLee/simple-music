@@ -23,9 +23,6 @@
           :key="item.tweetsTime"
           :data="item">
       </li>
-      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data1"></tweets-card>-->
-      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data2"></tweets-card>-->
-      <!--<tweets-card @getTargetInfo="_getTargetInfo" :data="data3"></tweets-card>-->
       <div class="blank"></div>
     </scroll>
   </div>
