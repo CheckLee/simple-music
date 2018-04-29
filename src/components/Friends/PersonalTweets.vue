@@ -113,18 +113,20 @@
       _getTargetInfo(payload) {
         if (payload['isImageList']) {
           let midLineX = this.screenWidth / 2,
-            midLineY = (this.screenHeight + -this.scrollY)/2
+            midLineY = (this.screenHeight/2 + -this.scrollY)
           this.currentImageList = payload['imageList']
           this.currentWidth = payload['width']
           this.currentOffsetX = payload['left']
           this.currentHeight = payload['height']
-          this.currentOffsetY = payload['top'] + this.scrollY
+          this.currentOffsetY = payload['top']
           this.currentIndex = payload['index']
           this.currentImgScale = payload['scale']
           this.currentMidLineX = midLineX
           this.currentMidLineY = midLineY
           this.show = true
+          console.log(payload)
         }
+
       },
       _formatCreator(data) {
         return {
@@ -268,7 +270,7 @@
               console.log(mvData)
               mv = {
                 id: mvData.id,
-                videoUrls: Object.values(mvData.brs),
+                videoUrls: mvData.brs,
                 duration: mvData.duration,
                 playCount: mvData.playCount,
                 title: mvData.desc,

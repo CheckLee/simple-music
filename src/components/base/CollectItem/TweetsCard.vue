@@ -69,7 +69,7 @@
           <video-pre-viewer
             width="293"
             :video-type="data.mv.type"
-            video-src="http://vjs.zencdn.net/v/oceans.mp4"
+            :video-src="`/mv/url?url=${data.mv.videoUrls['720']}`"
             :poster-src="data.mv.posterSrc">
           </video-pre-viewer>
         </div>
@@ -167,13 +167,14 @@
           data = this.isImageList
             ? {index: e.target.getAttribute('index'),
               left: target.offsetLeft,
-              top: this.$refs.tweetsCard.offsetTop + target.offsetTop + 52,
+              top: this.$refs.tweetsCard.offsetTop + target.offsetTop,
               width:target.offsetWidth,
               height: target.offsetHeight,
               scale: target.offsetWidth/screeWidth,
               isImageList: this.isImageList,
               imageList: this.data.pics}
             : {}
+          console.log(this.$refs.tweetsCard.offsetTop, target.offsetTop)
           this.$emit('getTargetInfo',data)
         },
         _formatDate(date) {

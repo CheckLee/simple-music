@@ -77,7 +77,7 @@
           scrollX = document.documentElement.scrollTop || document.body.scrollTop
         this.deletaX = -( this.midX - (this.offsetX + this.width/2) )/this.scale
         this.deletaY = -( this.midY - (this.offsetY + this.height/2) )/this.scale
-        console.log(this.midY, this.offsetY + this.height/2, this.deletaY)
+        console.log(this.midY, this.offsetY, this.height/2, this.deletaY, this.scale)
         Velocity(el, { scaleX: this.scale, scaleY: this.scale}, { duration: 0 })
         Velocity(el, { translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px`}, { duration: 0 })
       },

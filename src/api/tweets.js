@@ -11,15 +11,30 @@ export default {
       }
     })
   },
+  GetFollowerTweets(uids, promiseFn) {
+    let allEvents = [],
+      it = uids[Symbol.iterator](),
+      self = this
 
-  test(uids) {
-    let events = []
-    uids.forEach((id) => {
-      GetTweets(id)
+    return x(it.next())
+
+    function x(item) {
+      if(item.done) {
+        return Promise.resolve(allEvents)
+      }
+      return self.GetTweets(item.value)
         .then((res) => {
-          events.push(res.data.events)
+          let tweets = res.data.events
+          return promiseFn(allEvents, tweets)
+            .then((data) => {
+              allEvents = data
+            })
+            .then(() => {
+              return x(it.next())
+            })
+            .catch(Promise.reject)
         })
-    })
+    }
   },
   GetUserDetail(uid) {
     return axios.get('/user/detail', {

@@ -99,17 +99,18 @@
       _getTargetInfo(payload) {
         if (payload['isImageList']) {
           let midLineX = this.screenWidth / 2,
-            midLineY = (this.screenHeight + -this.scrollY)/2
+            midLineY = (this.screenHeight/2 + -this.scrollY)
           this.currentImageList = payload['imageList']
           this.currentWidth = payload['width']
           this.currentOffsetX = payload['left']
           this.currentHeight = payload['height']
-          this.currentOffsetY = payload['top'] + this.scrollY
+          this.currentOffsetY = payload['top']
           this.currentIndex = payload['index']
           this.currentImgScale = payload['scale']
           this.currentMidLineX = midLineX
           this.currentMidLineY = midLineY
           this.show = true
+          console.log(payload, midLineY)
         }
       },
       _formatCreator(data) {
@@ -303,18 +304,20 @@
       }
     },
     created() {
+      function promiseCallBack(arr, data) {
+        return new Promise((resolve, reject) => {
+          arr = arr.concat(data)
+          resolve(arr)
+        })
+      }
       login.GetFollowsData(this.uId)
         .then((res) => {
           let followers = res.data.follow,
-            followersId = followers.map((item) => { return item.userId }),
-            events = []
-          followersId.forEach((id) => {
-            tweets.GetTweets(id)
-              .then((res) => {
-                events.push(res.data.events)
-              })
-          })
-          console.log(events)
+            followersId = followers.map((item) => { return item.userId })
+          tweets.GetFollowerTweets(followersId, promiseCallBack)
+            .then((data) => {
+              this._formatEvents(data)
+            })
         })
       this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
       this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
