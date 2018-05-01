@@ -81,6 +81,12 @@ const Tweets = (resolve) => {
   })
 }
 
+const UserHomepage = (resolve) => {
+  import('components/Homepage/UserHomepage').then((module) => {
+    resolve(module)
+  })
+}
+
 const FoundMusic = (resolve) => {
   import('components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
@@ -190,6 +196,11 @@ export default new Router({
           component: PushTweets
         }
       ]
+    },
+    {
+      path: '/user/:id',
+      component: UserHomepage,
+      props: true
     },
     {
       path: '/mine',

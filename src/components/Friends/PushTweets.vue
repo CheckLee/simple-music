@@ -271,7 +271,7 @@
       },
       _formatEvents(events) {
         let pushTweets = []
-        events.forEach((item) => {
+        events.slice(0,2).forEach((item) => {
           let tweetBody = JSON.parse(item.json),
             {isShared, sharedContent} = this._formatShared(tweetBody),
             {isPics, pics} = this._formatPics(item.pics),
