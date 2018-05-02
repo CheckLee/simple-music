@@ -2,18 +2,30 @@
   <div class="user-homepage">
     <div class="user-homepage-header nav-panel-wrapper">
       <div class="nav-panel">
-            <span class="nav-header action-backward">
-              <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
-            </span>
+        <span class="nav-header action-backward">
+          <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
+        </span>
         <div class="nav-body panel">
           <p>{{ userInfo.userName }}</p>
         </div>
         <div class="nav-tail blank"></div>
+        <div class="bg" v-show="isCover">
+          <img :src="userInfo.userBgUrl" alt="background">
+        </div>
       </div>
     </div>
     <div class="user-homepage-body">
-      <section class="homepage-bg">
-        <div class="homepage-accountInfo">
+      <section class="homepage-bg" ref="bkg">
+        <div class="bg">
+          <img :src="userInfo.userBgUrl" alt="background">
+        </div>
+      </section>
+      <scroll
+        :probeType="3"
+        :listenScroll="isListenScroll"
+        @scroll="_getCurrentPos"
+        class="user-homepage-content">
+        <section class="homepage-accountInfo">
           <div class="account-avatar"><img :src="userInfo.userAvatarUrl" alt="account-avatar"></div>
           <div class="account-brief">
             <div class="row account-name">
@@ -37,13 +49,7 @@
               <p>{{ userInfo.userSignature }}</p>
             </div>
           </div>
-        </div>
-        <div class="bg">
-          <img :src="userInfo.userBgUrl" alt="background">
-        </div>
-      </section>
-      <scroll
-        class="user-homepage-content">
+        </section>
         <section class="homepage-user-subcount">
           <div class="homepage-routerlink">
             <router-link class="tab-item" tag="div" to="/foundmusic/recommend">
@@ -89,10 +95,32 @@
           userPlayListNum: 41,
           userAvatarUrl: require("../../assets/img/default_avatar.png"),
           userBgUrl: require("../../assets/img/default_user_bg.jpg")
+        },
+        // config for scroll
+        isListenScroll: true,
+        screenHeight: 0,
+        currentPosY: 0,
+        // config for navpanel
+        isCover: false
+      }
+    },
+    watch: {
+      currentPosY(val, oldVal) {
+        let maxScrollY = 120
+        if (val > 0) {
+          let scale = 1 + (val/maxScrollY)
+          this.isCover = false
+          Velocity(this.$refs.bkg, { scaleX: scale, scaleY: scale }, { duration: 0 })
+        }
+        else {
+          this.isCover = true
         }
       }
     },
     methods: {
+      _getCurrentPos(data) {
+        this.currentPosY = data.y
+      },
       _formatUserInfo(data) {
         let userInfo = {
           level: data.level,
@@ -112,6 +140,7 @@
         // .then((res) => {
           // console.log(res)
         // })
+        this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
     }
 }
 </script>
