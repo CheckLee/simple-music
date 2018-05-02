@@ -120,6 +120,12 @@ const SongList = (resolve) => {
   })
 }
 
+const SonglistDetail = (resolve) => {
+  import('components/SonglistDetail/SonglistDetail').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -192,7 +198,7 @@ export default new Router({
         },
         {
           path: 'pushtweets',
-          name: 'pushtweets',
+          name: 'PushTweets',
           component: PushTweets
         }
       ]
@@ -205,7 +211,13 @@ export default new Router({
     {
       path: '/mine',
       name: 'Mine',
-      component: Mine
+      component: Mine,
+      children: [
+        {
+          path: 'songlist/:id',
+          component: SonglistDetail
+        }
+      ]
     },
     {
       path: '/foundmusic',

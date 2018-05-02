@@ -44,7 +44,7 @@
       TweetsCard,
       InfCircleLoader,
       ImgPreViewer},
-    name: "pushtweets",
+    name: "Tweets",
     data() {
       return {
         show: false,
@@ -155,7 +155,7 @@
           creator: this._formatCreator(data.creator),
           playlist: {
             id: data.id,
-            avatarUrl: data.img80x80
+            avatarUrl: data.coverImgUrl
           }
         }
       },
@@ -183,8 +183,19 @@
           }
         }
       },
+      _formatProgram(data, type) {
+        return {
+          type: type,
+          title: data.name,
+          creator: this._formatCreator(data.dj),
+          program: {
+            avatarUrl: data.coverUrl,
+            id: data.id
+          }
+        }
+      },
       _formatShared(tweetsBody) {
-        let shareKeys = ["event", "song", "playlist", "video", "resource"],
+        let shareKeys = ["event", "song", "playlist", "video", "resource", "program"],
           keys = Object.keys(tweetsBody),
           intersection = this._.intersection(keys, shareKeys),
           isShared = intersection.length,
@@ -206,6 +217,9 @@
               break
             case "video":
               sharedContent = this._formatVideo(tweetsBody[shareType], shareType)
+              break
+            case "program":
+              sharedContent = this._formatProgram(tweetsBody[shareType], shareType)
               break
             default:
               break
@@ -271,7 +285,7 @@
       },
       _formatEvents(events) {
         let pushTweets = []
-        events.slice(0,2).forEach((item) => {
+        events.forEach((item) => {
           let tweetBody = JSON.parse(item.json),
             {isShared, sharedContent} = this._formatShared(tweetBody),
             {isPics, pics} = this._formatPics(item.pics),
@@ -304,9 +318,20 @@
       }
     },
     created() {
-      tweets.GetEvent()
+      function promiseCallBack(arr, data) {
+        return new Promise((resolve, reject) => {
+          arr = arr.concat(data)
+          resolve(arr)
+        })
+      }
+      login.GetFollowsData(this.uId)
         .then((res) => {
-          this._formatEvents(res.data.event)
+          let followers = res.data.follow,
+            followersId = followers.map((item) => { return item.userId })
+          tweets.GetFollowerTweets(followersId, promiseCallBack)
+            .then((data) => {
+              this._formatEvents(data)
+            })
         })
       this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
       this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight

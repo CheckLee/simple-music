@@ -170,7 +170,7 @@
           creator: this._formatCreator(data.creator),
           playlist: {
             id: data.id,
-            avatarUrl: data.img80x80
+            avatarUrl: data.coverImgUrl
           }
         }
       },
@@ -198,8 +198,19 @@
           }
         }
       },
+      _formatProgram(data, type) {
+        return {
+          type: type,
+          title: data.name,
+          creator: this._formatCreator(data.dj),
+          program: {
+            avatarUrl: data.coverUrl,
+            id: data.id
+          }
+        }
+      },
       _formatShared(tweetsBody) {
-        let shareKeys = ["event", "song", "playlist", "video", "resource"],
+        let shareKeys = ["event", "song", "playlist", "video", "resource", "program"],
           keys = Object.keys(tweetsBody),
           intersection = this._.intersection(keys, shareKeys),
           isShared = intersection.length,
@@ -221,6 +232,9 @@
               break
             case "video":
               sharedContent = this._formatVideo(tweetsBody[shareType], shareType)
+              break
+            case "program":
+              sharedContent = this._formatProgram(tweetsBody[shareType], shareType)
               break
             default:
               break

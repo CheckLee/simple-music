@@ -27,5 +27,8 @@ export default {
         url: url
       }
     })
+  },
+  GetSongListDetail(id) {
+    return axios.get(`/playlist/detail?id=${id}`)
   }
 }
