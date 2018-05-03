@@ -16,8 +16,9 @@
     <scroll
       class="user-tweets-content"
       :isEnd="isEndScroll"
-      @getCurrentY="_getCurrentY"
-      :listen-scroll="true">
+      :probeType="2"
+      :listen-scroll="true" 
+      @scroll="_getCurrentPos">
       <li v-for="item in pushTweets"
           is="TweetsCard"
           @getTargetInfo="_getTargetInfo"
@@ -88,14 +89,19 @@
         else {
           body.classList.remove('preview')
         }
+      },
+      scrollY(val, oldVal) {
+        if (val > 0) {
+          this.$emit('pullDown', true)
+        }
       }
     },
     methods: {
       _previewImg() {
         this.show = false
       },
-      _getCurrentY(y) {
-        this.scrollY = y
+      _getCurrentPos(data) {
+        this.scrollY = data.y
       },
       _getTargetInfo(payload) {
         if (payload['isImageList']) {
@@ -124,7 +130,6 @@
       _formatTweet(data, type) {
         let tweet = JSON.parse(data.json),
           creator = this._formatCreator(data.user)
-
         return {
           type: type,
           title: tweet.msg,

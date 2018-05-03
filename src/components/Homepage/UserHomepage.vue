@@ -26,7 +26,7 @@
         :isEnd="isEndScroll"
         @scroll="_getCurrentPos"
         class="user-homepage-content">
-        <section class="homepage-accountInfo">
+        <section class="homepage-accountInfo" ref="account">
           <div class="account-avatar"><img :src="userInfo.userAvatarUrl" alt="account-avatar"></div>
           <div class="account-brief">
             <div class="row account-name">
@@ -64,7 +64,9 @@
           </div>
           <div class="homepage-cards">
             <keep-alive>
-              <router-view :isEndScroll="!isEndScroll"></router-view>
+              <router-view
+              @pullDown="_pullDown" 
+              :isEndScroll="!isEndScroll"></router-view>
             </keep-alive>
           </div>
         </section>
@@ -100,14 +102,15 @@
         // config for scroll
         isListenScroll: true,
         screenHeight: 0,
-        currentPosY: 0,
+        scrollY: 0,
         isEndScroll: false,
+        maxScrollY: 173,
         // config for navpanel
         isCover: false
       }
     },
     watch: {
-      currentPosY(val, oldVal) {
+      scrollY(val, oldVal) {
         let maxScrollY = 120
         if (val > 0) {
           let scale = 1 + (val/maxScrollY)
@@ -117,15 +120,23 @@
         else {
           this.isCover = true
         }
-        //test
-        if (val < -200) {
+        // end scroll
+        if (val < -this.maxScrollY) {
           this.isEndScroll = true
         }
       }
     },
+    mounted() {
+      this.$nextTick(() => {
+        this.maxScrollY = this.$refs.account.offsetHeight + this.$refs.account.offsetTop - 52
+      })
+    },
     methods: {
+      _pullDown(data) {
+        // this.isEndScroll = !data
+      },
       _getCurrentPos(data) {
-        this.currentPosY = data.y
+        this.scrollY = data.y
       },
       _formatUserInfo(data) {
         let userInfo = {
