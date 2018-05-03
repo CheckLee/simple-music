@@ -79,14 +79,37 @@
         font-size: $font-size-large-xxxl
     .homepage-user-subcount
       width: 100%
-      height: 150vh
+      min-height: 150vh
+      position: relative
       overflow: hidden
       .homepage-routerlink
       .homepage-cards
-        background-color: gray
+        background-color: white
+      .homepage-routerlink
+        background-color: red
+        display: flex
+        height: 78px
+        align-items center
+        .tab-item
+          width: 50%
+          text-align: center
+          font-size: $font-size-large-xxxll
+          span
+            vertical-align: end
+            color: $color-theme-secondary
+          span:nth-child(2)
+            font-size: $font-size-large-xx
+            color: $color-icon
+          &.router-link-active
+              .tab-link
+                color: $color-theme-primary
+                font-weight: bolder
       .homepage-cards
         width: 100%
         height: 100%
+        position: fixed
+        top: 32vh
+        bottom: 0
 
 .nav-panel-wrapper
   position: relative

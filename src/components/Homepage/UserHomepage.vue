@@ -23,6 +23,7 @@
       <scroll
         :probeType="3"
         :listenScroll="isListenScroll"
+        :isEnd="isEndScroll"
         @scroll="_getCurrentPos"
         class="user-homepage-content">
         <section class="homepage-accountInfo">
@@ -52,18 +53,18 @@
         </section>
         <section class="homepage-user-subcount">
           <div class="homepage-routerlink">
-            <router-link class="tab-item" tag="div" to="/foundmusic/recommend">
+            <router-link class="tab-item" tag="div" to="/user/9861246/music">
               <span class="tab-link">音乐</span>
               <span>{{ userInfo.userPlayListNum }}</span>
             </router-link>
-            <router-link class="tab-item" tag="div" to="/foundmusic/songlist">
+            <router-link class="tab-item" tag="div" to="/user/9861246/tweets">
               <span class="tab-link">动态</span>
               <span>{{ userInfo.userTweetsNum }}</span>
             </router-link>
           </div>
           <div class="homepage-cards">
             <keep-alive>
-              <router-view></router-view>
+              <router-view :isEndScroll="!isEndScroll"></router-view>
             </keep-alive>
           </div>
         </section>
@@ -100,6 +101,7 @@
         isListenScroll: true,
         screenHeight: 0,
         currentPosY: 0,
+        isEndScroll: false,
         // config for navpanel
         isCover: false
       }
@@ -114,6 +116,10 @@
         }
         else {
           this.isCover = true
+        }
+        //test
+        if (val < -200) {
+          this.isEndScroll = true
         }
       }
     },

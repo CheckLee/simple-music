@@ -60,6 +60,11 @@
       pullUpLoad: {
         type: null,
         default: false
+      },
+      // props added by jw
+      isEnd: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -152,6 +157,9 @@
     mounted() {
       setTimeout(() => {
         this._initScroll()
+        if (this.isEnd) {
+          this.disable()
+        }
       }, 20)
     },
     watch: {
@@ -160,6 +168,14 @@
         setTimeout(() => {
           this.forceUpdate(true)
         }, this.refreshDelay)
+      },
+      isEnd(val, oldVal) {
+        if (val) {
+          this.disable()
+        }
+        else {
+          this.enable()
+        }
       }
     },
     components: {

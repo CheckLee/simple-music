@@ -87,6 +87,18 @@ const UserHomepage = (resolve) => {
   })
 }
 
+const UserHomepageMusic = (resolve) => {
+  import('components/Homepage/UserHomepageMusic').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserHomepageTweets = (resolve) => {
+  import('components/Homepage/UserHomepageTweets').then((module) => {
+    resolve(module)
+  })
+}
+
 const FoundMusic = (resolve) => {
   import('components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
@@ -206,7 +218,19 @@ export default new Router({
     {
       path: '/user/:id',
       component: UserHomepage,
-      props: true
+      props: true,
+      children: [
+        {
+          path: 'music',
+          name: 'UserHomepageMusic',
+          component: UserHomepageMusic
+        },
+        {
+          path: 'tweets',
+          name: 'UserHomepageTweets',
+          component: UserHomepageTweets
+        }
+      ]
     },
     {
       path: '/mine',
