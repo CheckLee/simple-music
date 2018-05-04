@@ -13,7 +13,10 @@
       <justify-order v-if="isJustifyOrder" class="justify-order"></justify-order>
     </transition>
     <transition name="slide">
-      <fm v-show="isFM"></fm>
+      <fm v-show="isFM" style="z-index: 2"></fm>
+    </transition>
+    <transition name="slide">
+      <daily-recommend v-show="isDailyRecommend"></daily-recommend>
     </transition>
   </div>
 </template>
@@ -23,6 +26,7 @@
   import JustifyOrder from 'components/JustifyOrder/JustifyOrder'
   import PlayerButton from 'base/Button/PlayerButton'
   import Fm from 'components/FM/Fm'
+  import DailyRecommend from 'components/DailyRecommend/DailyRecommend'
   import api from 'api/login'
   import { mapGetters, mapMutations } from 'vuex'
 
@@ -42,7 +46,7 @@
       }
     },
     components: {
-      BottomPanel, JustifyOrder, PlayerButton, Fm
+      BottomPanel, JustifyOrder, PlayerButton, Fm, DailyRecommend
     },
     created() {
       this.playButtonShow = this.routerMap.indexOf(this.$route.path.split('/')[1].toLowerCase()) > -1? false:true
@@ -57,7 +61,7 @@
       }
     },
     computed: {
-      ...mapGetters([ 'isLogin', 'isJustifyOrder', 'isPlayer', 'isFM', 'currentPlayer' ])
+      ...mapGetters([ 'isLogin', 'isJustifyOrder', 'isPlayer', 'isFM', 'currentPlayer', 'isDailyRecommend' ])
     },
     methods: {
       ...mapMutations({
@@ -77,14 +81,14 @@
     position: fixed;
     top: 24px;
     right: 24px;
-    z-index: 1;
+    z-index: 2;
   }
   .bottom-wrapper {
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 112px;
-    z-index: 1;
+    z-index: 2;
   }
   .bottom-wrapper.hide {
     z-index: -1

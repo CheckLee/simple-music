@@ -30,5 +30,11 @@ export default {
   },
   GetSongListDetail(id) {
     return axios.get(`/playlist/detail?id=${id}`)
+  },
+  GetDailyRecommend() {
+    return axios.get('/recommend/songs')
+  },
+  GetSongLyric(id) {
+    return axios.get(`/lyric?id=${id}`)
   }
 }

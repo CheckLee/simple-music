@@ -32,6 +32,9 @@ const mutations = {
   },
   [types.SET_IS_PLAYING](state, type) {
     state.isPlaying = type
+  },
+  [types.SET_DAILY_RECOMMEND](state) {
+    state.isDailyRecommend = !state.isDailyRecommend
   }
 }
 

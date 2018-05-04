@@ -55,12 +55,13 @@
             <li
               v-for="item in createdPlaylist"
               is="ImgCollectItem"
+              @click="selectItem(item)"
               :key="item.id"
               :img-url="item.coverImgUrl"
               :item-name="item.name"
               :item-intro="`${item.trackCount}首`"
               item-type="musiclist">
-              <i class="material-icons md-56">{{ tailIconName }}</i>
+              <!--<i class="material-icons md-56">{{ tailIconName }}</i>-->
             </li>
           </div>
         </section>
@@ -75,12 +76,13 @@
             <li
               v-for="item in subPlaylist"
               is="ImgCollectItem"
+              @click="selectItem(item)"
               :key="item.id"
               :img-url="item.coverImgUrl"
               :item-name="item.name"
               :item-intro="`${item.trackCount}首`"
               item-type="musiclist">
-              <i class="material-icons md-56">{{ tailIconName }}</i>
+              <!--<i class="material-icons md-56">{{ tailIconName }}</i>-->
             </li>
           </div>
         </section>
@@ -115,10 +117,10 @@
   import { mapGetters } from 'vuex'
 
   console.log(window.innerHeight)
-  const INFO_HEIGHT = 188 / 667 * window.innerHeight
+  const INFO_HEIGHT = 192 / 667 * window.innerHeight
   console.log(INFO_HEIGHT)
   const PANEL_HEIGHT = 25 / 667 * window.innerHeight
-  const ITEM_HEIGHT = 65 / 667 * window.innerHeight
+  const ITEM_HEIGHT = 70 / 667 * window.innerHeight
 
   export default {
     name: "mine",
@@ -192,6 +194,7 @@
 
       manageSub() {},
       selectItem(item) {
+        console.log(item)
         this.$router.push(`/mine/songlist/${item.id}`)
       }
       
