@@ -11,14 +11,10 @@
       :offset-y="currentOffsetY"
       :mid-x="currentMidLineX"
       :mid-y="currentMidLineY"
+      :start-y="-scrollY-offsetY"
       @clickit="_previewImg">
     </img-pre-viewer>
-    <scroll
-      class="user-tweets-content"
-      :isEnd="isEndScroll"
-      :probeType="2"
-      :listen-scroll="true" 
-      @scroll="_getCurrentPos">
+    <div>
       <li v-for="item in pushTweets"
           is="TweetsCard"
           @getTargetInfo="_getTargetInfo"
@@ -26,7 +22,7 @@
           :data="item">
       </li>
       <div class="blank"></div>
-    </scroll>
+    </div>
   </div>
 </template>
 
@@ -44,9 +40,13 @@
       TweetsCard,
       ImgPreViewer},
     props: {
-      isEndScroll: {
-        type: Boolean,
-        default: false
+      scrollY: {
+        type: Number,
+        default: 0
+      },
+      offsetY: {
+        type: Number,
+        default: 0
       }
     },
     data() {
@@ -55,7 +55,6 @@
         show: false,
         screenWidth: 0,
         screenHeight: 0,
-        scrollY: 0,
         pushTweets: [],
         currentMidLineX: 0,
         currentMidLineY: 0,
@@ -89,16 +88,12 @@
         else {
           body.classList.remove('preview')
         }
-      },
-      scrollY(val, oldVal) {
-        if (val > 0) {
-          this.$emit('pullDown', true)
-        }
       }
     },
     methods: {
       _previewImg() {
         this.show = false
+        this.$emit('getPreviewStatus', false)
       },
       _getCurrentPos(data) {
         this.scrollY = data.y
@@ -106,7 +101,7 @@
       _getTargetInfo(payload) {
         if (payload['isImageList']) {
           let midLineX = this.screenWidth / 2,
-            midLineY = (this.screenHeight/2 + -this.scrollY)
+            midLineY = (this.screenHeight/2 + -this.scrollY + this.offsetY)
           this.currentImageList = payload['imageList']
           this.currentWidth = payload['width']
           this.currentOffsetX = payload['left']
@@ -117,6 +112,7 @@
           this.currentMidLineX = midLineX
           this.currentMidLineY = midLineY
           this.show = true
+          this.$emit('getPreviewStatus', true)
           console.log(payload)
         }
 
@@ -328,6 +324,10 @@
       let path = this.$route.path.split('/'),
         uid = path[2]
       this.uid = uid
+      this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
+      this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
+      this.currentMidLineX = this.screenWidth / 2
+      this.currentMidLineY = this.screenHeight / 2
       tweets.GetTweets(uid)
         .then((res) => {
           this._formatEvents(res.data.events)

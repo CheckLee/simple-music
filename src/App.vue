@@ -135,7 +135,7 @@
     height: 100%;
     overflow: auto;
   }
-  .tweets.preview, .push-tweets.preview {
+  .tweets.preview, .push-tweets.preview, user-homepage-tweets.preview {
     z-index: 2000;
     top: 0px!important;
   }

@@ -62,7 +62,7 @@
         default: false
       },
       // props added by jw
-      isEnd: {
+      isEndScroll: {
         type: Boolean,
         default: false
       }
@@ -157,9 +157,6 @@
     mounted() {
       setTimeout(() => {
         this._initScroll()
-        if (this.isEnd) {
-          this.disable()
-        }
       }, 20)
     },
     watch: {
@@ -169,7 +166,7 @@
           this.forceUpdate(true)
         }, this.refreshDelay)
       },
-      isEnd(val, oldVal) {
+      isEndScroll(val, oldVal) {
         if (val) {
           this.disable()
         }

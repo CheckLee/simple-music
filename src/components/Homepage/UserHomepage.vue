@@ -1,6 +1,6 @@
 <template>
   <div class="user-homepage">
-    <div class="user-homepage-header nav-panel-wrapper">
+    <div class="user-homepage-header nav-panel-wrapper" ref="nav">
       <div class="nav-panel">
         <span class="nav-header action-backward">
           <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
@@ -14,7 +14,17 @@
         </div>
       </div>
     </div>
-    <div class="user-homepage-body">
+    <div class="homepage-routerlink" :style="routerStyle" ref="links">
+      <router-link class="tab-item" tag="div" to="/user/9861246/music">
+        <span class="tab-link">音乐</span>
+        <span>{{ userInfo.userPlayListNum }}</span>
+      </router-link>
+      <router-link class="tab-item" tag="div" to="/user/9861246/tweets">
+        <span class="tab-link">动态</span>
+        <span>{{ userInfo.userTweetsNum }}</span>
+      </router-link>
+    </div>
+    <div class="user-homepage-body" :class="{'preview': isEndScroll}">
       <section class="homepage-bg" ref="bkg">
         <div class="bg">
           <img :src="userInfo.userBgUrl" alt="background">
@@ -23,7 +33,7 @@
       <scroll
         :probeType="3"
         :listenScroll="isListenScroll"
-        :isEnd="isEndScroll"
+        :isEndScroll="isEndScroll"
         @scroll="_getCurrentPos"
         class="user-homepage-content">
         <section class="homepage-accountInfo" ref="account">
@@ -51,22 +61,14 @@
             </div>
           </div>
         </section>
-        <section class="homepage-user-subcount">
-          <div class="homepage-routerlink">
-            <router-link class="tab-item" tag="div" to="/user/9861246/music">
-              <span class="tab-link">音乐</span>
-              <span>{{ userInfo.userPlayListNum }}</span>
-            </router-link>
-            <router-link class="tab-item" tag="div" to="/user/9861246/tweets">
-              <span class="tab-link">动态</span>
-              <span>{{ userInfo.userTweetsNum }}</span>
-            </router-link>
-          </div>
+        <section class="homepage-user-subcount" :style="subcountStyle">
           <div class="homepage-cards">
             <keep-alive>
               <router-view
-              @pullDown="_pullDown" 
-              :isEndScroll="!isEndScroll"></router-view>
+                :scroll-y="scrollY"
+                :offset-y="accountTop"
+                @getPreviewStatus="_getPreviewStatus">
+              </router-view>
             </keep-alive>
           </div>
         </section>
@@ -103,10 +105,13 @@
         isListenScroll: true,
         screenHeight: 0,
         scrollY: 0,
-        isEndScroll: false,
         maxScrollY: 173,
+        isEndScroll: false,
         // config for navpanel
-        isCover: false
+        isCover: false,
+        navHeight: 52,
+        // config for account
+        accountTop: 77
       }
     },
     watch: {
@@ -120,20 +125,39 @@
         else {
           this.isCover = true
         }
-        // end scroll
-        if (val < -this.maxScrollY) {
-          this.isEndScroll = true
+      }
+    },
+    computed: {
+      routerStyle() {
+        let top = 400
+        if (this.scrollY < -this.maxScrollY) {
+          top = this.navHeight
+        }
+        else {
+          top = this.scrollY+this.maxScrollY + this.navHeight
+        }
+        return {
+          position: 'fixed',
+          zIndex: 1,
+          top: `${top}px`
+        }
+      },
+      subcountStyle() {
+        return {
+          paddingTop: `${this.navHeight}px`
         }
       }
     },
     mounted() {
       this.$nextTick(() => {
-        this.maxScrollY = this.$refs.account.offsetHeight + this.$refs.account.offsetTop - 52
+        this.navHeight = this.$refs.nav.offsetHeight
+        this.accountTop = this.$refs.account.offsetTop
+        this.maxScrollY = this.$refs.account.offsetHeight + this.accountTop - this.navHeight
       })
     },
     methods: {
-      _pullDown(data) {
-        // this.isEndScroll = !data
+      _getPreviewStatus(data) {
+        this.isEndScroll = data
       },
       _getCurrentPos(data) {
         this.scrollY = data.y

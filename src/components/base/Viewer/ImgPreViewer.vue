@@ -1,7 +1,7 @@
 <template>
-  <div v-show="show" class="img-view" >
+  <div v-show="show" class="img-view" :style="viewerStyle">
     <v-touch v-on:doubletap="_doubleTap" v-on:tripletap="_tripleTap" v-on:tap="_singleTap" class="swiper-touch-contanier">
-      <div v-show="show" class="img-layer">
+      <div v-show="false" class="img-layer">
         <div class="swiper-pagination" slot="pagination"></div>
       </div>
       <transition
@@ -55,7 +55,49 @@
         this.swiperOption.initialSlide = parseInt(val)
       }
     },
-    props: ['imgArr', 'show', 'scale', 'offsetX', 'offsetY', 'midX', 'midY', 'width', 'height', 'index'],
+    props: {
+      imgArr: {
+        type: Array
+      },
+      show: {
+        type: Boolean
+      },
+      scale: {
+        type: Number
+      },
+      offsetX: {
+        type: Number
+      },
+      offsetY: {
+        type: Number
+      },
+      midX: {
+        type: Number
+      },
+      midY: {
+        type: Number
+      },
+      width: {
+        type: Number
+      },
+      height: {
+        type: Number
+      },
+      index: {
+        type: Number
+      },
+      startY: {
+        type: Number,
+        default: 0
+      }
+    },
+    computed: {
+      viewerStyle() {
+        return {
+          top: `${this.startY}px`
+        }
+      }
+    },
     methods: {
       _singleTap() {
         this.emitFlag = true
@@ -79,11 +121,11 @@
         this.deletaY = -( this.midY - (this.offsetY + this.height/2) )/this.scale
         console.log(this.midY, this.offsetY, this.height/2, this.deletaY, this.scale)
         Velocity(el, { scaleX: this.scale, scaleY: this.scale}, { duration: 0 })
-        Velocity(el, { translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px`}, { duration: 0 })
+        Velocity(el, { translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px`}, { duration: 5000 })
       },
       _enter(el, done) {
-        Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
-        Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
+        // Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
+        // Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
       }
     },
     components: {
@@ -112,11 +154,10 @@
 
   .img-view {
     position: fixed;
-    top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 2000;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
