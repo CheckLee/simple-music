@@ -1,5 +1,5 @@
 <template>
-  <div class="tweets" :class="{ 'preview': show }">
+  <div class="user-homepage-tweets">
     <img-pre-viewer
       :show="show"
       :index="currentIndex"
@@ -14,9 +14,11 @@
       @clickit="_previewImg">
     </img-pre-viewer>
     <scroll
-      class="tweets-content"
-      @getCurrentY="_getCurrentY"
-      :listen-scroll="true">
+      class="user-tweets-content"
+      :isEnd="isEndScroll"
+      :probeType="2"
+      :listen-scroll="true" 
+      @scroll="_getCurrentPos">
       <li v-for="item in pushTweets"
           is="TweetsCard"
           @getTargetInfo="_getTargetInfo"
@@ -29,24 +31,27 @@
 </template>
 
 <script>
-  import ImgPreViewer from "../base/Viewer/ImgPreViewer";
-  import InfCircleLoader from "../base/Loader/InfCircleLoader";
-  import TweetsCard from "../base/CollectItem/TweetsCard";
-  import Scroll from "../base/Scroll/Scroll";
-  import login from '../../api/login'
-  import tweets from '../../api/tweets'
-  import song from '../../api/song'
-  import { mapGetters } from 'vuex'
+  import tweets from "../../api/tweets"
+  import song from "../../api/song"
+  import TweetsCard from "../base/CollectItem/TweetsCard"
+  import Scroll from "../base/Scroll/Scroll"
+  import ImgPreViewer from "../base/Viewer/ImgPreViewer"
 
   export default {
+    name: "UserHomepageTweets",
     components: {
       Scroll,
       TweetsCard,
-      InfCircleLoader,
       ImgPreViewer},
-    name: "Tweets",
+    props: {
+      isEndScroll: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
+        uid: 1,
         show: false,
         screenWidth: 0,
         screenHeight: 0,
@@ -84,17 +89,19 @@
         else {
           body.classList.remove('preview')
         }
+      },
+      scrollY(val, oldVal) {
+        if (val > 0) {
+          this.$emit('pullDown', true)
+        }
       }
-    },
-    computed: {
-      ...mapGetters(['uId'])
     },
     methods: {
       _previewImg() {
         this.show = false
       },
-      _getCurrentY(y) {
-        this.scrollY = y
+      _getCurrentPos(data) {
+        this.scrollY = data.y
       },
       _getTargetInfo(payload) {
         if (payload['isImageList']) {
@@ -110,8 +117,9 @@
           this.currentMidLineX = midLineX
           this.currentMidLineY = midLineY
           this.show = true
-          console.log(payload, midLineY)
+          console.log(payload)
         }
+
       },
       _formatCreator(data) {
         return {
@@ -122,7 +130,6 @@
       _formatTweet(data, type) {
         let tweet = JSON.parse(data.json),
           creator = this._formatCreator(data.user)
-
         return {
           type: type,
           title: tweet.msg,
@@ -235,7 +242,7 @@
           isPics = false,
           screenWidth = this.screenWidth,
           screenHeight = this.screenHeight
-        if (data !== []) {
+        if (Array.isArray(data) && data.length > 0) {
           isPics = true
           data.forEach((pic, index) => {
             let isLong = _isLong(pic.width, pic.height),
@@ -269,7 +276,7 @@
               console.log(mvData)
               mv = {
                 id: mvData.id,
-                videoUrls: Object.values(mvData.brs),
+                videoUrls: mvData.brs,
                 duration: mvData.duration,
                 playCount: mvData.playCount,
                 title: mvData.desc,
@@ -318,29 +325,19 @@
       }
     },
     created() {
-      function promiseCallBack(arr, data) {
-        return new Promise((resolve, reject) => {
-          arr = arr.concat(data)
-          resolve(arr)
-        })
-      }
-      login.GetFollowsData(this.uId)
+      let path = this.$route.path.split('/'),
+        uid = path[2]
+      this.uid = uid
+      tweets.GetTweets(uid)
         .then((res) => {
-          let followers = res.data.follow,
-            followersId = followers.map((item) => { return item.userId })
-          tweets.GetFollowerTweets(followersId, promiseCallBack)
-            .then((data) => {
-              this._formatEvents(data)
-            })
+          this._formatEvents(res.data.events)
         })
-      this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
-      this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
-      this.currentMidLineX = this.screenWidth / 2
-      this.currentMidLineY = this.screenHeight / 2
     }
   }
 </script>
 
-<style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./Tweets.styl"
+
+<style rel="stylesheet/stylus" lang="stylus" type="text/stylus" scoped>
+  @import "./UserHomepageTweets.styl"
 </style>
+

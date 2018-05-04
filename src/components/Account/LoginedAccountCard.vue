@@ -2,7 +2,7 @@
     <div class="logined-account-card">
       <div class="row">
         <div class="account-brief">
-          <div class="account-avatar"><img :src="accountAvatarUrl" alt="account-avatar"></div>
+          <div class="account-avatar"><img v-lazy="accountAvatarUrl" alt="account-avatar"></div>
           <div>
             <h1 class="account-name">{{ accountName }}</h1>
             <span class="account-level"><i>Lv </i>{{ accountLevel }}</span>
@@ -27,7 +27,7 @@
       </div>
       <div class="row">
         <ul class="account-detail">
-          <li>
+          <li @click="_link('/account/tweets')">
             <p>动态</p>
             <span>{{ accountTweetsNum }}</span>
           </li>

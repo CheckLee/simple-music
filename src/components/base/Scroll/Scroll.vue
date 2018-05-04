@@ -1,5 +1,5 @@
 <template>
-	<div ref="wrapper" class="list-wrapper">
+	<div ref="wrapper" class="list-wrapper" @click="_emitCurrentY">
     <div class="scroll-content">
       <div ref="listWrapper">
         <slot></slot>
@@ -23,8 +23,8 @@
 <script>
   import BScroll from 'better-scroll'
   import InfCircleLoader from 'base/Loader/InfCircleLoader'
-  
-  
+
+
 
   export default {
     name: "scroll",
@@ -35,7 +35,7 @@
       },
       click: {
         type: Boolean,
-        default: true
+        default: false
       },
       listenScroll: {
         type: Boolean,
@@ -59,6 +59,11 @@
       },
       pullUpLoad: {
         type: null,
+        default: false
+      },
+      // props added by jw
+      isEnd: {
+        type: Boolean,
         default: false
       }
     },
@@ -85,7 +90,7 @@
         this.scroll = new BScroll(this.$refs.wrapper, {
           probeType: this.probeType,
           click: this.click,
-          pullUpLoad: this.pullUpLoad
+          pullUpLoad: this.pullUpLoad,
         })
         if (this.listenScroll) {
           let me = this
@@ -96,6 +101,7 @@
         if (this.pullup) {
           this.scroll.on('scrollEnd', () => {
             if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+              console.log(this.scroll.y)
               this.$emit('scrollToEnd')
             }
           })
@@ -143,11 +149,17 @@
           this.isPullUpLoad = true
           this.$emit('pullingUp')
         })
+      },
+      _emitCurrentY() {
+        this.$emit('getCurrentY', this.scroll.y)
       }
     },
     mounted() {
       setTimeout(() => {
         this._initScroll()
+        if (this.isEnd) {
+          this.disable()
+        }
       }, 20)
     },
     watch: {
@@ -156,6 +168,14 @@
         setTimeout(() => {
           this.forceUpdate(true)
         }, this.refreshDelay)
+      },
+      isEnd(val, oldVal) {
+        if (val) {
+          this.disable()
+        }
+        else {
+          this.enable()
+        }
       }
     },
     components: {

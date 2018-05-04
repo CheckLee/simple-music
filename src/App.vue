@@ -46,7 +46,7 @@
     },
     created() {
       this.playButtonShow = this.routerMap.indexOf(this.$route.path.split('/')[1].toLowerCase()) > -1? false:true
-      if (! this.isLogin ) {
+      if (!this.isLogin ) {
         this.$store.dispatch('updateLoginStatus')
           .then((success) => {
             console.log('login success')
@@ -138,6 +138,11 @@
   .tweets.preview, .push-tweets.preview {
     z-index: 2000;
     top: 0px!important;
+  }
+
+  .personal-tweets.preview {
+    z-index: 2000;
+    top: -104px!important;
   }
 
   .pop-up-enter-active, .pop-up-leave-active {

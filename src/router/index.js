@@ -57,6 +57,12 @@ const Followers = (resolve) => {
   })
 }
 
+const PersonalTweets = (resolve) => {
+  import('components/Friends/PersonalTweets').then((module) => {
+    resolve(module)
+  })
+}
+
 const Friends = (resolve) => {
   import('components/Friends/Friends').then((module) => {
     resolve(module)
@@ -71,6 +77,24 @@ const PushTweets = (resolve) => {
 
 const Tweets = (resolve) => {
   import('components/Friends/Tweets').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserHomepage = (resolve) => {
+  import('components/Homepage/UserHomepage').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserHomepageMusic = (resolve) => {
+  import('components/Homepage/UserHomepageMusic').then((module) => {
+    resolve(module)
+  })
+}
+
+const UserHomepageTweets = (resolve) => {
+  import('components/Homepage/UserHomepageTweets').then((module) => {
     resolve(module)
   })
 }
@@ -169,6 +193,11 @@ export default new Router({
       component: Followers
     },
     {
+      path: '/account/tweets',
+      name: 'PersonalTweets',
+      component: PersonalTweets
+    },
+    {
       path: '/friends',
       name: 'Friends',
       component: Friends,
@@ -181,8 +210,25 @@ export default new Router({
         },
         {
           path: 'pushtweets',
-          name: 'pushtweets',
+          name: 'PushTweets',
           component: PushTweets
+        }
+      ]
+    },
+    {
+      path: '/user/:id',
+      component: UserHomepage,
+      props: true,
+      children: [
+        {
+          path: 'music',
+          name: 'UserHomepageMusic',
+          component: UserHomepageMusic
+        },
+        {
+          path: 'tweets',
+          name: 'UserHomepageTweets',
+          component: UserHomepageTweets
         }
       ]
     },

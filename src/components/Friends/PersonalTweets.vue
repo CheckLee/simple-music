@@ -1,5 +1,16 @@
 <template>
-  <div class="tweets" :class="{ 'preview': show }">
+  <div class="personal-tweets" :class="{ 'preview': show }">
+    <div class="nav-panel-wrapper">
+      <div class="nav-panel">
+        <span class="nav-header action-backward" @click="_backward">
+          <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
+        </span>
+        <div class="nav-body panel">
+          <p>动态</p>
+        </div>
+        <div class="nav-tail blank"></div>
+      </div>
+    </div>
     <img-pre-viewer
       :show="show"
       :index="currentIndex"
@@ -14,7 +25,7 @@
       @clickit="_previewImg">
     </img-pre-viewer>
     <scroll
-      class="tweets-content"
+      class="personal-tweets-content"
       @getCurrentY="_getCurrentY"
       :listen-scroll="true">
       <li v-for="item in pushTweets"
@@ -33,7 +44,6 @@
   import InfCircleLoader from "../base/Loader/InfCircleLoader";
   import TweetsCard from "../base/CollectItem/TweetsCard";
   import Scroll from "../base/Scroll/Scroll";
-  import login from '../../api/login'
   import tweets from '../../api/tweets'
   import song from '../../api/song'
   import { mapGetters } from 'vuex'
@@ -44,7 +54,7 @@
       TweetsCard,
       InfCircleLoader,
       ImgPreViewer},
-    name: "Tweets",
+    name: " PersonalTweets",
     data() {
       return {
         show: false,
@@ -70,7 +80,8 @@
           { width: 750, type: 'normal', index: 6, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_unloadimg.png' },
           { width: 750, type: 'normal', index: 7, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_avatar.png' },
           { width: 750, type: 'long', index: 8, url: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/test_longpics.jpg' }
-        ]
+        ],
+        fromPath: '/account',
       }
     },
     watch: {
@@ -90,6 +101,9 @@
       ...mapGetters(['uId'])
     },
     methods: {
+      _backward() {
+        this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
+      },
       _previewImg() {
         this.show = false
       },
@@ -110,8 +124,9 @@
           this.currentMidLineX = midLineX
           this.currentMidLineY = midLineY
           this.show = true
-          console.log(payload, midLineY)
+          console.log(payload)
         }
+
       },
       _formatCreator(data) {
         return {
@@ -235,7 +250,7 @@
           isPics = false,
           screenWidth = this.screenWidth,
           screenHeight = this.screenHeight
-        if (data !== []) {
+        if (Array.isArray(data) && data.length > 0) {
           isPics = true
           data.forEach((pic, index) => {
             let isLong = _isLong(pic.width, pic.height),
@@ -269,7 +284,7 @@
               console.log(mvData)
               mv = {
                 id: mvData.id,
-                videoUrls: Object.values(mvData.brs),
+                videoUrls: mvData.brs,
                 duration: mvData.duration,
                 playCount: mvData.playCount,
                 title: mvData.desc,
@@ -318,20 +333,9 @@
       }
     },
     created() {
-      function promiseCallBack(arr, data) {
-        return new Promise((resolve, reject) => {
-          arr = arr.concat(data)
-          resolve(arr)
-        })
-      }
-      login.GetFollowsData(this.uId)
+      tweets.GetTweets(this.uId)
         .then((res) => {
-          let followers = res.data.follow,
-            followersId = followers.map((item) => { return item.userId })
-          tweets.GetFollowerTweets(followersId, promiseCallBack)
-            .then((data) => {
-              this._formatEvents(data)
-            })
+          this._formatEvents(res.data.events)
         })
       this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
       this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
@@ -342,5 +346,5 @@
 </script>
 
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./Tweets.styl"
+  @import "./PersonalTweets.styl"
 </style>

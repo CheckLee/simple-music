@@ -55,7 +55,7 @@
         this.swiperOption.initialSlide = parseInt(val)
       }
     },
-    props: ['imgArr', 'show', 'scale', 'offsetX', 'offsetY', 'width', 'height', 'index'],
+    props: ['imgArr', 'show', 'scale', 'offsetX', 'offsetY', 'midX', 'midY', 'width', 'height', 'index'],
     methods: {
       _singleTap() {
         this.emitFlag = true
@@ -74,16 +74,14 @@
       _beforeEnter(el) {
         let screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth,
           screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight,
-          scrollX = document.documentElement.scrollTop || document.body.scrollTop,
-          midXLine = screenWidth / 2.0,
-          midYLine = screenHeight / 2.0 + scrollX,
-          radio = 750/midXLine
-        this.deletaX = -( midXLine - (this.offsetX + this.width/2) ) * radio
-        this.deletaY = -( midYLine - (this.offsetY + this.width/2) ) * radio
-        Velocity(el, { scaleX: this.scale/2, scaleY: this.scale/2, translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px` }, { duration: 0 })
+          scrollX = document.documentElement.scrollTop || document.body.scrollTop
+        this.deletaX = -( this.midX - (this.offsetX + this.width/2) )/this.scale
+        this.deletaY = -( this.midY - (this.offsetY + this.height/2) )/this.scale
+        console.log(this.midY, this.offsetY, this.height/2, this.deletaY, this.scale)
+        Velocity(el, { scaleX: this.scale, scaleY: this.scale}, { duration: 0 })
+        Velocity(el, { translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px`}, { duration: 0 })
       },
       _enter(el, done) {
-        // Velocity(el, { translateX: `${this.deletaX/2}px`, translateY: `${this.deletaY/2}px`,  scaleX: 0.5, scaleY: 0.5}, { duration: 50, easing: 'ease' })
         Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
         Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
       }
@@ -114,6 +112,8 @@
 
   .img-view {
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 1000;
     width: 100%;
     height: 100%;

@@ -2,7 +2,7 @@
   <div class="share-item">
     <div class="item-header">
       <div class="item-avatar">
-        <img :src="avatarUrl" alt="share-item-avatar">
+        <img v-lazy="imgObj" alt="share-item-avatar">
         <div class="item-avatar-layer">
           <i class="material-icons md-light md-48">{{ iconName }}</i>
         </div>
@@ -23,12 +23,13 @@
       data() {
         return {
           iconMap: {
-            'musicList': 'assignment',
-            'commits': 'chat',
+            'playlist': 'album',
+            'resource': 'chat',
             'video': 'videocam',
-            'tweets': 'textsms',
-            'music': 'album',
+            'event': 'textsms',
+            'song': 'play_arrow',
             'third': 'link',
+            'program': 'radio',
             'error': 'error'
           }
         }
@@ -56,6 +57,18 @@
           return this.itemType
             ? this.iconMap[this.itemType]
             : this.iconMap['error']
+        },
+        imgObj() {
+          return {
+            src: this.avatarUrl,
+            error: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_shareitem_avatar.png',
+            loading: 'https://raw.githubusercontent.com/JiangWeixian/simple-music/dev/src/assets/img/default_shareitem_avatar.png'
+          }
+        }
+      },
+      methods: {
+        _link() {
+          console.log(this.itemType)
         }
       }
     }

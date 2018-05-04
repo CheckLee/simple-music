@@ -1,0 +1,143 @@
+@import "~assets/stylus/variable.styl"
+
+.user-homepage
+  width: 100%
+  height: 100%
+  position: relative
+.user-homepage-body
+  width: inherit
+  height: inherit
+  position: fixed
+  top: 0px
+  bottom: 0
+  .homepage-bg
+    position: fixed
+    width: 100%
+    height: 40vh
+    overflow: hidden
+    .bg
+      position: absolute
+      width: 100%
+      height: 100%
+      top: 0
+      left: 0
+      z-index: -1
+      img
+        width: inherit
+        height: inherit
+
+  .user-homepage-content
+    width: 100%
+    height: 100%
+    overflow: hidden
+    .homepage-accountInfo
+      margin-top: 154px
+      .account-avatar
+        width: 160px
+        height: 160px
+        border-radius: 100%
+        overflow: hidden
+        margin-left: 80px
+        img
+          width: inherit
+          height: inherit
+          object-fit: fill
+      .account-name
+        margin-left: 80px
+        color: white
+        h1
+          height: 80px
+          line-height: 80px
+          font-weight: bolder
+          font-size: $font-size-large-xxxlll
+      .account-detail
+        margin-left: 80px
+        display: flex
+        flex: row
+        li
+          display: flex
+          flex: row
+          color: rgba(255, 255, 255, 0.9)
+          font-size: $font-size-large-xxxl
+          p
+            text-indent: 22px
+          span
+            text-indent: 14px
+            padding-right: 22px
+            border-right: 1px solid white
+        li:nth-child(1)
+          p
+            text-indent: 0px!important
+        li:nth-child(3)
+          span
+            border-right: none
+      .account-signature
+        color: rgba(255, 255, 255, 0.9)
+        margin-left: 80px
+        height: 80px
+        line-height: 80px
+        font-size: $font-size-large-xxxl
+    .homepage-user-subcount
+      width: 100%
+      background-color: white
+      min-height: 150vh
+      position: relative
+      overflow: hidden
+      .homepage-routerlink
+      .homepage-cards
+        background-color: white
+      .homepage-routerlink
+        display: flex
+        height: 78px
+        align-items center
+        .tab-item
+          width: 50%
+          text-align: center
+          font-size: $font-size-large-xxxll
+          span
+            vertical-align: end
+            color: $color-theme-secondary
+          span:nth-child(2)
+            font-size: $font-size-large-xx
+            color: $color-icon
+          &.router-link-active
+              .tab-link
+                color: $color-theme-primary
+                font-weight: bolder
+      .homepage-cards
+        width: 100%
+        height: 100%
+        position: fixed
+        top: 32vh
+        bottom: 0
+
+.nav-panel-wrapper
+  position: relative
+  z-index: 1
+.nav-panel
+  position: relative
+  display: flex
+  height: 104px
+  width: 100%
+  overflow: hidden
+  justify-content: space-evenly
+  align-items: center
+  .nav-body
+    color: white
+    width: 540px
+    display: flex
+    justify-content: center
+    align-content: center
+  .nav-tail.blank
+    width: 56px
+    height: 56px
+  .bg
+    width: 100%
+    height: 40vh
+    position: absolute
+    top: 0px
+    left: 0px
+    z-index: -1
+    img
+      width: inherit
+      height: inherit
