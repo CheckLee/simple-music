@@ -13,15 +13,15 @@
     </div>
     <scroll class="followers-content">
       <div>
-        <li
+        <img-collect-item
           v-for="item in followerData"
-          is="ImgCollectItem"
+          @getClickStatus="_link(item.userId)"
           :key="item.nickname"
           :img-url="item.avatarUrl"
           :item-name="item.nickname"
           :item-intro="item.signature"
           item-type="fans">
-        </li>
+        </img-collect-item>
         <div class="blank"></div>
       </div>
     </scroll>
@@ -55,6 +55,9 @@
       },
       _formatFollowData(followers) {
         this.followerData = followers
+      },
+      _link(id) {
+        this.$router.push({path: `/user/${id}`, query: {transition: 'slide-right'}})
       }
     },
     created() {

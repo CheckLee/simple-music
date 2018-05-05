@@ -1,6 +1,6 @@
 <template>
   <div class="user-homepage-music">
-    <div class="panel created-playlist-nav" ref="panel" :style="createdPanelStyle">
+    <div class="panel created-playlist-nav" ref="panel">
       <p>歌单<span>({{ createdPlaylistNum }})</span></p>
       <p>共被收藏<span>{{ subscribedCount }}次</span></p>
     </div>
@@ -40,6 +40,8 @@
     name: "UserHomepageMusic",
     data() {
       return {
+        id: 0,
+        name: "UserHomepageMusic",
         panelHeight: 25,
         createdPlaylistHeight: 0,
         officalPlaylistCount: 0,
@@ -48,6 +50,27 @@
     },
     components: {
       ImgCollectItem
+    },
+    watch: {
+      '$route'(to, from) {
+        if (this._filter(to)) {
+          let id = to.path.split('/')[2]
+          login.GetUserDetail(id)
+            .then((res) => {
+              let createdPlayListNum = res.data.profile.playlistCount
+              return Promise.resolve(createdPlayListNum)
+            })
+            .then(data => {
+              return login.GetUserPlayList(id)
+                .then((res) => {
+                  return Promise.resolve({createdPlaylistNum: data, playlist: res.data.playlist})
+                })
+            })
+            .then((data) => {
+              this._formatPlaylist(data)
+            })
+        }
+      }
     },
     computed: {
       createdPlaylistNum() {
@@ -83,11 +106,13 @@
       })
     },
     methods: {
+      _filter(route) {
+        return route.name && route.name === this.name
+      },
       _formatSubscribedCount(data) {
         let subscribedCount = 0
       },
       _formatPlaylist(data) {
-        console.log(data)
         this.officalPlaylistCount = data.createdPlaylistNum
         this.playlists = data.playlist
       }
@@ -95,7 +120,7 @@
     created() {
       let path = this.$route.path.split('/'),
         uid = path[2]
-
+      this.id = uid
       login.GetUserDetail(uid)
         .then((res) => {
           let createdPlayListNum = res.data.profile.playlistCount
@@ -104,7 +129,6 @@
         .then(data => {
           return login.GetUserPlayList(uid)
             .then((res) => {
-              console.log(res)
               return Promise.resolve({createdPlaylistNum: data, playlist: res.data.playlist})
             })
         })

@@ -218,7 +218,9 @@ export default new Router({
     {
       path: '/user/:id',
       component: UserHomepage,
+      name: 'UserHomepage',
       props: true,
+      redirect: '/user/:id/music',
       children: [
         {
           path: 'music',

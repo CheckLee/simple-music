@@ -11,16 +11,17 @@
         <div class="nav-tail blank"></div>
       </div>
     </div>
-    <scroll class="fans-content">
-      <li
-        v-for="item in fansData"
-        is="ImgCollectItem"
-        :key="item.nickname"
-        :img-url="item.avatarUrl"
-        :item-name="item.nickname"
-        :item-intro="item.signature"
-        item-type="fans">
-      </li>
+    <scroll
+      class="fans-content">
+        <img-collect-item
+          v-for="item in fansData"
+          @getClickStatus="_link(item.userId)"
+          :key="item.nickname"
+          :img-url="item.avatarUrl"
+          :item-name="item.nickname"
+          :item-intro="item.signature"
+          item-type="fans">
+        </img-collect-item>
     </scroll>
   </div>
 </template>
@@ -54,6 +55,9 @@
       _backward() {
         this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
       },
+      _link(id) {
+        this.$router.push({path: `/user/${id}`, query: {transition: 'slide-right'}})
+      }
     },
     created() {
       api.GetFansData(this.uId)

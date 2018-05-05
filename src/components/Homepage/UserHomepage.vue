@@ -2,7 +2,7 @@
   <div class="user-homepage">
     <div class="user-homepage-header nav-panel-wrapper" ref="nav">
       <div class="nav-panel">
-        <span class="nav-header action-backward">
+        <span class="nav-header action-backward" @click="_backward">
           <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
         </span>
         <div class="nav-body panel">
@@ -91,6 +91,7 @@
     data() {
       return {
         name: 'UserHomepage',
+        fromPath: '/',
         userInfo: {
           level: 9,
           userName: '姜维',
@@ -123,8 +124,20 @@
         let maxScrollY = 120
         if (val > 0) {
           let scale = 1 + (val/maxScrollY)
-          this.isCover = false
           Velocity(this.$refs.bkg, { scaleX: scale, scaleY: scale }, { duration: 0 })
+        }
+      },
+      id(val, oldVal) {
+        login.GetUserDetail(val)
+          .then((res) => {
+            this._formatUserInfo(res.data)
+            this.$router.push({path: `/user/${val}/music`})
+          })
+      },
+      '$route'(to, from) {
+        console.log(from)
+        if (!this._filter(from)) {
+          this.fromPath = from.path
         }
       }
     },
@@ -171,6 +184,12 @@
       })
     },
     methods: {
+      _filter(route) {
+        return route.name && (route.name == 'UserHomepageMusic' || route.name == 'UserHomepageTweets')
+      },
+      _backward() {
+        this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
+      },
       _getPreviewStatus(data) {
         this.isEndScroll = data
       },
@@ -195,6 +214,7 @@
     created() {
       login.GetUserDetail(this.id)
         .then((res) => {
+          console.log(res)
           this._formatUserInfo(res.data)
         })
         this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
