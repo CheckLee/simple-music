@@ -165,7 +165,7 @@
             target = e.target,
             data = {}
           data = this.isImageList
-            ? {index: e.target.getAttribute('index'),
+            ? {index: parseInt(e.target.getAttribute('index')),
               left: target.offsetLeft,
               top: this.$refs.tweetsCard.offsetTop + target.offsetTop,
               width:target.offsetWidth,

@@ -11,7 +11,7 @@
       :offset-y="currentOffsetY"
       :mid-x="currentMidLineX"
       :mid-y="currentMidLineY"
-      :start-y="-scrollY-offsetY"
+      :start-y="-scrollY-viewerOffsetY"
       @clickit="_previewImg">
     </img-pre-viewer>
     <div>
@@ -44,7 +44,11 @@
         type: Number,
         default: 0
       },
-      offsetY: {
+      pageOffsetY: {
+        type: Number,
+        default: 0
+      },
+      viewerOffsetY: {
         type: Number,
         default: 0
       }
@@ -82,7 +86,6 @@
       show(val, oldVal) {
         let body = document.querySelector('body')
         if (val) {
-          console.log(val)
           body.classList.add('preview')
         }
         else {
@@ -101,12 +104,12 @@
       _getTargetInfo(payload) {
         if (payload['isImageList']) {
           let midLineX = this.screenWidth / 2,
-            midLineY = (this.screenHeight/2 + -this.scrollY + this.offsetY)
+            midLineY = (this.screenHeight/2 + -this.scrollY)
           this.currentImageList = payload['imageList']
           this.currentWidth = payload['width']
           this.currentOffsetX = payload['left']
           this.currentHeight = payload['height']
-          this.currentOffsetY = payload['top']
+          this.currentOffsetY = payload['top'] + this.pageOffsetY
           this.currentIndex = payload['index']
           this.currentImgScale = payload['scale']
           this.currentMidLineX = midLineX
@@ -267,9 +270,7 @@
         if (isMv) {
           return song.GetMv(data.mv.id)
             .then((res) => {
-              console.log(res)
               let mvData = res.data.data
-              console.log(mvData)
               mv = {
                 id: mvData.id,
                 videoUrls: mvData.brs,

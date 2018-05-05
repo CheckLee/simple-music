@@ -6,7 +6,7 @@
           <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
         </span>
         <div class="nav-body panel">
-          <p>{{ userInfo.userName }}</p>
+          <p v-show="isTitle">{{ userInfo.userName }}</p>
         </div>
         <div class="nav-tail blank"></div>
         <div class="bg" v-show="isCover">
@@ -15,11 +15,11 @@
       </div>
     </div>
     <div class="homepage-routerlink" :style="routerStyle" ref="links">
-      <router-link class="tab-item" tag="div" to="/user/9861246/music">
+      <router-link class="tab-item" tag="div" :to="musicPath">
         <span class="tab-link">音乐</span>
         <span>{{ userInfo.userPlayListNum }}</span>
       </router-link>
-      <router-link class="tab-item" tag="div" to="/user/9861246/tweets">
+      <router-link class="tab-item" tag="div" :to="tweetsPath">
         <span class="tab-link">动态</span>
         <span>{{ userInfo.userTweetsNum }}</span>
       </router-link>
@@ -61,12 +61,13 @@
             </div>
           </div>
         </section>
-        <section class="homepage-user-subcount" :style="subcountStyle">
+        <section class="homepage-user-subcount" :style="subcountStyle" ref="subcount">
           <div class="homepage-cards">
             <keep-alive>
               <router-view
                 :scroll-y="scrollY"
-                :offset-y="accountTop"
+                :viewer-offset-y="accountTop"
+                :page-offset-y="subcountTop"
                 @getPreviewStatus="_getPreviewStatus">
               </router-view>
             </keep-alive>
@@ -108,10 +109,13 @@
         maxScrollY: 173,
         isEndScroll: false,
         // config for navpanel
-        isCover: false,
         navHeight: 52,
+        // config for links
+        linksHeight: 0,
         // config for account
-        accountTop: 77
+        accountTop: 77,
+        // config for subcount
+        subcountTop: 0
       }
     },
     watch: {
@@ -121,9 +125,6 @@
           let scale = 1 + (val/maxScrollY)
           this.isCover = false
           Velocity(this.$refs.bkg, { scaleX: scale, scaleY: scale }, { duration: 0 })
-        }
-        else {
-          this.isCover = true
         }
       }
     },
@@ -144,14 +145,28 @@
       },
       subcountStyle() {
         return {
-          paddingTop: `${this.navHeight}px`
+          paddingTop: `${this.linksHeight}px`
         }
+      },
+      musicPath() {
+        return `/user/${this.id}/music`
+      },
+      tweetsPath() {
+        return `/user/${this.id}/tweets`
+      },
+      isTitle() {
+        return this.scrollY <= -this.maxScrollY? true:false
+      },
+      isCover() {
+        return this.scrollY < 0? true:false
       }
     },
     mounted() {
       this.$nextTick(() => {
         this.navHeight = this.$refs.nav.offsetHeight
+        this.linksHeight = this.$refs.links.offsetHeight
         this.accountTop = this.$refs.account.offsetTop
+        this.subcountTop = this.$refs.subcount.offsetTop
         this.maxScrollY = this.$refs.account.offsetHeight + this.accountTop - this.navHeight
       })
     },
@@ -174,13 +189,14 @@
           userAvatarUrl: data.profile.avatarUrl,
           userBgUrl: data.profile.backgroundUrl
         }
+        this.userInfo = userInfo
       }
     },
     created() {
-      // login.GetUserDetail(this.id)
-        // .then((res) => {
-          // console.log(res)
-        // })
+      login.GetUserDetail(this.id)
+        .then((res) => {
+          this._formatUserInfo(res.data)
+        })
         this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
     }
 }

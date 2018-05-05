@@ -1,7 +1,7 @@
 <template>
   <div v-show="show" class="img-view" :style="viewerStyle">
     <v-touch v-on:doubletap="_doubleTap" v-on:tripletap="_tripleTap" v-on:tap="_singleTap" class="swiper-touch-contanier">
-      <div v-show="false" class="img-layer">
+      <div v-show="show" class="img-layer">
         <div class="swiper-pagination" slot="pagination"></div>
       </div>
       <transition
@@ -52,7 +52,7 @@
     },
     watch: {
       index(val, oldVal) {
-        this.swiperOption.initialSlide = parseInt(val)
+        this.swiperOption.initialSlide = val
       }
     },
     props: {
@@ -121,11 +121,11 @@
         this.deletaY = -( this.midY - (this.offsetY + this.height/2) )/this.scale
         console.log(this.midY, this.offsetY, this.height/2, this.deletaY, this.scale)
         Velocity(el, { scaleX: this.scale, scaleY: this.scale}, { duration: 0 })
-        Velocity(el, { translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px`}, { duration: 5000 })
+        Velocity(el, { translateX: `${this.deletaX}px`, translateY: `${this.deletaY}px`}, { duration: 0 })
       },
       _enter(el, done) {
-        // Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
-        // Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
+        Velocity(el, {  translateX: '0px', translateY: '0px'}, { duration: 250, easing: 'ease' })
+        Velocity(el, { scaleX: 1, scaleY: 1 }, { duration: 250, easing: 'ease' }, { complete: done })
       }
     },
     components: {
@@ -165,9 +165,8 @@
 
   /*遮罩层样式*/
   .img-view .img-layer {
-    position: fixed;
+    position: absolute;
     z-index: 1;
-    top: 0;
     left: 0;
     background: rgba(0, 0, 0, 1);
     width: 100%;

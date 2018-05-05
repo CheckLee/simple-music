@@ -21,7 +21,8 @@ export default {
   GetUserPlayList(uid) {
     return axios.get('/user/playlist', {
       params: {
-        uid: uid
+        uid: uid,
+        more: true
       }
     })
   },
