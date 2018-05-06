@@ -128,6 +128,7 @@
         }
       },
       id(val, oldVal) {
+        this.scrollY = 0
         login.GetUserDetail(val)
           .then((res) => {
             this._formatUserInfo(res.data)

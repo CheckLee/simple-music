@@ -56,6 +56,7 @@
     data() {
       return {
         uid: 1,
+        name: 'UserHomepageTweets',
         show: false,
         screenWidth: 0,
         screenHeight: 0,
@@ -91,9 +92,21 @@
         else {
           body.classList.remove('preview')
         }
+      },
+      '$route'(to, from) {
+        if(this._filter(to)) {
+          let id = to.path.split('/')[2]
+          tweets.GetTweets(id)
+            .then((res) => {
+              this._formatEvents(res.data.events)
+            })
+        }
       }
     },
     methods: {
+      _filter(route) {
+        return route.name && route.name === this.name
+      },
       _previewImg() {
         this.show = false
         this.$emit('getPreviewStatus', false)

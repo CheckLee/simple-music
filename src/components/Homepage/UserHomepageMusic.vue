@@ -15,7 +15,7 @@
         item-type="musiclist">
       </li>
     </section>
-    <div class="panel sub-playlist-nav">
+    <div class="panel sub-playlist-nav" v-show="subPlaylistNum != 0">
       <p>收藏的歌单<span>({{ subPlaylistNum }})</span></p>
     </div>
     <section class="playlists sub-playlist">
@@ -29,6 +29,7 @@
         item-type="musiclist">
       </li>
     </section>
+    <div class="blank"></div>
   </div>
 </template>
 
