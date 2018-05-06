@@ -3,19 +3,21 @@
     <div class="blur-wrapper" v-if="this.currentSong">
       <img :src="currentSong.picUrl" class="blur-pic" alt="">
     </div>
-    <div class="song-info-wrapper">
-      <div class="pic-wrapper">
-        <img :src="currentSong.picUrl" class="pic" alt="">
+    <transition name="fade">
+      <div class="lyric-wrapper" v-if="isLyricShow" @click="toggleLyricShow">
+        Lyric
       </div>
-      <div class="song">{{ currentSong.name }}</div>
-      <div class="singer">
-        <span class="name">{{ currentSong.singers }}</span>
-        <i class="material-icons">chevron_right</i>
+      <div class="song-info-wrapper" v-else @click="toggleLyricShow">
+        <div class="pic-wrapper">
+          <img :src="currentSong.picUrl" class="pic" alt="">
+        </div>
+        <div class="song">{{ currentSong.name }}</div>
+        <div class="singer">
+          <span class="name">{{ currentSong.singers }}</span>
+          <i class="material-icons">chevron_right</i>
+        </div>
       </div>
-    </div>
-    <div class="lyric-wrapper">
-    
-    </div>
+    </transition>
     <div class="progress-wrapper">
       <span class="cur-time">{{ curTime }}</span>
       <div class="progress-bar-wrapper" ref="progressBarWrapper" @click="progressClick">
@@ -63,6 +65,8 @@
           this.currentList = res.data.data
           this.currentSong = this._formatSong(this.currentList[0])
           this.currentSongUrl = `http://music.163.com/song/media/outer/url?id=${this.currentSong.id}.mp3`
+          // 获取歌曲歌词
+          this._getLyric(this.currentSong.id)
           // api接口可能会出现 403
           /*api.GetSong(this.currentSong.id).then(res => {
             if (res.data.code === 200) {
@@ -102,6 +106,8 @@
         currentSongIndex: 0,
         currentTime: 0,
         songReady: false,
+        isLyricShow: false,
+        currentSongLyric: {}
         
         // progress 数值
         // percent: 0.5
@@ -129,6 +135,7 @@
         
         this.currentSong = this._formatSong(this.currentList[this.currentSongIndex])
         this.currentSongUrl = `http://music.163.com/song/media/outer/url?id=${this.currentSong.id}.mp3`
+        this._getLyric(this.currentSong.id)
         // this._getSong(this.currentSong.id)
         // 如果当前播放状态是暂停，那么改成播放
         if (!this.isPlaying) {
@@ -235,7 +242,8 @@
         if (!this.songReady) {
           return
         }
-        this.setIsPlaying(!this.isPlaying)
+        this.isPlaying = !this.isPlaying
+        this.setIsPlaying(this.isPlaying)
       },
       
       // 时间格式化补零
@@ -246,6 +254,20 @@
           len ++
         }
         return num
+      },
+  
+      // 歌词方法
+      toggleLyricShow() {
+        this.isLyricShow = !this.isLyricShow
+      },
+      _getLyric(id) {
+        api.GetSongLyric(id).then(({ data }) => {
+          if (data.code === 200) {
+            console.log(data)
+            this.currentSongLyric = data
+          }
+        })
+        setTimeout()
       }
     },
     computed: {
@@ -266,7 +288,7 @@
       // 计算当前播放进度百分比，来控制progress-bar
       percent() {
         return parseInt(this.currentTime) / parseInt((this.currentSong.duration / 1000))
-      }
+      },
     },
     watch: {
       // 当URL变化时，audio进行播放
@@ -300,4 +322,9 @@
 <style type="text/stylus" lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~assets/stylus/variable.styl"
   @import "PersonalFm.styl"
+
+  .fade-enter-active, .fade-leave-active
+    transition: opacity 0.4s
+  .fade-enter, .fade-leave-to
+    opacity: 0
 </style>

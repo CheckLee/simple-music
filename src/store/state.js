@@ -44,12 +44,17 @@ const state = {
   isPlayer: false,
   // 判断 FM 状态
   isFM: false,
-  //FM 播放列表
+  // FM 播放列表
   FMPlayList: [],
   // 判断右上角按钮 当前状态
   currentPlayer: true,
   // 判断当前是否在播放音乐
-  isPlaying: false
+  isPlaying: false,
+  // 播放器播放列表
+  PlayerPlayList: [],
+
+  // 判断是否进入每日推荐
+  isDailyRecommend: false
 }
 
 export default state

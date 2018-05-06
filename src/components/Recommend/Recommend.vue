@@ -12,7 +12,7 @@
             </div>
             <div class="text">私人FM</div>
           </div>
-          <div class="panel-item">
+          <div class="panel-item" @click="handleEnterDailyRecommend">
             <div class="icon-wrapper daily-recommend">
               <i class="material-icons theme">event_note</i>
             </div>
@@ -61,7 +61,8 @@
     methods: {
       ...mapMutations({
         setJustifyOrder: 'SET_JUSTIFY_ORDER',
-        setIsPlaying: 'SET_IS_PLAYING'
+        setIsPlaying: 'SET_IS_PLAYING',
+        setDailyRecommend: 'SET_DAILY_RECOMMEND'
       }),
       ...mapActions([
         'enterFM'
@@ -76,6 +77,9 @@
           this.setIsPlaying(true)
         }
         this.enterFM()
+      },
+      handleEnterDailyRecommend() {
+        this.setDailyRecommend()
       }
     }
   }

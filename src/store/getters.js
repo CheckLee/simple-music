@@ -13,3 +13,5 @@ export const FMPlayList = state => state.FMPlayList
 export const isPlaying = state => state.isPlaying
 
 export const currentUid = state => state.currentUser.uid
+
+export const isDailyRecommend = state => state.isDailyRecommend
