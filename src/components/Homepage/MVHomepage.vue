@@ -13,9 +13,18 @@
     <section class="mv-wrapper">
     </section>
     <ul class="mvh-actions">
-      <li class="mvh-mv-suggestions-btn"></li>
-      <li class="mvh-music-suggestions-btn"></li>
-      <li class="mvh-commit-btn"></li>
+      <li class="mvh-mv-suggestions-btn">
+        <i class="material-icons md-48">videocam</i>
+        <span>5</span>
+      </li>
+      <li class="mvh-music-suggestions-btn">
+        <i class="material-icons md-48">music_note</i>
+        <span>5</span>
+      </li>
+      <li class="mvh-commit-btn">
+        <i class="material-icons md-48">chat</i>
+        <span>{{ mvInfo.commentCount }}</span>
+      </li>
     </ul>
     <section class="mv-homepage-body">
       <scroll
