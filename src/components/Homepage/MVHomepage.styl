@@ -1,0 +1,56 @@
+@import "~assets/stylus/variable.styl"
+
+.mv-homepage-body
+  position: fixed
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+  color: $color-text
+  .mv-content
+    height: 100%
+    overflow: hidden
+    .mv-panel
+      display: flex
+      flex-direction: column
+      padding: 0px 24px
+      .mv-title
+        display: flex
+        height: 90px
+        justify-content: space-between
+        align-items: center
+        p
+          font-size: $font-size-large-xxxlll
+      .mv-creators
+      .mv-info
+      .mv-actions    
+        display: flex
+        align-items: center
+        height: 60px
+        font-size: $font-size-large-xxx
+      .mv-creators  
+        li:last-child
+          p
+            color: #1E8BE8
+            span 
+              display: none
+      .mv-info
+        color: $color-icon
+        li
+          margin-right: 20px      
+      .mv-actions
+        li
+          display: flex
+          align-items: center 
+          margin-right: 20px
+          height: inherit
+          line-height: 60px
+          color: $color-icon
+          .material-icons
+            margin-right: 20px
+            height: inherit
+            line-height: inherit
+          span
+            display: block
+            height: inherit
+            line-height: inherit      

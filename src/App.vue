@@ -35,7 +35,7 @@
     data() {
       return {
         playButtonShow: true,
-        routerMap: ['loginin', 'signup'],
+        routerMap: ['loginin', 'signup', 'mvh'],
         transitionName: 'pop-up'
       }
     },
