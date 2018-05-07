@@ -71,7 +71,6 @@
       methods: {
         _loginOrOut(status) {
           if (status) {
-            // this.$router.push({path: '/loginin/phonelogin', query: {transition: 'pop-up'}})
             this.$router.push({path: '/loginin', query: {transition: 'pop-up'}})
           }
           else {

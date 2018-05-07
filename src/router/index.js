@@ -99,6 +99,12 @@ const UserHomepageTweets = (resolve) => {
   })
 }
 
+const MVHomepage = (resolve) => {
+  import('components/Homepage/MVHomepage').then((module) => {
+    resolve(module)
+  })
+}
+
 const FoundMusic = (resolve) => {
   import('components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
@@ -218,7 +224,9 @@ export default new Router({
     {
       path: '/user/:id',
       component: UserHomepage,
+      name: 'UserHomepage',
       props: true,
+      redirect: '/user/:id/music',
       children: [
         {
           path: 'music',
@@ -231,6 +239,12 @@ export default new Router({
           component: UserHomepageTweets
         }
       ]
+    },
+    {
+      path: '/mvh/:id',
+      component: MVHomepage,
+      name: 'MVHomepage',
+      props: true
     },
     {
       path: '/mine',

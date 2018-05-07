@@ -1,12 +1,12 @@
 <template>
   <div class="user-homepage">
-    <div class="user-homepage-header nav-panel-wrapper">
+    <div class="user-homepage-header nav-panel-wrapper" ref="nav">
       <div class="nav-panel">
-        <span class="nav-header action-backward">
+        <span class="nav-header action-backward" @click="_backward">
           <i class="material-icons md-56 md-light">keyboard_arrow_left</i>
         </span>
         <div class="nav-body panel">
-          <p>{{ userInfo.userName }}</p>
+          <p v-show="isTitle">{{ userInfo.userName }}</p>
         </div>
         <div class="nav-tail blank"></div>
         <div class="bg" v-show="isCover">
@@ -14,7 +14,17 @@
         </div>
       </div>
     </div>
-    <div class="user-homepage-body">
+    <div class="homepage-routerlink" :style="routerStyle" ref="links">
+      <router-link class="tab-item" tag="div" :to="musicPath">
+        <span class="tab-link">音乐</span>
+        <span>{{ userInfo.userPlayListNum }}</span>
+      </router-link>
+      <router-link class="tab-item" tag="div" :to="tweetsPath">
+        <span class="tab-link">动态</span>
+        <span>{{ userInfo.userTweetsNum }}</span>
+      </router-link>
+    </div>
+    <div class="user-homepage-body" :class="{'preview': isEndScroll}">
       <section class="homepage-bg" ref="bkg">
         <div class="bg">
           <img :src="userInfo.userBgUrl" alt="background">
@@ -23,7 +33,7 @@
       <scroll
         :probeType="3"
         :listenScroll="isListenScroll"
-        :isEnd="isEndScroll"
+        :isEndScroll="isEndScroll"
         @scroll="_getCurrentPos"
         class="user-homepage-content">
         <section class="homepage-accountInfo" ref="account">
@@ -51,22 +61,15 @@
             </div>
           </div>
         </section>
-        <section class="homepage-user-subcount">
-          <div class="homepage-routerlink">
-            <router-link class="tab-item" tag="div" to="/user/9861246/music">
-              <span class="tab-link">音乐</span>
-              <span>{{ userInfo.userPlayListNum }}</span>
-            </router-link>
-            <router-link class="tab-item" tag="div" to="/user/9861246/tweets">
-              <span class="tab-link">动态</span>
-              <span>{{ userInfo.userTweetsNum }}</span>
-            </router-link>
-          </div>
+        <section class="homepage-user-subcount" :style="subcountStyle" ref="subcount">
           <div class="homepage-cards">
             <keep-alive>
               <router-view
-              @pullDown="_pullDown" 
-              :isEndScroll="!isEndScroll"></router-view>
+                :scroll-y="scrollY"
+                :viewer-offset-y="accountTop"
+                :page-offset-y="subcountTop"
+                @getPreviewStatus="_getPreviewStatus">
+              </router-view>
             </keep-alive>
           </div>
         </section>
@@ -88,6 +91,7 @@
     data() {
       return {
         name: 'UserHomepage',
+        fromPath: '/',
         userInfo: {
           level: 9,
           userName: '姜维',
@@ -103,10 +107,16 @@
         isListenScroll: true,
         screenHeight: 0,
         scrollY: 0,
-        isEndScroll: false,
         maxScrollY: 173,
+        isEndScroll: false,
         // config for navpanel
-        isCover: false
+        navHeight: 52,
+        // config for links
+        linksHeight: 0,
+        // config for account
+        accountTop: 77,
+        // config for subcount
+        subcountTop: 0
       }
     },
     watch: {
@@ -114,26 +124,75 @@
         let maxScrollY = 120
         if (val > 0) {
           let scale = 1 + (val/maxScrollY)
-          this.isCover = false
           Velocity(this.$refs.bkg, { scaleX: scale, scaleY: scale }, { duration: 0 })
         }
+      },
+      id(val, oldVal) {
+        this.scrollY = 0
+        login.GetUserDetail(val)
+          .then((res) => {
+            this._formatUserInfo(res.data)
+            this.$router.push({path: `/user/${val}/music`})
+          })
+      },
+      '$route'(to, from) {
+        console.log(from)
+        if (!this._filter(from)) {
+          this.fromPath = from.path
+        }
+      }
+    },
+    computed: {
+      routerStyle() {
+        let top = 400
+        if (this.scrollY < -this.maxScrollY) {
+          top = this.navHeight
+        }
         else {
-          this.isCover = true
+          top = this.scrollY+this.maxScrollY + this.navHeight
         }
-        // end scroll
-        if (val < -this.maxScrollY) {
-          this.isEndScroll = true
+        return {
+          position: 'fixed',
+          zIndex: 1,
+          top: `${top}px`
         }
+      },
+      subcountStyle() {
+        return {
+          paddingTop: `${this.linksHeight}px`
+        }
+      },
+      musicPath() {
+        return `/user/${this.id}/music`
+      },
+      tweetsPath() {
+        return `/user/${this.id}/tweets`
+      },
+      isTitle() {
+        return this.scrollY <= -this.maxScrollY? true:false
+      },
+      isCover() {
+        return this.scrollY < 0? true:false
       }
     },
     mounted() {
       this.$nextTick(() => {
-        this.maxScrollY = this.$refs.account.offsetHeight + this.$refs.account.offsetTop - 52
+        this.navHeight = this.$refs.nav.offsetHeight
+        this.linksHeight = this.$refs.links.offsetHeight
+        this.accountTop = this.$refs.account.offsetTop
+        this.subcountTop = this.$refs.subcount.offsetTop
+        this.maxScrollY = this.$refs.account.offsetHeight + this.accountTop - this.navHeight
       })
     },
     methods: {
-      _pullDown(data) {
-        // this.isEndScroll = !data
+      _filter(route) {
+        return route.name && (route.name == 'UserHomepageMusic' || route.name == 'UserHomepageTweets')
+      },
+      _backward() {
+        this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
+      },
+      _getPreviewStatus(data) {
+        this.isEndScroll = data
       },
       _getCurrentPos(data) {
         this.scrollY = data.y
@@ -150,13 +209,15 @@
           userAvatarUrl: data.profile.avatarUrl,
           userBgUrl: data.profile.backgroundUrl
         }
+        this.userInfo = userInfo
       }
     },
     created() {
-      // login.GetUserDetail(this.id)
-        // .then((res) => {
-          // console.log(res)
-        // })
+      login.GetUserDetail(this.id)
+        .then((res) => {
+          console.log(res)
+          this._formatUserInfo(res.data)
+        })
         this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
     }
 }

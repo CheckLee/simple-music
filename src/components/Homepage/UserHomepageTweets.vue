@@ -11,14 +11,10 @@
       :offset-y="currentOffsetY"
       :mid-x="currentMidLineX"
       :mid-y="currentMidLineY"
+      :start-y="-scrollY-viewerOffsetY"
       @clickit="_previewImg">
     </img-pre-viewer>
-    <scroll
-      class="user-tweets-content"
-      :isEnd="isEndScroll"
-      :probeType="2"
-      :listen-scroll="true" 
-      @scroll="_getCurrentPos">
+    <div>
       <li v-for="item in pushTweets"
           is="TweetsCard"
           @getTargetInfo="_getTargetInfo"
@@ -26,7 +22,7 @@
           :data="item">
       </li>
       <div class="blank"></div>
-    </scroll>
+    </div>
   </div>
 </template>
 
@@ -44,18 +40,26 @@
       TweetsCard,
       ImgPreViewer},
     props: {
-      isEndScroll: {
-        type: Boolean,
-        default: false
+      scrollY: {
+        type: Number,
+        default: 0
+      },
+      pageOffsetY: {
+        type: Number,
+        default: 0
+      },
+      viewerOffsetY: {
+        type: Number,
+        default: 0
       }
     },
     data() {
       return {
         uid: 1,
+        name: 'UserHomepageTweets',
         show: false,
         screenWidth: 0,
         screenHeight: 0,
-        scrollY: 0,
         pushTweets: [],
         currentMidLineX: 0,
         currentMidLineY: 0,
@@ -83,22 +87,29 @@
       show(val, oldVal) {
         let body = document.querySelector('body')
         if (val) {
-          console.log(val)
           body.classList.add('preview')
         }
         else {
           body.classList.remove('preview')
         }
       },
-      scrollY(val, oldVal) {
-        if (val > 0) {
-          this.$emit('pullDown', true)
+      '$route'(to, from) {
+        if(this._filter(to)) {
+          let id = to.path.split('/')[2]
+          tweets.GetTweets(id)
+            .then((res) => {
+              this._formatEvents(res.data.events)
+            })
         }
       }
     },
     methods: {
+      _filter(route) {
+        return route.name && route.name === this.name
+      },
       _previewImg() {
         this.show = false
+        this.$emit('getPreviewStatus', false)
       },
       _getCurrentPos(data) {
         this.scrollY = data.y
@@ -111,12 +122,13 @@
           this.currentWidth = payload['width']
           this.currentOffsetX = payload['left']
           this.currentHeight = payload['height']
-          this.currentOffsetY = payload['top']
+          this.currentOffsetY = payload['top'] + this.pageOffsetY
           this.currentIndex = payload['index']
           this.currentImgScale = payload['scale']
           this.currentMidLineX = midLineX
           this.currentMidLineY = midLineY
           this.show = true
+          this.$emit('getPreviewStatus', true)
           console.log(payload)
         }
 
@@ -271,9 +283,7 @@
         if (isMv) {
           return song.GetMv(data.mv.id)
             .then((res) => {
-              console.log(res)
               let mvData = res.data.data
-              console.log(mvData)
               mv = {
                 id: mvData.id,
                 videoUrls: mvData.brs,
@@ -328,6 +338,10 @@
       let path = this.$route.path.split('/'),
         uid = path[2]
       this.uid = uid
+      this.screenWidth = document.documentElement.offsetWidth || document.body.offsetWidth
+      this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight
+      this.currentMidLineX = this.screenWidth / 2
+      this.currentMidLineY = this.screenHeight / 2
       tweets.GetTweets(uid)
         .then((res) => {
           this._formatEvents(res.data.events)

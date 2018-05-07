@@ -35,7 +35,7 @@
     data() {
       return {
         playButtonShow: true,
-        routerMap: ['loginin', 'signup'],
+        routerMap: ['loginin', 'signup', 'mvh'],
         transitionName: 'pop-up'
       }
     },
@@ -139,7 +139,7 @@
     height: 100%;
     overflow: auto;
   }
-  .tweets.preview, .push-tweets.preview {
+  .tweets.preview, .push-tweets.preview, user-homepage-tweets.preview {
     z-index: 2000;
     top: 0px!important;
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="img-collect-item" :class="collectItemClassName">
+  <div class="img-collect-item" :class="collectItemClassName" @click="_emitClickStatus">
     <div class="img-collect-item-header">
       <img v-lazy="imgUrl" alt="itemImg">
     </div>
@@ -37,6 +37,11 @@
         },
         isItemIntro() {
           return !!this.itemIntro
+        }
+      },
+      methods: {
+        _emitClickStatus() {
+          this.$emit('getClickStatus')
         }
       }
     }

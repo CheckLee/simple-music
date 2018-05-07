@@ -1,5 +1,5 @@
 <template>
-  <div v-show="show" class="img-view" >
+  <div v-show="show" class="img-view" :style="viewerStyle">
     <v-touch v-on:doubletap="_doubleTap" v-on:tripletap="_tripleTap" v-on:tap="_singleTap" class="swiper-touch-contanier">
       <div v-show="show" class="img-layer">
         <div class="swiper-pagination" slot="pagination"></div>
@@ -52,10 +52,52 @@
     },
     watch: {
       index(val, oldVal) {
-        this.swiperOption.initialSlide = parseInt(val)
+        this.swiperOption.initialSlide = val
       }
     },
-    props: ['imgArr', 'show', 'scale', 'offsetX', 'offsetY', 'midX', 'midY', 'width', 'height', 'index'],
+    props: {
+      imgArr: {
+        type: Array
+      },
+      show: {
+        type: Boolean
+      },
+      scale: {
+        type: Number
+      },
+      offsetX: {
+        type: Number
+      },
+      offsetY: {
+        type: Number
+      },
+      midX: {
+        type: Number
+      },
+      midY: {
+        type: Number
+      },
+      width: {
+        type: Number
+      },
+      height: {
+        type: Number
+      },
+      index: {
+        type: Number
+      },
+      startY: {
+        type: Number,
+        default: 0
+      }
+    },
+    computed: {
+      viewerStyle() {
+        return {
+          top: `${this.startY}px`
+        }
+      }
+    },
     methods: {
       _singleTap() {
         this.emitFlag = true
@@ -112,11 +154,10 @@
 
   .img-view {
     position: fixed;
-    top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 2000;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -124,9 +165,8 @@
 
   /*遮罩层样式*/
   .img-view .img-layer {
-    position: fixed;
+    position: absolute;
     z-index: 1;
-    top: 0;
     left: 0;
     background: rgba(0, 0, 0, 1);
     width: 100%;
