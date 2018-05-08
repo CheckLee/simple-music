@@ -91,6 +91,10 @@
           <div class="panel">
             <p>全部评论</p>
           </div>
+          <comment-card 
+            v-for="item in comments" 
+            :comment-info="item">
+          </comment-card>
         </div>
       </scroll>
     </section>
@@ -101,6 +105,7 @@
   import Scroll from "../base/Scroll/Scroll"
   import ImgCollectItem from "../base/CollectItem/ImgCollectItem"
   import MusicCollectItem from "../base/CollectItem/MusicCollectItem"
+  import CommentCard from "../base/CollectItem/CommentCard"
   import song from "../../api/song"
 
   export default {
@@ -108,7 +113,8 @@
     components: {
       Scroll,
       ImgCollectItem,
-      MusicCollectItem
+      MusicCollectItem,
+      CommentCard
     },
     props: ['vid', 'sid'],
     data() {
@@ -233,7 +239,8 @@
           st:0,
           t:0,
           v:31,
-        }
+        },
+        comments: []
       }
     },
     computed: {
@@ -268,6 +275,9 @@
       },
       _formatSimiSong(data) {
         this.songInfo = data[0]
+      },
+      _formatComments(data) {
+        this.comments = this.comments.concat(data)
       }
     },
     created() {
@@ -286,7 +296,7 @@
       //   })
       song.GetMvComments(376199)
         .then((res) => {
-          console.log(res)
+          this._formatComments(res.data.comments)
         })
     }
   }

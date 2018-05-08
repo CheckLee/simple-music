@@ -32,8 +32,8 @@ export default {
     return axios.get('/comment/mv', {
       params: {
         id: id,
-        offset: 2,
-        limit: 100
+        offset: 40,
+        limit: 20
       }
     })
   },
