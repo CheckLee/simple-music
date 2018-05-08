@@ -9,9 +9,6 @@
   .mvh-actions
     color: $color-icon
     display: flex
-    position: absolute
-    top: 0
-    left: 0
     width: 100%
     height: 112px
     li
@@ -30,6 +27,16 @@
   top: 0px
   bottom: 0px
   color: $color-text
+  .panel
+    background-color: $color-background
+    display: flex
+    align-items: center
+    width: 100%
+    height: 50px
+    color: $color-text
+    font-size: $font-size-large-xxxl
+    p
+      padding: 0 10px
   .mv-content
     width: 100%
     height: 100%
@@ -38,6 +45,7 @@
       display: flex
       flex-direction: column
       padding: 0px 24px
+      margin-bottom: 112px
       .mv-title
         display: flex
         height: 90px
@@ -47,25 +55,25 @@
           font-size: $font-size-large-xxxlll
       .mv-creators
       .mv-info
-      .mv-actions    
+      .mv-actions
         display: flex
         align-items: center
         height: 60px
         font-size: $font-size-large-xxx
-      .mv-creators  
+      .mv-creators
         li:last-child
           p
             color: #1E8BE8
-            span 
+            span
               display: none
       .mv-info
         color: $color-icon
         li
-          margin-right: 20px      
+          margin-right: 20px
       .mv-actions
         li
           display: flex
-          align-items: center 
+          align-items: center
           margin-right: 20px
           height: inherit
           line-height: 60px
@@ -81,4 +89,5 @@
       .mv-desc
         color: $color-icon
         font-size: $font-size-large-xxx
-        line-height: 1.5           
+        line-height: 1.5
+

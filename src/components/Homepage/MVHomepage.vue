@@ -12,7 +12,7 @@
     </div>
     <section class="mv-wrapper">
     </section>
-    <ul class="mvh-actions">
+    <ul class="mvh-actions" :style="mvhAStyle">
       <li class="mvh-mv-suggestions-btn">
         <i class="material-icons md-48">videocam</i>
         <span>5</span>
@@ -29,10 +29,11 @@
     <section class="mv-homepage-body">
       <scroll
         class="mv-content">
-        <div class="mv-panel">
-          <div class="mv-title">
+        <div class="mv-panel" ref="mvPanel">
+          <div class="mv-title" @click="_toggleDesc">
             <p>{{ mvInfo.briefDesc }}</p>
-            <i class="material-icons md-36 more">arrow_drop_down</i>
+            <i class="material-icons md-36 more" v-if="isMore">arrow_drop_up</i>
+            <i class="material-icons md-36 more" v-else>arrow_drop_down</i>
           </div>
           <ul class="mv-creators">
             <p class="mv-creator">歌手：</p>
@@ -58,16 +59,24 @@
               <span class="share-num">{{ mvInfo.shareCount }}</span>
             </li>
           </ul>
-          <p class="mv-desc">{{ mvInfo.desc }}</p>
+          <p class="mv-desc" v-show="isMore">{{ mvInfo.desc }}</p>
         </div>
         <div class="mv-suggestions">
           <div class="panel">
-            <p>相关推荐</p>
+            <p>相似MV</p>
           </div>
+          <img-collect-item
+            v-for="item in simiMVInfo"
+            :img-url="item.cover"
+            :item-badge="item.playCount"
+            :item-name="item.briefDesc"
+            :item-intro="`@${item.artistName}`"
+            item-type="mv">
+          </img-collect-item>
         </div>
         <div class="music-suggestions">
           <div class="panel">
-            <p>相关音乐</p>
+            <p>相似音乐</p>
           </div>
         </div>
         <div class="commits-content">
@@ -82,18 +91,21 @@
 
 <script>
   import Scroll from "../base/Scroll/Scroll"
+  import ImgCollectItem from "../base/CollectItem/ImgCollectItem"
   import song from "../../api/song"
 
   export default {
     name: "MVHomepage",
     components: {
-      Scroll
+      Scroll,
+      ImgCollectItem
     },
-    props: ['id'],
+    props: ['vid', 'sid'],
     data() {
       return {
         name: 'MVHomepage',
         isMore: false,
+        mvPanelHeight: 0,
         mvInfo: {
           artistId:62662,
           artistName:"Jessie J",
@@ -123,22 +135,105 @@
           publishTime:"2016-08-22",
           shareCount:544,
           subCount:5538,
+        },
+        simiMVInfo: [
+          {
+            alg:"itembased",
+            artistId:70850,
+            artistName:"Pixie Lott",
+            artists:[
+              {
+                id:42980,
+                name:"Shaggy"
+              },
+              {
+                id:70850,
+                name:"Pixie Lott"
+              }
+            ],
+            briefDesc:"鲜肉沙滩性感热舞",
+            cover:"http://p3.music.126.net/YpMCVY1GKssvaE7qGwJqRg==/3399689964628516.jpg",
+            desc:null,
+            duration:232000,
+            id:5356031,
+            mark:0,
+            name:"A Real Good Thing",
+            playCount:121773,
+          },
+          {
+            alg:"itembased",
+            artistId:70850,
+            artistName:"Pixie Lott",
+            artists:[
+              {
+                id:42980,
+                name:"Shaggy"
+              },
+              {
+                id:70850,
+                name:"Pixie Lott"
+              }
+            ],
+            briefDesc:"鲜肉沙滩性感热舞",
+            cover:"http://p3.music.126.net/YpMCVY1GKssvaE7qGwJqRg==/3399689964628516.jpg",
+            desc:null,
+            duration:232000,
+            id:5356030,
+            mark:0,
+            name:"A Real Good Thing",
+            playCount:121773,
+          }
+        ],
+        simiSongInfo: []
+      }
+    },
+    computed: {
+      mvhAStyle() {
+        return {
+          position: 'absolute',
+          top: `${this.mvPanelHeight}px`,
+          left: 0
         }
       }
     },
+    mounted() {
+      this.$nextTick(() => {
+        this.mvPanelHeight = this.$refs.mvPanel.offsetHeight
+      })
+    },
     methods: {
+      _toggleDesc() {
+        this.isMore = !this.isMore
+        this.$nextTick(() => {
+          this.mvPanelHeight = this.$refs.mvPanel.offsetHeight
+        })
+      },
       _linkSinger(id) {
         console.log(id)
       },
       _formatMV(data) {
         this.mvInfo = data
+      },
+      _formatSimiMv(data) {
+        this.simiMVInfo = data
+      },
+      _formatSimiSong(data) {
+        this.simiSongInfo = data
       }
     },
     created() {
-      // song.GetMv(this.id)
+      // song.GetMv(this.vid)
       // .then((res) => {
       //   this._formatMV(res.data.data)
       // })
+      // song.GetSimiMv(5360030)
+      //   .then((res) => {
+      //     this._formatSimiMv(res.data.mvs)
+      //   })
+      song.GetSimiSong(347230)
+        .then((res) => {
+          console.log(res)
+        })
     }
   }
 </script>

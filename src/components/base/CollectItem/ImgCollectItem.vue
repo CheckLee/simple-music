@@ -2,6 +2,10 @@
   <div class="img-collect-item" :class="collectItemClassName" @click="_emitClickStatus">
     <div class="img-collect-item-header">
       <img v-lazy="imgUrl" alt="itemImg">
+      <div class="header-badge" v-show="itemType === 'mv'">
+        <i class="material-icons md-36 md-light">play_arrow</i>
+        <span>{{ formatBadge }}</span>
+      </div>
     </div>
     <div class="img-collect-item-body">
       <h2>{{ itemName }}</h2>
@@ -29,6 +33,9 @@
         },
         itemType: {
           type: String
+        },
+        itemBadge: {
+          type: Number
         }
       },
       computed: {
@@ -37,6 +44,22 @@
         },
         isItemIntro() {
           return !!this.itemIntro
+        },
+        formatBadge() {
+          switch(this.itemType) {
+            case 'mv':
+              if (this.itemBadge < 100000) {
+                return count
+              }
+              else {
+                let dec = parseInt(this.itemBadge / 10000)
+                return `${dec}万`
+              }
+              break
+            default:
+              return ''
+              break
+          }
         }
       },
       methods: {
