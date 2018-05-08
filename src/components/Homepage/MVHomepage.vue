@@ -14,7 +14,7 @@
     </section>
     <ul class="mvh-actions" :style="mvhAStyle">
       <li class="mvh-mv-suggestions-btn">
-        <i class="material-icons md-48">videocam</i>
+        <i class="material-icons md-48">ondemand_video</i>
         <span>5</span>
       </li>
       <li class="mvh-music-suggestions-btn">
@@ -76,8 +76,16 @@
         </div>
         <div class="music-suggestions">
           <div class="panel">
-            <p>相似音乐</p>
+            <p>相关音乐</p>
           </div>
+          <music-collect-item
+            :need-index="false"
+            :need-mv="true"
+            :mv="songInfo.mv"
+            :artists="songInfo.ar"
+            :album="songInfo.al"
+            :name="songInfo.name">
+          </music-collect-item>
         </div>
         <div class="commits-content">
           <div class="panel">
@@ -92,13 +100,15 @@
 <script>
   import Scroll from "../base/Scroll/Scroll"
   import ImgCollectItem from "../base/CollectItem/ImgCollectItem"
+  import MusicCollectItem from "../base/CollectItem/MusicCollectItem"
   import song from "../../api/song"
 
   export default {
     name: "MVHomepage",
     components: {
       Scroll,
-      ImgCollectItem
+      ImgCollectItem,
+      MusicCollectItem
     },
     props: ['vid', 'sid'],
     data() {
@@ -184,7 +194,46 @@
             playCount:121773,
           }
         ],
-        simiSongInfo: []
+        songInfo: {
+          a:null,
+          al: {
+            id:34209,
+            name:"海阔天空",
+            pic:102254581395219,
+            picUrl:"http://p1.music.126.net/QHw-RuMwfQkmgtiyRpGs0Q==/102254581395219.jpg"
+          },
+          ar:[
+            {
+              id:11127,
+              name:"Beyond",
+            }
+          ],
+          cd:"1",
+          cf:"",
+          copyright:1,
+          cp:7002,
+          crbt:null,
+          djId:0,
+          dt:326348,
+          fee:8,
+          ftype:0,
+          id:347230,
+          mst:9,
+          mv:376199,
+          name:"海阔天空",
+          no:1,
+          pop:100,
+          pst:0,
+          publishTime:746812800000,
+          rt:"600902000004240302",
+          rtUrl:null,
+          rtype:0,
+          rurl:null,
+          s_id:0,
+          st:0,
+          t:0,
+          v:31,
+        }
       }
     },
     computed: {
@@ -215,10 +264,10 @@
         this.mvInfo = data
       },
       _formatSimiMv(data) {
-        this.simiMVInfo = data
+        this.songInfo = data
       },
       _formatSimiSong(data) {
-        this.simiSongInfo = data
+        this.songInfo = data[0]
       }
     },
     created() {
@@ -230,7 +279,12 @@
       //   .then((res) => {
       //     this._formatSimiMv(res.data.mvs)
       //   })
-      song.GetSimiSong(347230)
+      // song.GetSongDetail(347230)
+      //   .then((res) => {
+      //     console.log(res)
+      //     this._formatSimiSong(res.data.songs)
+      //   })
+      song.GetMvComments(376199)
         .then((res) => {
           console.log(res)
         })

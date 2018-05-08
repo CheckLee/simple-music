@@ -28,6 +28,15 @@ export default {
       }
     })
   },
+  GetMvComments(id) {
+    return axios.get('/comment/mv', {
+      params: {
+        id: id,
+        offset: 2,
+        limit: 100
+      }
+    })
+  },
   GetSimiMv(id) {
     return axios.get('/simi/mv', {
       params: {
