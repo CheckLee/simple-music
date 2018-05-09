@@ -65,6 +65,9 @@
       isEndScroll: {
         type: Boolean,
         default: false
+      },
+      scrollToPosY: {
+        type: Number
       }
     },
     data() {
@@ -172,6 +175,11 @@
         }
         else {
           this.enable()
+        }
+      },
+      scrollToPosY(val, oldVal) {
+        if (val !== this.scroll.y) {
+          this.scrollTo(0, val, 700, 'swipe')
         }
       }
     },

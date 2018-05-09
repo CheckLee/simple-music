@@ -19,16 +19,16 @@
         :poster-src="mvInfo.cover">
       </video-pre-viewer>
     </div>
-    <ul class="mvh-actions" :style="mvhAStyle">
-      <li class="mvh-mv-suggestions-btn">
+    <ul class="mvh-actions" :style="mvhAStyle" ref="mvhActions">
+      <li class="mvh-mv-suggestions-btn" @click="_scrollTo(isMv, 'mvSuggestion')">
         <i class="material-icons md-48">ondemand_video</i>
         <span>{{ simiMVInfo.length }}</span>
       </li>
-      <li class="mvh-music-suggestions-btn">
+      <li class="mvh-music-suggestions-btn" @click="_scrollTo(isSong, 'songSuggestion')">
         <i class="material-icons md-48">music_note</i>
         <span>{{ songsCount }}</span>
       </li>
-      <li class="mvh-commit-btn">
+      <li class="mvh-commit-btn" @click="_scrollTo(isComment, 'comments')">
         <i class="material-icons md-48">chat</i>
         <span>{{ mvInfo.commentCount | roundOht }}</span>
       </li>
@@ -36,6 +36,7 @@
     <section class="mv-homepage-body" :style="mvhBStyle">
       <scroll
         :probeType="3"
+        :scrollToPosY="scrollToPosY"
         :listenScroll="isListenScroll"
         @scroll="_getCurrentPos"
         class="mv-content">
@@ -71,12 +72,13 @@
           </ul>
           <p class="mv-desc" v-show="isMore">{{ mvInfo.desc }}</p>
         </div>
-        <div class="mv-suggestions">
+        <div class="mv-suggestions" v-show="isMv" ref="mvSuggestion">
           <div class="panel">
             <p>相似MV</p>
           </div>
           <img-collect-item
             v-for="item in simiMVInfo"
+            @getClickStatus="_linkMv(item.id)"
             :img-url="item.cover"
             :item-badge="item.playCount"
             :item-name="item.name"
@@ -84,7 +86,7 @@
             item-type="mv">
           </img-collect-item>
         </div>
-        <div class="music-suggestions" v-show="isSong">
+        <div class="music-suggestions" v-show="isSong" ref="songSuggestion">
           <div class="panel">
             <p>相关音乐</p>
           </div>
@@ -97,7 +99,7 @@
             :name="songInfo.name">
           </music-collect-item>
         </div>
-        <div class="commits-content">
+        <div class="commits-content" v-show="isComment" ref="comments">
           <div class="panel">
             <p>全部评论</p>
           </div>
@@ -137,6 +139,7 @@
         videoType: 'video/mp4',
         isListenScroll: true,
         scrollY: 0,
+        scrollToPosY: 0,
         mvPanelHeight: 135,
         mvWrapperHeight: 210,
         mvInfo: {},
@@ -231,9 +234,43 @@
         comments: []
       }
     },
+    watch: {
+      '$route'(to, from) {
+        if (this._filter(to)) {
+          let vid = to.query['vid']
+            ,sid = to.query['sid']
+          song.GetMv(vid)
+            .then((res) => {
+              this._formatMV(res.data.data)
+            })
+          song.GetSimiMv(vid)
+            .then((res) => {
+              console.log(res)
+              this._formatSimiMv(res.data.mvs)
+            })
+          if (this.sid) {
+            song.GetSongDetail(sid)
+              .then((res) => {
+                console.log(res)
+                this._formatSong(res.data.songs)
+              })
+          }
+          song.GetMvComments(vid)
+            .then((res) => {
+              this._formatComments(res.data.comments)
+            })
+        }
+      }
+    },
     computed: {
       isSong() {
         return !!this.sid
+      },
+      isMv() {
+        return !!this.simiMVInfo.length
+      },
+      isComment() {
+        return !!this.comments.length
       },
       songsCount() {
         return this.isSong? 1:0
@@ -292,11 +329,22 @@
           this.mvPanelHeight = this.$refs.mvPanel.offsetHeight
         })
       },
+      _filter(to) {
+        return to.name && to.name === 'MVHomepage'
+      },
+      _scrollTo(flag, key) {
+        if (flag) {
+          this.scrollToPosY = -(this.$refs[key].offsetTop - this.$refs.mvhActions.offsetHeight)
+        }
+      },
       _getCurrentPos(data) {
         this.scrollY = data.y
       },
       _linkSinger(id) {
         console.log(id)
+      },
+      _linkMv(id) {
+        this.$router.push({path: '/mvh', query: {vid: id}})
       },
       _formatMV(data) {
         this.mvInfo = data
