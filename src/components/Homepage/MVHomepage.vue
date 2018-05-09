@@ -10,28 +10,38 @@
         <div class="nav-tail blank"></div>
       </div>
     </div>
-    <section class="mv-wrapper">
-    </section>
+    <div class="mv-wrapper" ref="mvWrapper">
+      <video-pre-viewer
+        :width="375"
+        :height="mvWrapperHeight"
+        :video-type="videoType"
+        :video-src="`/mv/url?url=${mvInfo.brs['240']}`"
+        :poster-src="mvInfo.cover">
+      </video-pre-viewer>
+    </div>
     <ul class="mvh-actions" :style="mvhAStyle">
       <li class="mvh-mv-suggestions-btn">
         <i class="material-icons md-48">ondemand_video</i>
-        <span>5</span>
+        <span>{{ simiMVInfo.length }}</span>
       </li>
       <li class="mvh-music-suggestions-btn">
         <i class="material-icons md-48">music_note</i>
-        <span>5</span>
+        <span>{{ songsCount }}</span>
       </li>
       <li class="mvh-commit-btn">
         <i class="material-icons md-48">chat</i>
-        <span>{{ mvInfo.commentCount }}</span>
+        <span>{{ mvInfo.commentCount | roundOht }}</span>
       </li>
     </ul>
-    <section class="mv-homepage-body">
+    <section class="mv-homepage-body" :style="mvhBStyle">
       <scroll
+        :probeType="3"
+        :listenScroll="isListenScroll"
+        @scroll="_getCurrentPos"
         class="mv-content">
         <div class="mv-panel" ref="mvPanel">
           <div class="mv-title" @click="_toggleDesc">
-            <p>{{ mvInfo.briefDesc }}</p>
+            <p>{{ mvBriefDesc }}</p>
             <i class="material-icons md-36 more" v-if="isMore">arrow_drop_up</i>
             <i class="material-icons md-36 more" v-else>arrow_drop_down</i>
           </div>
@@ -43,20 +53,20 @@
           </ul>
           <ul class="mv-info">
             <li class="mv-publishtime">发行：{{ mvInfo.publishTime }}</li>
-            <li class="mv-playcount">播放：{{ mvInfo.playCount }}</li>
+            <li class="mv-playcount">播放：{{ mvInfo.playCount | roundOht }}</li>
           </ul>
           <ul class="mv-actions">
             <li class="mv-likeCount">
               <i class="material-icons md-36">thumb_up</i>
-              <span class="thumbup-num">{{ mvInfo.likeCount }}</span>
+              <span class="thumbup-num">{{ mvInfo.likeCount | roundOht }}</span>
             </li>
             <li class="mv-subCount">
               <i class="material-icons md-36">add_box</i>
-              <span class="sub-num">{{ mvInfo.subCount }}</span>
+              <span class="sub-num">{{ mvInfo.subCount | roundOht }}</span>
             </li>
             <li class="mv-shareCount">
               <i class="material-icons md-36">share</i>
-              <span class="share-num">{{ mvInfo.shareCount }}</span>
+              <span class="share-num">{{ mvInfo.shareCount | roundOht }}</span>
             </li>
           </ul>
           <p class="mv-desc" v-show="isMore">{{ mvInfo.desc }}</p>
@@ -69,12 +79,12 @@
             v-for="item in simiMVInfo"
             :img-url="item.cover"
             :item-badge="item.playCount"
-            :item-name="item.briefDesc"
+            :item-name="item.name"
             :item-intro="`@${item.artistName}`"
             item-type="mv">
           </img-collect-item>
         </div>
-        <div class="music-suggestions">
+        <div class="music-suggestions" v-show="isSong">
           <div class="panel">
             <p>相关音乐</p>
           </div>
@@ -91,11 +101,12 @@
           <div class="panel">
             <p>全部评论</p>
           </div>
-          <comment-card 
-            v-for="item in comments" 
+          <comment-card
+            v-for="item in comments"
             :comment-info="item">
           </comment-card>
         </div>
+        <div class="blank"></div>
       </scroll>
     </section>
   </div>
@@ -106,6 +117,7 @@
   import ImgCollectItem from "../base/CollectItem/ImgCollectItem"
   import MusicCollectItem from "../base/CollectItem/MusicCollectItem"
   import CommentCard from "../base/CollectItem/CommentCard"
+  import VideoPreViewer from "../base/Viewer/VideoPreViewer"
   import song from "../../api/song"
 
   export default {
@@ -114,6 +126,7 @@
       Scroll,
       ImgCollectItem,
       MusicCollectItem,
+      VideoPreViewer,
       CommentCard
     },
     props: ['vid', 'sid'],
@@ -121,37 +134,12 @@
       return {
         name: 'MVHomepage',
         isMore: false,
-        mvPanelHeight: 0,
-        mvInfo: {
-          artistId:62662,
-          artistName:"Jessie J",
-          artists:[{
-            id:62662,
-            name:"Jessie J"
-          }],
-          briefDesc:"电影《冰川时代5》片尾曲MV",
-          brs:{
-            1080:"http://v4.music.126.net/20180508060624/975e5dd1d317ddc7dce6794c987fb786/web/cloudmusic/JDBhJWA5MDUjISI0ZDNgZQ==/mv/5360030/29cd958ff89060bfc5b7f8e5b9a63dc6.mp4",
-            240:"http://v4.music.126.net/20180508060624/de1acc088eb744bc295b77be92bd68b5/web/cloudmusic/JDBhJWA5MDUjISI0ZDNgZQ==/mv/5360030/2abb40d939ad706b7878fdd9751e58d1.mp4",
-            480:"http://v4.music.126.net/20180508060624/4a811ca61501b9edd00a520de4235e4c/web/cloudmusic/JDBhJWA5MDUjISI0ZDNgZQ==/mv/5360030/187165f0cea9de55808c8aa94f68aa90.mp4",
-            720:"http://v4.music.126.net/20180508060624/8f56d958e6c766ef5e1ea7a06b8a7878/web/cloudmusic/JDBhJWA5MDUjISI0ZDNgZQ==/mv/5360030/3bc0b8ee3f386e454d543010ad85e446.mp4",
-          },
-          commentCount:1950,
-          commentThreadId:"R_MV_5_5360030",
-          cover:"http://p3.music.126.net/RFipkmY3jYdtU1d5JbPWfg==/1372190526113978.jpg",
-          coverId:1372190526113978,
-          desc:"好莱坞系列动画电影《冰川时代5：星际碰撞》曝光片尾曲MV《My Superstar》，英国流行天后Jessie J 一展歌喉，演唱年轻貌美性格好的女树懒布鲁克(Jessie J配音)，为其貌不扬的话痨男树懒希德打造的饱含深情的“爱之歌”。",
-          duration:61000,
-          id:5360030,
-          isReward:false,
-          likeCount:5545,
-          nType:0,
-          name:"My Superstar",
-          playCount:448711,
-          publishTime:"2016-08-22",
-          shareCount:544,
-          subCount:5538,
-        },
+        videoType: 'video/mp4',
+        isListenScroll: true,
+        scrollY: 0,
+        mvPanelHeight: 135,
+        mvWrapperHeight: 210,
+        mvInfo: {},
         simiMVInfo: [
           {
             alg:"itembased",
@@ -244,17 +232,57 @@
       }
     },
     computed: {
+      isSong() {
+        return !!this.sid
+      },
+      songsCount() {
+        return this.isSong? 1:0
+      },
       mvhAStyle() {
+        if (-this.scrollY > this.mvPanelHeight) {
+          return {
+            position: 'absolute',
+            zIndex: 3,
+            top: `${this.mvWrapperHeight - 1}px`,
+            left: 0
+          }
+        }
         return {
           position: 'absolute',
-          top: `${this.mvPanelHeight}px`,
+          zIndex: 3,
+          top: `${this.scrollY + this.mvPanelHeight + this.mvWrapperHeight}px`,
           left: 0
+        }
+      },
+      mvhBStyle() {
+        return {
+          top: `${this.mvWrapperHeight}px`,
+        }
+      },
+      mvBriefDesc() {
+        if (this.mvInfo.briefDesc) return `${this.mvInfo.name} - ${this.mvInfo.briefDesc}`
+        return this.mvInfo.name
+      },
+      mvUrl() {
+        let mvResKeys = Object.keys(this.mvInfo.brs)
+        return `localhost:3000/mv/url?url=${this.mvInfo.brs[mvResKeys[mvResKeys.length - 1]]}`
+      }
+    },
+    filters: {
+      roundOht(val) {
+        if (val < 100000) {
+          return val
+        }
+        else {
+          let dec = parseInt(val / 10000)
+          return `${dec}万`
         }
       }
     },
     mounted() {
       this.$nextTick(() => {
-        this.mvPanelHeight = this.$refs.mvPanel.offsetHeight
+        // this.mvPanelHeight = this.$refs.mvPanel.offsetHeight
+        // this.mvWrapperHeight = this.$refs.mvWrapper.offsetHeight
       })
     },
     methods: {
@@ -264,6 +292,9 @@
           this.mvPanelHeight = this.$refs.mvPanel.offsetHeight
         })
       },
+      _getCurrentPos(data) {
+        this.scrollY = data.y
+      },
       _linkSinger(id) {
         console.log(id)
       },
@@ -271,9 +302,9 @@
         this.mvInfo = data
       },
       _formatSimiMv(data) {
-        this.songInfo = data
+        this.simiMVInfo = data
       },
-      _formatSimiSong(data) {
+      _formatSong(data) {
         this.songInfo = data[0]
       },
       _formatComments(data) {
@@ -281,20 +312,23 @@
       }
     },
     created() {
-      // song.GetMv(this.vid)
-      // .then((res) => {
-      //   this._formatMV(res.data.data)
-      // })
-      // song.GetSimiMv(5360030)
-      //   .then((res) => {
-      //     this._formatSimiMv(res.data.mvs)
-      //   })
-      // song.GetSongDetail(347230)
-      //   .then((res) => {
-      //     console.log(res)
-      //     this._formatSimiSong(res.data.songs)
-      //   })
-      song.GetMvComments(376199)
+      song.GetMv(this.vid)
+      .then((res) => {
+        this._formatMV(res.data.data)
+      })
+      song.GetSimiMv(this.vid)
+        .then((res) => {
+          console.log(res)
+          this._formatSimiMv(res.data.mvs)
+        })
+      if (this.sid) {
+        song.GetSongDetail(this.sid)
+          .then((res) => {
+            console.log(res)
+            this._formatSong(res.data.songs)
+          })
+      }
+      song.GetMvComments(this.vid)
         .then((res) => {
           this._formatComments(res.data.comments)
         })

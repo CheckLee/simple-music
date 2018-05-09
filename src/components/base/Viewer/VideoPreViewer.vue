@@ -22,7 +22,10 @@
     name: 'video-pre-viewer',
     props: {
       width: {
-        type: String
+        type: Number
+      },
+      height: {
+        type: Number
       },
       videoSrc:{
         type: String,
@@ -67,6 +70,12 @@
     watch: {
       width(val, oldVal) {
         this.playerOptions.width = `${parseFloat(val)}px`
+      },
+      videoSrc(val, oldVal) {
+        this.playerOptions.sources = [{
+          type: this.videoType,
+          src: val,
+        }]
       }
     },
     computed: {
@@ -116,7 +125,8 @@
       }
     },
     created() {
-      this.playerOptions.width = `${parseFloat(this.width)}px`
+      this.playerOptions.width = `${this.width}px`
+      this.playerOptions.height = `${this.height}px`
       this.playerOptions.sources = [{
         type: this.videoType,
         src: this.videoSrc,

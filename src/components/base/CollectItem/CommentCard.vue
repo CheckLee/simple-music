@@ -18,8 +18,7 @@
     <div class="comment-body">
       <p class="content">{{ commentInfo.content }}</p>
       <div class="replaied" v-show="isReplied">
-        <span @click="_linkUser(repliedInfo.user.userId)">@{{ repliedInfo.user.nickname }}</span>
-        <p>{{ repliedInfo.content }}</p>
+        <p><span @click="_linkUser(repliedInfo.user.userId)">@{{ repliedInfo.user.nickname }}：</span>{{ repliedInfo.content }}</p>
       </div>
     </div>
   </div>
@@ -36,7 +35,14 @@
     },
     data() {
       return {
-        name: 'CommentCard'
+        name: 'CommentCard',
+        repliedTemplate: {
+          content: '',
+          user: {
+            userId: 1,
+            nickname: "姜维"
+          }
+        }
       }
     },
     computed: {
@@ -51,7 +57,7 @@
         return time.toLocaleDateString().split('/').join('-')
       },
       repliedInfo() {
-        return this.commentInfo.beReplied[0]
+        return !!this.commentInfo.beReplied.length? this.commentInfo.beReplied[0]:this.repliedTemplate
       }
     },
     methods: {

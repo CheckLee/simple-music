@@ -49,7 +49,7 @@
           switch(this.itemType) {
             case 'mv':
               if (this.itemBadge < 100000) {
-                return count
+                return this.itemBadge
               }
               else {
                 let dec = parseInt(this.itemBadge / 10000)
