@@ -38,6 +38,8 @@
         :probeType="3"
         :scrollToPosY="scrollToPosY"
         :listenScroll="isListenScroll"
+        :pullUpLoad = "pullLoadObj"
+        @pullingUp="_test"
         @scroll="_getCurrentPos"
         class="mv-content">
         <div class="mv-panel" ref="mvPanel">
@@ -140,6 +142,13 @@
         isListenScroll: true,
         scrollY: 0,
         scrollToPosY: 0,
+        pullLoadObj: {
+          threshold: 100,
+          txt: {
+            more: '加载更多',
+            noMore: '没有更多数据'
+          }
+        },
         mvPanelHeight: 135,
         mvWrapperHeight: 210,
         mvInfo: {},
@@ -331,6 +340,9 @@
       },
       _filter(to) {
         return to.name && to.name === 'MVHomepage'
+      },
+      _test() {
+        console.log('pulling')
       },
       _scrollTo(flag, key) {
         if (flag) {
