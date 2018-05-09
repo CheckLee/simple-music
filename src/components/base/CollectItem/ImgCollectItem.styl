@@ -7,7 +7,6 @@
   justify-content: space-between
   align-items: center
   .img-collect-item-body
-    width: 100%
     align-self: stretch
     overflow: hidden
     text-indent: 28px
@@ -24,9 +23,9 @@
       width: inherit
       height: 32px
       line-height: 32px
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
   .img-collect-item-tail
     margin-right: 24px
     .material-icons
@@ -43,6 +42,8 @@
       height: inherit
       border-radius: 100%
       object-fit: fill
+  .img-collect-item-body
+    width: calc(100% - 92px - 24px)
 
 .musiclist-img-collect-item
   margin-bottom: 10px
@@ -52,3 +53,28 @@
     img
       width: inherit
       height: inherit
+  .img-collect-item-body
+    width: calc(100% - 118px)
+
+.mv-img-collect-item
+  margin: 0 0 10px 10px
+  .img-collect-item-header
+    width: 210px
+    height: 118px
+    position: relative
+    img
+      position: absolute
+      left: 0
+      top: 0
+      width: 210px
+      object-fit: fill
+    .header-badge
+      position: absolute
+      top: 0
+      right: 0
+      display: flex
+      color: white
+      align-items: center
+      font-size: $font-size-large-x
+  .img-collect-item-body
+    width: calc(100% - 210px)

@@ -289,6 +289,8 @@
                 playCount: mvData.playCount,
                 title: mvData.desc,
                 posterSrc: mvData.cover,
+                artists: mvData.artists,
+                videoName: mvData.name,
                 type: 'video/mp4'
               }
               return Promise.resolve({ isMv: isMv, mv: mv })

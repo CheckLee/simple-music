@@ -7,6 +7,13 @@ export default {
   GetSong(id) {
     return axios.get(`/music/url?id=${id}`)
   },
+  GetSimiSong(id) {
+    return axios.get('/simi/song', {
+      params: {
+        id: id
+      }
+    })
+  },
   GetSongDetail(id) {
     return axios.get('/song/detail', {
       params: {
@@ -16,6 +23,22 @@ export default {
   },
   GetMv(id) {
     return axios.get('/mv', {
+      params: {
+        mvid: id
+      }
+    })
+  },
+  GetMvComments(id) {
+    return axios.get('/comment/mv', {
+      params: {
+        id: id,
+        offset: 40,
+        limit: 20
+      }
+    })
+  },
+  GetSimiMv(id) {
+    return axios.get('/simi/mv', {
       params: {
         mvid: id
       }

@@ -67,11 +67,17 @@
         </ul>
         <div class="video" v-if="isVideo">
           <video-pre-viewer
-            width="293"
+            :width="293"
+            :height="164"
             :video-type="data.mv.type"
             :video-src="`/mv/url?url=${data.mv.videoUrls['720']}`"
             :poster-src="data.mv.posterSrc">
           </video-pre-viewer>
+          <div class="video-panel" @click.stop="_linkMv(data.mv.id)">
+            <p>
+              <span>@</span><span v-for="artor in data.mv.artists">{{ artor.name }}</span><span>：</span>{{ data.mv.videoName }}
+            </p>
+          </div>
         </div>
         <div class="shared" v-if="isShared">
           <share-item
@@ -176,6 +182,10 @@
             : {}
           console.log(this.$refs.tweetsCard.offsetTop, target.offsetTop)
           this.$emit('getTargetInfo',data)
+        },
+        _linkMv(id) {
+          console.log(id)
+          this.$router.push({path: '/mvh', query: {vid: id}})
         },
         _formatDate(date) {
           let localeDateString = new Date(date).toLocaleDateString().split('/').join('-')

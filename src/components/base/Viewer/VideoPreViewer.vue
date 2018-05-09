@@ -22,7 +22,10 @@
     name: 'video-pre-viewer',
     props: {
       width: {
-        type: String
+        type: Number
+      },
+      height: {
+        type: Number
       },
       videoSrc:{
         type: String,
@@ -42,11 +45,16 @@
           muted: true,
           language: 'en',
           playbackRates: [0.7, 1.0, 1.5, 2.0],
+          sources: [{
+            type: "video/mp4",
+            src: "http://vjs.zencdn.net/v/oceans.mp4",
+          }],
+          poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg",
         }
       }
     },
     mounted() {
-      // console.log('this is current player instance object', this.player)
+      console.log('this is current player instance object', this.player)
       setTimeout(() => {
         console.log('dynamic change options', this.player)
         // change src
@@ -61,12 +69,21 @@
         //   type: "video/mp4",
         //   src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm',
         // }]
-        this.player.muted(false)
+        this.player.muted(true)
       }, 5000)
     },
     watch: {
       width(val, oldVal) {
         this.playerOptions.width = `${parseFloat(val)}px`
+      },
+      videoSrc(val, oldVal) {
+        this.playerOptions.sources = [{
+          type: this.videoType,
+          src: val,
+        }]
+      },
+      posterSrc(val, oldVal) {
+        this.playerOptions.poster = val
       }
     },
     computed: {
@@ -116,7 +133,8 @@
       }
     },
     created() {
-      this.playerOptions.width = `${parseFloat(this.width)}px`
+      this.playerOptions.width = `${this.width}px`
+      this.playerOptions.height = `${this.height}px`
       this.playerOptions.sources = [{
         type: this.videoType,
         src: this.videoSrc,

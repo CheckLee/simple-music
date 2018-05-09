@@ -241,10 +241,10 @@ export default new Router({
       ]
     },
     {
-      path: '/mvh/:id',
+      path: '/mvh',
       component: MVHomepage,
       name: 'MVHomepage',
-      props: true
+      props: (route) => ({ vid: route.query.vid, sid: route.query.sid })
     },
     {
       path: '/mine',
