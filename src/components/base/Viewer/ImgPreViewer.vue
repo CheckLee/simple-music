@@ -155,7 +155,7 @@
   .img-view {
     position: fixed;
     left: 0;
-    z-index: 2000;
+    z-index: 3;
     width: 100%;
     height: 100vh;
     display: flex;

@@ -136,8 +136,8 @@
           })
       },
       '$route'(to, from) {
-        console.log(from)
-        if (!this._filter(from)) {
+        if (this._filter(to, from)) {
+          console.log(from)
           this.fromPath = from.path
         }
       }
@@ -185,8 +185,8 @@
       })
     },
     methods: {
-      _filter(route) {
-        return route.name && (route.name == 'UserHomepageMusic' || route.name == 'UserHomepageTweets')
+      _filter(to, from) {
+        return (to.name && to.name === 'UserHomepageMusic') && (from.name && from.name !== 'UserHomepageMusic' && from.name !== 'UserHomepageTweets')
       },
       _backward() {
         this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
@@ -215,7 +215,6 @@
     created() {
       login.GetUserDetail(this.id)
         .then((res) => {
-          console.log(res)
           this._formatUserInfo(res.data)
         })
         this.screenHeight = document.documentElement.offsetHeight || document.body.offsetHeight

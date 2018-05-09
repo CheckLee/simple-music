@@ -129,7 +129,6 @@
           this.currentMidLineY = midLineY
           this.show = true
           this.$emit('getPreviewStatus', true)
-          console.log(payload)
         }
 
       },
