@@ -17,6 +17,10 @@
           type: Boolean,
           required: true
         },
+        clickable: {
+          type: Boolean,
+          required: true
+        },
         buttonNameList: {
           type: Array,
           required: true
@@ -44,11 +48,13 @@
       },
       methods: {
         _changeStatus() {
-          if (this.toggle) {
-            this.isClicked = !this.isClicked
-          }
-          else {
-            this.isClicked = true
+          if (this.clickable) {
+            if (this.toggle) {
+              this.isClicked = !this.isClicked
+            }
+            else {
+              this.isClicked = true
+            }
           }
         },
         _emitStatus() {

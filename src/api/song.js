@@ -28,12 +28,12 @@ export default {
       }
     })
   },
-  GetMvComments(id) {
+  GetMvComments(id, offset=0, limit=100) {
     return axios.get('/comment/mv', {
       params: {
         id: id,
-        offset: 40,
-        limit: 20
+        offset: offset,
+        limit: limit
       }
     })
   },
@@ -48,6 +48,13 @@ export default {
     return axios.get('/mv/url', {
       params: {
         url: url
+      }
+    })
+  },
+  GetSinger(id=6452) {
+    return axios.get('/artists', {
+      params: {
+        id: id
       }
     })
   },

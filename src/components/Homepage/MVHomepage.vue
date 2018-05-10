@@ -12,7 +12,7 @@
     </div>
     <div class="mv-wrapper" ref="mvWrapper">
       <video-pre-viewer
-        :width="375"
+        :width="mvWrapperWidth"
         :height="mvWrapperHeight"
         :video-type="videoType"
         :video-src="`/mv/url?url=${mvInfo.brs['240']}`"
@@ -30,7 +30,7 @@
       </li>
       <li class="mvh-commit-btn" @click="_scrollTo(isComment, 'comments')">
         <i class="material-icons md-48">chat</i>
-        <span>{{ mvInfo.commentCount | roundOht }}</span>
+        <span>{{ totalCommentCount | roundOht }}</span>
       </li>
     </ul>
     <section class="mv-homepage-body" :style="mvhBStyle">
@@ -38,8 +38,7 @@
         :probeType="3"
         :scrollToPosY="scrollToPosY"
         :listenScroll="isListenScroll"
-        :pullUpLoad = "pullLoadObj"
-        @pullingUp="_test"
+        ref="scroll"
         @scroll="_getCurrentPos"
         class="mv-content">
         <div class="mv-panel" ref="mvPanel">
@@ -110,7 +109,7 @@
             :comment-info="item">
           </comment-card>
         </div>
-        <div class="blank"></div>
+        <div class="blank" slot="pullup"></div>
       </scroll>
     </section>
   </div>
@@ -151,6 +150,7 @@
         },
         mvPanelHeight: 135,
         mvWrapperHeight: 210,
+        mvWrapperWidth: 375,
         mvInfo: {},
         simiMVInfo: [
           {
@@ -240,7 +240,12 @@
           t:0,
           v:31,
         },
-        comments: []
+        comments: [],
+        //config for comments
+        limit: 100,
+        pageLimit: 100,
+        currentCommentsCount: 0,
+        totalCommentCount: 0,
       }
     },
     watch: {
@@ -341,8 +346,15 @@
       _filter(to) {
         return to.name && to.name === 'MVHomepage'
       },
-      _test() {
-        console.log('pulling')
+      _pullingUp() {
+        let offset = parseInt(this.currentCommentsCount / this.pageLimit)
+        song.GetMvComments(this.vid, offset, this.limit)
+          .then((res) => {
+            this._formatComments(res.data.comments)
+          })
+        this.$nextTick(() => {
+          console.log(this.$refs.scroll.forceUpdate(true))
+        })
       },
       _scrollTo(flag, key) {
         if (flag) {
@@ -360,6 +372,7 @@
       },
       _formatMV(data) {
         this.mvInfo = data
+        this.totalCommentCount = data.commentCount
       },
       _formatSimiMv(data) {
         this.simiMVInfo = data
@@ -369,6 +382,7 @@
       },
       _formatComments(data) {
         this.comments = this.comments.concat(data)
+        this.currentCommentsCount += data.length
       }
     },
     created() {
@@ -392,6 +406,8 @@
         .then((res) => {
           this._formatComments(res.data.comments)
         })
+      this.mvWrapperWidth = document.documentElement.offsetWidth || document.body.offsetWidth
+      this.mvWrapperHeight = document.documentElement.offsetHeight/3 || document.body.offsetHeight/3
     }
   }
 </script>

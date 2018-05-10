@@ -105,6 +105,36 @@ const MVHomepage = (resolve) => {
   })
 }
 
+const SingerHomepage = (resolve) => {
+  import('components/Homepage/SingerHomepage').then((module) => {
+    resolve(module)
+  })
+}
+
+const SingerHotSongs = (resolve) => {
+  import('components/Homepage/SingerHotSongs').then((module) => {
+    resolve(module)
+  })
+}
+
+const SingerAlbums = (resolve) => {
+  import('components/Homepage/SingerAlbums').then((module) => {
+    resolve(module)
+  })
+}
+
+const SingerMV = (resolve) => {
+  import('components/Homepage/SingerMV').then((module) => {
+    resolve(module)
+  })
+}
+
+const SingerInfo = (resolve) => {
+  import('components/Homepage/SingerInfo').then((module) => {
+    resolve(module)
+  })
+}
+
 const FoundMusic = (resolve) => {
   import('components/FoundMusic/FoundMusic').then((module) => {
     resolve(module)
@@ -245,6 +275,34 @@ export default new Router({
       component: MVHomepage,
       name: 'MVHomepage',
       props: (route) => ({ vid: route.query.vid, sid: route.query.sid })
+    },
+    {
+      path: '/singer/:id',
+      component: SingerHomepage,
+      name: 'SingerHomepage',
+      props: true,
+      children: [
+        {
+          path: 'hotsongs',
+          name: 'SingerHotSongs',
+          component: SingerHotSongs
+        },
+        {
+          path: 'albums',
+          name: 'SingerAlbums',
+          component: SingerAlbums
+        },
+        {
+          path: 'mvs',
+          name: 'SingerMV',
+          component: SingerMV,
+        },
+        {
+          path: 'info',
+          name: 'SingerInfo',
+          component: SingerInfo
+        }
+      ]
     },
     {
       path: '/mine',
