@@ -97,6 +97,11 @@
     height: 112px;
     width: 100%;
   }
+  .ellipsis {
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+  }
   .pullup-enter-active, .pullup-leave-active {
     transition: all 0.4s
   }

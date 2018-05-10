@@ -1,15 +1,26 @@
 <template>
   <div class="singer-hotsongs">
-    <collect-item
-      header-icon-name="play_arrow"
-      item-name="播放全部"
-      item-type="icon">
-    </collect-item>
+    <div class="play-all">
+      <i class="material-icons md-56">play_arrow</i>
+      <p>播放全部</p>
+    </div>
+    <music-collect-item
+      v-for="item in sortedSongs" 
+      :need-index="true"
+      :need-mv="true"
+      :mv="item.mv"
+      :song="item.id"
+      :index="item.index"
+      :artists="item.ar"
+      :album="item.al"
+      :name="item.name">
+    </music-collect-item>
   </div>
 </template>
 
 <script>
   import CollectItem from "../base/CollectItem/CollectItem"
+  import MusicCollectItem from "../base/CollectItem/MusicCollectItem"
 
   export default {
     name: "SingerHotSongs",
@@ -20,7 +31,16 @@
       }
     },
     components: {
-      CollectItem
+      CollectItem,
+      MusicCollectItem
+    },
+    computed: {
+      sortedSongs() {
+        return this.songs.map((item, index) => {
+          item.index = index + 1 
+          return item
+        })
+      }
     }
   }
 </script>

@@ -95,6 +95,7 @@
             :need-index="false"
             :need-mv="true"
             :mv="songInfo.mv"
+            :song="songInfo.id"
             :artists="songInfo.ar"
             :album="songInfo.al"
             :name="songInfo.name">
