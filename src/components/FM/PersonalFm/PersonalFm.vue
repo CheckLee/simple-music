@@ -143,6 +143,7 @@
         }
         this.songReady = true
         if (this.currentSongIndex === 2) {
+          console.log('index')
           api.GetPersonalFM().then(({ data }) => {
             console.log(data)
             if (data.code === 200) {
@@ -242,8 +243,7 @@
         if (!this.songReady) {
           return
         }
-        this.isPlaying = !this.isPlaying
-        this.setIsPlaying(this.isPlaying)
+        this.setIsPlaying(!this.isPlaying)
       },
       
       // 时间格式化补零
@@ -267,7 +267,6 @@
             this.currentSongLyric = data
           }
         })
-        setTimeout()
       }
     },
     computed: {
