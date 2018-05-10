@@ -58,6 +58,13 @@ export default {
       }
     })
   },
+  GetSingerMV(id=6452) {
+    return axios.get('/artist/mv', {
+      params: {
+        id: id
+      }
+    })
+  },
   GetSongListDetail(id) {
     return axios.get(`/playlist/detail?id=${id}`)
   },

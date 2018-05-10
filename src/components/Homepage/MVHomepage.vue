@@ -359,7 +359,13 @@
       },
       _scrollTo(flag, key) {
         if (flag) {
-          this.scrollToPosY = -(this.$refs[key].offsetTop - this.$refs.mvhActions.offsetHeight)
+          let tmp = -(this.$refs[key].offsetTop - this.$refs.mvhActions.offsetHeight)
+          if (this.scrollToPosY == tmp) {
+            this.scrollToPosY = this.scrollY
+          }
+          else{
+            this.scrollToPosY = tmp
+          }
         }
       },
       _getCurrentPos(data) {
