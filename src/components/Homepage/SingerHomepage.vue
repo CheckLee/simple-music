@@ -58,6 +58,8 @@
           <div class="homepage-cards">
             <keep-alive>
               <router-view
+                :id="id"
+                :singer-name="singerInfo.name"
                 :songs="hotSongs">
               </router-view>
             </keep-alive>
@@ -83,6 +85,8 @@
     props: ['id'],
     data() {
       return {
+        routerArr: ['SingerHotSongs', 'SingerAlbums', 'SingerMV', 'SingerInfo'],
+        fromPath: '/',
         scrollY: 0,
         singerTop: 0,
         infoTop: 0,
@@ -131,6 +135,20 @@
           Velocity(this.$refs.bkg, { scaleX: scale, scaleY: scale }, { duration: 0 })
         }
       },
+      id(val, oldVal) {
+        song.GetSinger(val)
+          .then((res) => {
+            this._formatBase(res.data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      '$route'(to, from) {
+        if (this._filter(to, from)) {
+          this.fromPath = from.path
+        }
+      }
     },
     computed: {
       routerStyle() {
@@ -167,8 +185,11 @@
       }
     },
     methods: {
+      _filter(to, from) {
+        return (to.name && to.name === 'SingerHotSongs') && (from.name && this.routerArr.indexOf(from.name) < 0)
+      },
       _backward() {
-        console.log('backward')
+        this.$router.push({path: this.fromPath, query: {transition: 'slide-left'}})
       },
       _getCurrentPos(data) {
         this.scrollY = data.y
@@ -179,9 +200,12 @@
       }
     },
     created() {
-      song.GetSinger()
+      song.GetSinger(this.id)
         .then((res) => {
           this._formatBase(res.data)
+        })
+        .catch((error) => {
+          console.log(error)
         })
     }
   }

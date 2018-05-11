@@ -5,7 +5,8 @@
       <p>播放全部</p>
     </div>
     <music-collect-item
-      v-for="item in sortedSongs" 
+      v-for="item in sortedSongs"
+      :key="item.id"
       :need-index="true"
       :need-mv="true"
       :mv="item.mv"
@@ -37,7 +38,7 @@
     computed: {
       sortedSongs() {
         return this.songs.map((item, index) => {
-          item.index = index + 1 
+          item.index = index + 1
           return item
         })
       }

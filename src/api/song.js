@@ -65,6 +65,29 @@ export default {
       }
     })
   },
+  GetSingerAlbums(id, offset=0, limit=50) {
+    return axios.get('/artist/album', {
+      params: {
+        id: id,
+        offset: offset,
+        limit: limit
+      }
+    })
+  },
+  GetSinerDesc(id) {
+    return axios.get('/artist/desc', {
+      params: {
+        id: id
+      }
+    })
+  },
+  GetSimiSinger(id) {
+    return axios.get('/simi/artist', {
+      params: {
+        id: id
+      }
+    })
+  },
   GetSongListDetail(id) {
     return axios.get(`/playlist/detail?id=${id}`)
   },

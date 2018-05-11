@@ -19,7 +19,7 @@
         },
         clickable: {
           type: Boolean,
-          required: true
+          default: true
         },
         buttonNameList: {
           type: Array,

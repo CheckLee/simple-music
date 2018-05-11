@@ -80,6 +80,7 @@
           <img-collect-item
             v-for="item in simiMVInfo"
             @getClickStatus="_linkMv(item.id)"
+            :key="item.id"
             :img-url="item.cover"
             :item-badge="item.playCount"
             :item-name="item.name"
@@ -107,6 +108,7 @@
           </div>
           <comment-card
             v-for="item in comments"
+            :key="item.id"
             :comment-info="item">
           </comment-card>
         </div>
@@ -372,7 +374,7 @@
         this.scrollY = data.y
       },
       _linkSinger(id) {
-        console.log(id)
+        this.$router.push({path: `/singer/${id}`, query: {transition: 'slide-right'}})
       },
       _linkMv(id) {
         this.$router.push({path: '/mvh', query: {vid: id}})

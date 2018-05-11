@@ -280,6 +280,7 @@ export default new Router({
       path: '/singer/:id',
       component: SingerHomepage,
       name: 'SingerHomepage',
+      redirect: '/singer/:id/hotsongs',
       props: true,
       children: [
         {

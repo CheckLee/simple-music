@@ -22,10 +22,18 @@
     components: {
       ImgCollectItem
     },
+    props: ['id'],
     data() {
       return {
-        mvs: [],
-        id: 0,
+        mvs: []
+      }
+    },
+    watch: {
+      id(val, oldVal) {
+        song.GetSingerMV(val)
+          .then((res) => {
+            this._formatMvs(res.data.mvs)
+          })
       }
     },
     methods: {
@@ -37,9 +45,6 @@
       }
     },
     created() {
-      let path = this.$route.path.split('/'),
-        uid = path[2]
-      this.id = uid
       song.GetSingerMV(this.id)
         .then((res) => {
           this._formatMvs(res.data.mvs)
