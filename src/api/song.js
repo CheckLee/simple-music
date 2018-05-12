@@ -28,12 +28,12 @@ export default {
       }
     })
   },
-  GetMvComments(id) {
+  GetMvComments(id, offset=0, limit=100) {
     return axios.get('/comment/mv', {
       params: {
         id: id,
-        offset: 40,
-        limit: 20
+        offset: offset,
+        limit: limit
       }
     })
   },
@@ -48,6 +48,43 @@ export default {
     return axios.get('/mv/url', {
       params: {
         url: url
+      }
+    })
+  },
+  GetSinger(id=6452) {
+    return axios.get('/artists', {
+      params: {
+        id: id
+      }
+    })
+  },
+  GetSingerMV(id=6452) {
+    return axios.get('/artist/mv', {
+      params: {
+        id: id
+      }
+    })
+  },
+  GetSingerAlbums(id, offset=0, limit=50) {
+    return axios.get('/artist/album', {
+      params: {
+        id: id,
+        offset: offset,
+        limit: limit
+      }
+    })
+  },
+  GetSinerDesc(id) {
+    return axios.get('/artist/desc', {
+      params: {
+        id: id
+      }
+    })
+  },
+  GetSimiSinger(id) {
+    return axios.get('/simi/artist', {
+      params: {
+        id: id
       }
     })
   },

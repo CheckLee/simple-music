@@ -1,0 +1,102 @@
+@import "~assets/stylus/variable.styl"
+
+.singer-homepage
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 0
+  left: 0
+.singer-homepage-body
+  width: inherit
+  height: inherit
+  position: fixed
+  top: 0px
+  bottom: 0
+  .homepage-bg
+    position: fixed
+    width: 100%
+    height: 40vh
+    overflow: hidden
+    .bg
+      position: absolute
+      width: 100%
+      height: 100%
+      top: 0
+      left: 0
+      z-index: -1
+      img
+        width: inherit
+  .singer-homepage-content
+    width: 100%
+    height: 100%
+    overflow: hidden
+    .homepage-singer
+      height: 40vh
+      display: flex
+      align-items: flex-end
+      justify-content: center
+      .collect-btn
+        margin-bottom: 40px
+        width: 150px
+    .homepage-singer-info
+      width: 100%
+      background-color: white
+      position: relative
+      overflow: hidden
+      padding-top: 78px
+      .homepage-cards
+        background-color: white
+        width: 100%
+        min-height: 100vh
+
+
+.homepage-routerlink
+  background-color: white
+  display: flex
+  width: 100%
+  height: 78px
+  align-items center
+  .tab-item
+    width: 25%
+    text-align: center
+    font-size: $font-size-large-xxxll
+    span
+      vertical-align: end
+      color: $color-theme-secondary
+    span:nth-child(2)
+      font-size: $font-size-large-xx
+      color: $color-icon
+    &.router-link-active
+      .tab-link
+        color: $color-theme-primary
+        font-weight: bolder
+
+.nav-panel-wrapper
+  position: relative
+  z-index: 1
+.nav-panel
+  position: relative
+  display: flex
+  height: 104px
+  width: 100%
+  overflow: hidden
+  justify-content: space-evenly
+  align-items: center
+  .nav-body
+    color: white
+    width: 540px
+    display: flex
+    justify-content: center
+    align-content: center
+  .nav-tail.blank
+    width: 56px
+    height: 56px
+  .bg
+    width: 100%
+    height: 40vh
+    position: absolute
+    top: 0px
+    left: 0px
+    z-index: -1
+    img
+      width: inherit

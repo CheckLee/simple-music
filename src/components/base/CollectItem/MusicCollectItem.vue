@@ -2,14 +2,13 @@
   <div class="music-collect-item" @click="_startPlay">
     <div class="music-collect-item-wrapper">
       <div class="music-collect-item-header">
-        <span v-show="isList">1</span>
+        <span v-show="isList">{{ index }}</span>
         <i class="material-icons md-48" v-show="isPlay">volume_up</i>
       </div>
       <div class="music-collect-item-body">
-        <p>{{ name }}</p>
-        <div class="sub-title">
-          <span>{{ artistsStr }} - </span>
-          <span>{{ albumStr }}</span>
+        <p class="ellipsis">{{ name }}</p>
+        <div class="sub-title ellipsis">
+          <span class="ellipsis">{{ artistsStr }}</span><span class="ellipsis">- {{ albumStr }}</span>
         </div>
       </div>
     </div>
@@ -38,7 +37,12 @@
         default: false,
       },
       index: {
-        type: Number
+        type: Number,
+        default: 1
+      },
+      song: {
+        type: Number,
+        required: true
       },
       mv: {
         type: Number,
@@ -76,7 +80,7 @@
         this.isPlay = true
       },
       _linkMV() {
-        console.log(this.mv)
+        this.$router.push({path: '/mvh', query: {vid: this.mv}})
       }
     }
   }

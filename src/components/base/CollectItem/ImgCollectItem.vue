@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="img-collect-item-body">
-      <h2>{{ itemName }}</h2>
+      <h2 class="ellipsis">{{ itemName }}</h2>
       <p v-show="isItemIntro">{{ itemIntro }}</p>
     </div>
     <div class="img-collect-item-tail">

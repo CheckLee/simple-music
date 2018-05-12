@@ -4,9 +4,9 @@
       <div ref="listWrapper">
         <slot></slot>
       </div>
-      <slot name="pullup"
-            :pullUpLoad="pullUpLoad"
-            :isPullUpLoad="isPullUpLoad">
+      <div
+        :pullUpLoad="pullUpLoad"
+        :isPullUpLoad="isPullUpLoad">
         <div class="pullup-wrapper" v-if="pullUpLoad">
           <div class="before-trigger" v-if="!isPullUpLoad">
             <span>{{ pullUpTxt }}</span>
@@ -15,7 +15,8 @@
             <inf-circle-loader :color="circleColor"></inf-circle-loader>
           </div>
         </div>
-      </slot>
+        <slot name="pullup"></slot>
+      </div>
     </div>
   </div>
 </template>
