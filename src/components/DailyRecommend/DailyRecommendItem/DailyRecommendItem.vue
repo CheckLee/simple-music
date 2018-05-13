@@ -5,7 +5,7 @@
       <div class="song-name">{{ item.name }} <span class="trans" v-if="item.transName">({{ item.transName }})</span> </div>
       <div class="others">{{ singers }} - {{ item.album.name }}</div>
     </div>
-    <i class="material-icons mv-icon" v-show="item.mvid">slideshow</i>
+    <i class="material-icons mv-icon" v-show="item.mvid">ondemand_video</i>
     <i class="material-icons more-icon">more_horiz</i>
   </div>
 </template>

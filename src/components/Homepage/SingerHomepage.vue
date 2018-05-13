@@ -48,7 +48,7 @@
             class="collect-btn"
             :toggle="false"
             :clickable="false"
-            :button-name-list="['收藏', '已收藏']"
+            :button-name-list="['未收藏', '已收藏']"
             button-size="medium"
             :button-status="singerInfo.followed"
             secondary-color="white">

@@ -38,6 +38,11 @@
           default: 'gray'
         }
       },
+      watch: {
+        buttonStatus(val, oldVal) {
+          this.isClicked = this.buttonStatus
+        }
+      },
       computed: {
         buttonName() {
           return this.isClicked? this.buttonNameList[1]:this.buttonNameList[0]

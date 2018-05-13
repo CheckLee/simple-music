@@ -49,8 +49,8 @@
           </div>
           <ul class="mv-creators">
             <p class="mv-creator">歌手：</p>
-            <li v-for="item in mvInfo.artists" @click="_linkSinger(item.id)">
-              <p>{{ item.name }}<span>/</span></p>
+            <li v-for="item in mvInfo.artists">
+              <p @click="_linkSinger(item.id)">{{ item.name }}<span>/</span></p>
             </li>
           </ul>
           <ul class="mv-info">

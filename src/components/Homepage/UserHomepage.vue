@@ -128,7 +128,6 @@
         }
       },
       id(val, oldVal) {
-        this.scrollY = 0
         login.GetUserDetail(val)
           .then((res) => {
             this._formatUserInfo(res.data)
@@ -137,7 +136,6 @@
       },
       '$route'(to, from) {
         if (this._filter(to, from)) {
-          console.log(from)
           this.fromPath = from.path
         }
       }
