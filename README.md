@@ -21,9 +21,6 @@ npm run dev
 localhost:8080
 ```
 
-Solarized dark             |  Solarized Ocean
-:-------------------------:|:-------------------------:
-![freinds](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)  |  ![mines](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/mine.gif)
 
-<div style="display: flex">
 
+<img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif" width="200"/> <img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/mine.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/recommed.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/singer.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/userh.gif" width="200"/>
