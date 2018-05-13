@@ -21,10 +21,7 @@ npm run dev
 localhost:8080
 ```
 
-![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
 
-<ul style="display: flex;">
-   <li>
-      ![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
-   </li>
-</ul>
+<div style="display: flex;">
+    ![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
+</div>
