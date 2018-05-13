@@ -21,6 +21,12 @@ npm run dev
 localhost:8080
 ```
 
-
+## 项目一览
 
 <img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif" width="200"/> <img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/mine.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/recommed.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/singer.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/userh.gif" width="200"/>
+
+## Thanks
+
+Thanks[@CheckLee](https://github.com/CheckLee/simple-music)
+
+Thanks[@JiangWeixian](https://github.com/JiangWeixian/simple-music/)
