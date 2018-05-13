@@ -4,7 +4,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
 
-<p>A music app based on Vue.js</p>
+<p>Vue练手项目</p>
 </div>
 
 
@@ -21,6 +21,10 @@ npm run dev
 localhost:8080
 ```
 
-<ul style="display: flex;">
+![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
 
+<ul style="display: flex;">
+   <li>
+      [friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
+   </li>
 </ul>
