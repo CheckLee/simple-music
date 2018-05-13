@@ -21,7 +21,7 @@ npm run dev
 localhost:8080
 ```
 
-## 项目一览
+## 项目一览 ![70](https://img.lishengcn.cn/progress?percent=65&color=c92d36)
 
 <img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif" width="200"/> <img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/mine.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/recommed.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/singer.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/userh.gif" width="200"/>
 
