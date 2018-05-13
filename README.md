@@ -21,11 +21,18 @@ npm run dev
 localhost:8080
 ```
 
-<div style="display: flex;">
+<div style="display: flex">
+
+<div style="padding: 20px; width: 240px">
 
 ![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
 
+</div>
 
-![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
+<div style="padding: 20px; width: 240px">
+
+![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/mine.gif)
+
+</div>
 
 </div>
