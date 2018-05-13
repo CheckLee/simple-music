@@ -25,6 +25,6 @@ localhost:8080
 
 <ul style="display: flex;">
    <li>
-      [friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
+      ![friends](https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif)
    </li>
 </ul>
