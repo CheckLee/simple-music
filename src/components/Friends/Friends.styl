@@ -1,0 +1,64 @@
+@import "~assets/stylus/variable.styl"
+
+.friends
+  .nav-panel
+    background-color: $color-theme-primary
+    display: flex
+    height: 104px
+    width: 100%
+    justify-content: space-evenly
+    align-items: center
+    .nav-body
+      width: 540px
+      display: flex
+      justify-content: center
+      align-content: center
+      ul.nav-body-routerlink
+        display: flex
+        border: 1px solid $color-background
+        position: relative
+        z-index: 1000
+        li
+          width: 164px
+          height: 60px
+          text-align: center
+          line-height: 60px
+          color: white
+          font-size: $font-size-large-xxxl
+          position: relative
+          z-index: 1000
+          .router-link-active
+            color: $color-theme-primary
+        &:after
+          width: 164px
+          height: 60px
+          content: ""
+          background-color: white
+          position: absolute
+          top: 0
+          left: 0
+          z-index: 999
+          transition: left .3s ease
+        &.active:after
+          content: ""
+          left: 164px
+    .nav-tail.blank
+      width: 56px
+      height: 56px
+
+
+//.slide-left-enter-active, .slide-left-leave-active
+//  transition: transform .3s ease
+//  transform: translateX(0)
+//  opacity: 1
+//.slide-right-enter-active, .slide-right-leave-active
+//  transition: transform .3s ease
+//  transform: translateX(0)
+//  opacity: 1
+//
+//.slide-left-enter, .slide-left-leave-active
+//  opacity: 0
+//  transform: translateX(-100%)
+//.slide-right-enter, .slide-right-leave-active
+//  opacity: 0
+//  transform: translateX(100%)

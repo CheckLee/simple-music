@@ -1,0 +1,60 @@
+.official-rank
+  .content
+    .item
+      height: 246px
+      width: 100%
+      border-bottom: 1px solid #ccc
+      margin-bottom: 12px
+      display: flex
+      justify-content: flex-start
+      .pic
+        width: 246px
+        height: 246px
+        background: #ccc
+        flex-shrink: 0
+        position: relative
+        &.raise
+          background: #6090DA
+        &.new
+          background: #4DB8C0
+        &.original
+          background: #C8476F
+        &.hot
+          background: #B35549
+        &.appreciate
+          background: #B94B4A
+        &.singer
+          background: #8348B4
+        .desc
+          width: 246px
+          height: 46px
+          line-height: 46px
+          position: absolute
+          bottom: 0
+          font-size: 26px
+          color: $color-background-d
+          padding: 0 10px
+          overflow: hidden
+          white-space: nowrap
+          text-overflow: ellipsis
+      .right
+        margin-left: 26px
+        margin-right: 36px
+        padding-top: 20px
+        padding-bottom: 20px
+        display: flex
+        flex-direction: column
+        justify-content: space-around
+        width: 100%
+        .right-item
+          width: 442px
+          overflow: hidden
+          white-space: nowrap
+          text-overflow: ellipsis
+          font-size: 28px
+          .material-icons
+            margin-left: 30px
+            vertical-align: middle
+          .point
+            color: #cccccc
+            font-size: 26px

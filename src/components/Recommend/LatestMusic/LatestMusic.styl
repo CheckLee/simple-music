@@ -1,0 +1,50 @@
+.latest-music
+  width: 100%
+  .title
+    height: 94px
+    display: flex;
+    align-items: center
+    .left
+      height: 32px
+      width: 4px
+      background: $color-theme-primary
+      margin-right: 10px
+    .text
+      font-size: 32px
+    .right
+      margin-top: 2px
+      font-size: 44px
+  // 手写右箭头
+  /*
+  width: 16px
+  height: 16px
+  border-top: 2px solid #000
+  border-right: 2px solid #000
+  transform: rotate(45deg)
+  */
+  .content
+    .column
+      margin-bottom: 12px
+      display: flex
+      justify-content: space-between
+      .item
+        width: calc((100% - 12px)/3)
+        .pic
+          width: 246px
+          height: 246px
+          background: #ccc;
+          position: relative
+
+        .text-wrapper
+          height: 112px
+          .song, .singer
+            padding: 14px 10px 0 10px
+            font-size: 26px
+            line-height: 30px
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
+          .singer
+            font-size: 25px
+            color: #222
+

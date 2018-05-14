@@ -1,0 +1,126 @@
+@import "~assets/stylus/variable.styl"
+
+.mv-homepage
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 0
+  left: 0
+  .mvh-actions
+    color: $color-icon
+    display: flex
+    background-color: white
+    width: 100%
+    height: 112px
+    li
+      width: 33.3%
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+
+.mv-wrapper
+  position: fixed
+  left: 0
+  top: 0
+
+.mv-homepage-body
+  position: fixed
+  z-index: 1
+  width: 100%
+  height: 100%
+  top: 0px
+  bottom: 0px
+  color: $color-text
+  .panel
+    background-color: $color-background
+    display: flex
+    align-items: center
+    width: 100%
+    height: 50px
+    color: $color-text
+    font-size: $font-size-large-xxxl
+    p
+      padding: 0 10px
+  .mv-content
+    width: 100%
+    height: 100%
+    overflow: hidden
+    .mv-panel
+      display: flex
+      flex-direction: column
+      padding: 0px 24px
+      margin-bottom: 112px
+      .mv-title
+        display: flex
+        height: 90px
+        justify-content: space-between
+        align-items: center
+        p
+          font-size: $font-size-large-xxxlll
+      .mv-creators
+      .mv-info
+      .mv-actions
+        display: flex
+        align-items: center
+        height: 60px
+        font-size: $font-size-large-xxx
+      .mv-creators
+        li
+          p
+            color: $color-singer
+        li:last-child
+          p
+            span
+              display: none
+      .mv-info
+        color: $color-icon
+        li
+          margin-right: 20px
+      .mv-actions
+        li
+          display: flex
+          align-items: center
+          margin-right: 20px
+          height: inherit
+          line-height: 60px
+          color: $color-icon
+          .material-icons
+            margin-right: 20px
+            height: inherit
+            line-height: inherit
+          span
+            display: block
+            height: inherit
+            line-height: inherit
+      .mv-desc
+        color: $color-icon
+        font-size: $font-size-large-xxx
+        line-height: 1.5
+
+.blank
+  height: 420px!important
+
+.pullup-wrapper
+  margin-bottom: 420px!important
+
+.nav-panel-wrapper
+  position: relative
+  z-index: 3
+.nav-panel
+  position: relative
+  display: flex
+  height: 104px
+  width: 100%
+  overflow: hidden
+  justify-content: space-evenly
+  align-items: center
+  .nav-body
+    color: white
+    width: 540px
+    display: flex
+    justify-content: center
+    align-content: center
+  .nav-tail.blank
+    width: 56px
+    height: 56px

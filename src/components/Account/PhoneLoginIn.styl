@@ -1,0 +1,85 @@
+@import "~assets/stylus/variable.styl"
+
+.nav-panel
+  display: flex
+  height: 104px
+  width: 100%
+  justify-content: space-evenly
+  background-color : $color-theme-primary
+  align-items: center
+  .nav-body
+    color: white
+    width: 540px
+    display: flex
+    justify-content: center
+    align-content: center
+  .nav-tail.blank
+    width: 56px
+    height: 56px
+
+
+.phone-loginin
+  width: 100%
+  height: 100%
+  background-color: white
+  position: absolute
+  top: 0
+  left: 0
+  z-index: 2
+  .phone-login-forms
+    width: 704px
+    display: flex
+    flex-direction: column
+    margin: 0 auto
+    margin-top: 22px
+    .button
+      display: block
+      text-align: center
+      width: inherit
+      height: 94px
+      line-height: 94px
+      margin: 0 auto
+      margin-top: 70px
+    .login-action-login
+      background-color: $color-theme-primary
+      color: white
+    .login-action-reset
+      background-color: white
+      color: $color-text
+    .input
+      width: inherit
+      height: 94px
+      display: flex
+      align-items: center
+      margin-top: 22px
+      border: 1px solid $color-background
+      .material-icons
+        width: 82px
+        text-indent: 24px
+        color: $color-icon
+      input
+        width: calc(704px, -82px)
+        text-indent: 12px
+        height: 94px
+        line-height: 94px
+      input:focus::-webkit-input-placeholder
+        color:#fff
+      input:focus::-moz-input-placeholder
+        color:#fff
+
+.toast-wrapper
+  position: absolute
+  left: 0
+  bottom: 90px
+  display: flex
+  width: 100%
+  justify-content: center
+
+.toast-popup-enter-active, .toast-popup-leave-active
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  bottom: 90px
+  opacity: 1;
+
+.toast-popup-enter, .toast-popup-leave-active
+  bottom: -50px
+  opacity: 0;

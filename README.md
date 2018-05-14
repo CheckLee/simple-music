@@ -1,10 +1,12 @@
-<<<<<<< HEAD
-# Netease-music
-A webapp imitation from netease-music
-=======
-# netease-music
+<div align="center">
+<h3 style="color: #dd3f3c">Simple-Music</h3>
 
-> A Vue.js project
+[![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
+
+<p>Vue练手项目</p>
+</div>
+
 
 ## Build Setup
 
@@ -15,12 +17,16 @@ npm install
 # serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+# type url in browser
+localhost:8080
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
->>>>>>> init
+## 项目一览 ![70](https://img.lishengcn.cn/progress?percent=65&color=c92d36)
+
+<img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/friends.gif" width="200"/> <img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/mine.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/recommed.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/singer.gif" width="200"/><img src="https://github.com/JiangWeixian/simple-music/blob/dev/protoPicture/pages/README/userh.gif" width="200"/>
+
+## Thanks
+
+Thanks[@CheckLee](https://github.com/CheckLee/simple-music)
+
+Thanks[@JiangWeixian](https://github.com/JiangWeixian/simple-music/)

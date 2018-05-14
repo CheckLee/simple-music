@@ -1,0 +1,45 @@
+@import "~assets/stylus/variable.styl"
+
+.singer-info
+ .info
+   font-size: $font-size-large-xxx
+   h2
+     height: 78px
+     line-height: 78px
+     text-indent: 20px
+     position: relative
+     &::before
+       content: ''
+       background-color: $color-theme-primary
+       width: 10px
+       height: $font-size-large-xxx
+       position: absolute
+       top: $font-size-large-xxx
+       left: 0
+   pre
+     color: $color-icon
+     padding: 0 20px
+     line-height: 1.5
+     white-space:pre-wrap;
+     word-wrap:break-word;
+
+.container
+  .simisinger
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    .img-wrapper
+      width: 140px
+      height: 140px
+      overflow: hidden
+      img
+        width: inherit
+        height: inherit
+        object-fit: fill
+    .singer-name
+      width: 140px
+      padding-top: 10px
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap

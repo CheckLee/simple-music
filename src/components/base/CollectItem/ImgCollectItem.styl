@@ -1,0 +1,81 @@
+@import '~assets/stylus/variable.styl'
+
+.img-collect-item
+  display: flex
+  width: 100%
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  .img-collect-item-body
+    align-self: stretch
+    overflow: hidden
+    text-indent: 28px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    h2
+      font-size: $font-size-large-xxxl
+      height: 58px
+      line-height: 58px
+    p
+      font-size: $font-size-large-xx
+      color: $color-icon
+      width: inherit
+      height: 32px
+      line-height: 32px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+  .img-collect-item-tail
+    margin-right: 24px
+    .material-icons
+      color: $color-icon
+
+.fans-img-collect-item
+  height: 140px
+  .img-collect-item-header
+    margin-left: 24px
+    width: 92px
+    height: 92px
+    img
+      width: inherit
+      height: inherit
+      border-radius: 100%
+      object-fit: fill
+  .img-collect-item-body
+    width: calc(100% - 92px - 24px)
+
+.musiclist-img-collect-item
+  margin-bottom: 10px
+  .img-collect-item-header
+    width: 118px
+    height: 118px!important
+    img
+      width: inherit
+      height: inherit
+  .img-collect-item-body
+    width: calc(100% - 118px)
+
+.mv-img-collect-item
+  margin: 0 0 10px 10px
+  .img-collect-item-header
+    width: 210px
+    height: 118px
+    position: relative
+    overflow: hidden
+    img
+      position: absolute
+      left: 0
+      top: 0
+      width: 210px
+      object-fit: fill
+    .header-badge
+      position: absolute
+      top: 5px
+      right: 10px
+      display: flex
+      color: white
+      align-items: center
+      font-size: $font-size-large-x
+  .img-collect-item-body
+    width: calc(100% - 210px)

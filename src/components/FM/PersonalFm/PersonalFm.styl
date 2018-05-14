@@ -1,0 +1,128 @@
+.personal-fm
+  height: 100%
+  display: flex
+  flex-direction: column
+  align-items: center
+  color: $color-background-d
+  background: rgba(0, 0, 0, 0.3)
+  .blur-wrapper
+    z-index: -1
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    width: 100%;
+    height: 100%
+    filter: blur(100px)
+    .blur-pic
+      height: 100%
+  .song-info-wrapper
+    width: 100%
+    display: flex
+    align-items: center
+    flex-direction: column
+    margin-top: 104px
+    margin-bottom: 104px
+    .pic-wrapper
+      width: 586px
+      height: 586px
+      margin-top: 76px
+      background: #cccccc
+      border-radius: 10px
+      position: relative
+      .pic
+        position: absolute
+        margin: auto
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        width: 586px
+        height: 586px
+        border-radius: 10px
+    .song
+      margin-top: 60px
+      font-size: 40px
+      line-height: 60px
+      height: 60px
+    .singer
+      color: #cccccc
+      .name
+        display: inline-block
+        vertical-align: middle
+        font-size: 26px
+        height: 34px
+        line-height: 34px
+      i
+        vertical-align: middle
+        font-size: 32px
+        margin-left: -12px
+  .lyric-wrapper
+    z-index: 1
+    position: fixed
+    top: 104px
+    bottom: 280px
+    width: 100%
+  .progress-wrapper
+    position: absolute
+    bottom: 196px
+    display: flex
+    align-items: center
+    width: 86%
+    justify-content: space-around
+    .cur-time, .song-time
+      height: 60px
+      line-height: 60px
+      font-size: 26px
+      flex-basis: 60px
+    .progress-bar-wrapper
+      flex: 0 0 1
+      position: relative
+      width: 500px
+      height: 60px
+      .progress-bar
+        position: relative
+        top: 27px
+        height: 6px
+        width: 468px
+        margin-left: 16px
+        background: rgba(204, 204, 204, 0.3)
+        .progress
+          position: absolute
+          height: 100%
+          background: $color-theme-primary
+        .progress-dot-wrapper
+          position: absolute
+          left: -32px
+          top: -27px
+          width: 60px
+          height: 60px
+          .progress-dot
+            position: relative
+            top: 14px
+            left: 14px
+            -webkit-box-sizing: border-box
+            -moz-box-sizing: border-box
+            box-sizing: border-box
+            width: 32px
+            height: 32px
+            border: 13px solid $color-background-d
+            border-radius: 50%
+            background: $color-theme-primary
+
+  .handlers
+    width: 684px
+    height: 120px
+    display: flex
+    position: absolute
+    bottom: 36px
+    justify-content: space-between
+    align-items: center
+    .info
+      font-size: 60px
+    .skip
+      font-size: 80px
+    .play
+      font-size: 108px
+

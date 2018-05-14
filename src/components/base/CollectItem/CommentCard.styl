@@ -1,0 +1,63 @@
+@import "~assets/stylus/variable.styl"
+
+.comment-card
+  margin: 10px
+  .comment-header
+    display: flex
+    width: 100%
+    height: 92px
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 20px
+    .header-innerwrapper
+      display: flex
+      align-items: center
+      .header-avatar
+        width: 92px
+        height: 92px
+        border-radius: 100%
+        overflow: hidden
+        img
+          width: inherit
+          height: inherit
+          object-fit: fill
+      .header-body
+        text-indent: 20px
+        p:nth-child(1)
+          font-size: $font-size-large-xxxl
+          margin-bottom: 10px
+        p:nth-child(2)
+          font-size: $font-size-large-x
+          color: $color-icon
+    .header-tail
+      display: flex
+      margin-top: 10px
+      align-self: flex-start
+      align-items: flex-end
+      color: $color-icon
+      font-size: $font-size-large-xxx
+      span
+      .material-icons
+        vertical-align: bottom
+      span
+        display: block
+        vertical-align: bottom
+      .material-icons
+        margin-left: 10px
+  .comment-body.border
+    border-bottom: 1px solid $color-background
+  .comment-body
+    color: black
+    font-size: $font-size-large-xxxl
+    line-height: 1.5
+    margin-left: 112px
+    border-bottom: 1px solid $color-background
+    p.content
+      margin-bottom: 20px
+    .replaied
+      margin-bottom: 20px
+      background-color: $color-background
+      padding: 20px
+      p
+        span
+          color: $color-singer

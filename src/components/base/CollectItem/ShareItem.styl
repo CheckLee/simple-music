@@ -1,0 +1,46 @@
+@import '~assets/stylus/variable.styl'
+
+.share-item
+  width: 100%
+  background-color: $color-background
+  .item-header
+    height: 100px
+    display: flex
+    flex-direction: row
+    .item-avatar
+      width: 100px
+      height: inherit
+      position: relative
+      img
+        width: inherit
+        height: inherit
+      .item-avatar-layer
+        position:absolute
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+    .item-title
+      font-size: $font-size-large-xxxl
+      line-height: $font-size-large-xxxlll
+      padding-left: 10px
+      box-sizing: border-box
+      display: flex
+      align-items: center
+      p
+        display: -webkit-box;
+        overflow: hidden
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+   .item-tail
+     color: $color-icon
+     padding-right: 20px
+     border-top: 1px solid $color-background-p
+     font-size: $font-size-large-xxxl
+     line-height: 50px
+     height: 50px
+     display: flex
+     justify-content: flex-end

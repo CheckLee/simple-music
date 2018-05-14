@@ -1,0 +1,97 @@
+.daily-recommend
+  position: fixed
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  z-index: 1000
+  background: $color-background-d
+  .header
+    width: 100%
+    height: 104px
+    background: $color-theme-primary
+    color: $color-background-d
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    .material-icons
+      width: 56px
+      height: 56px
+      position: absolute
+      font-size: 56px
+      &.back
+        left: 14px
+      &.info
+        right: 96px
+  .daily-recommend-content
+    overflow: hidden
+    height: calc(100% - 104px - 112px)
+    position: relative
+    .ad-wrapper
+      height: 376px
+      background: #ccc
+      position: relative
+      .ad-pic
+        width: 100%
+        height: 100%
+      .tip
+        color: $color-text
+        position: absolute
+        height: 82px
+        bottom: 0
+        line-height: 82px
+        font-size: 24px
+        padding-left: 16px
+        .icon
+          vertical-align: middle
+    section
+      background: $color-background-d
+    .panel
+      height: 94px
+      display: flex
+      align-items: center
+      .play-icon
+        font-size: 46px
+        margin-left: 20px
+      .play-text
+        margin-left: 20px
+      .multi-select
+        position: absolute
+        right: 20px
+        font-size: 28px
+        height: 94px
+        line-height: 94px
+        .multi-icon
+          font-size: 40px
+          vertical-align: middle
+          margin-right: -6px
+
+    .recommend-list-wrapper
+      padding-left: 16px
+      .recommend-list:nth-child(1)
+        border-top: 1px solid #ccc
+  .panel-fixed
+    width: 100%
+    position: fixed
+    background: $color-background-d
+    top: 104px
+    left: 0
+    height: 94px
+    display: flex
+    align-items: center
+    .play-icon
+      font-size: 46px
+      margin-left: 20px
+    .play-text
+      margin-left: 20px
+    .multi-select
+      position: absolute
+      right: 20px
+      font-size: 28px
+      height: 94px
+      line-height: 94px
+      .multi-icon
+        font-size: 40px
+        vertical-align: middle
+        margin-right: -6px

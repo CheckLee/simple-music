@@ -1,0 +1,19 @@
+.tab
+  box-sizing: border-box
+  display: flex
+  height: 82px
+  line-height: 82px
+  font-size: 30px
+  background-color: $color-background-p;
+  .tab-item
+    flex: 1
+    text-align: center
+    .tab-link
+      height: 82px
+      line-height: 82px
+      padding-bottom: 15px
+      color: black
+    &.router-link-active
+      .tab-link
+        color: $color-theme-primary
+        border-bottom: 4px solid $color-theme-primary

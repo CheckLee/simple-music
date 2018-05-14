@@ -1,0 +1,40 @@
+.bottom-panel
+  width: 100%
+  height: 112px
+  font-size: 24px
+  position: relative
+  .bottom-bg
+    width: 100%
+    height: 100%
+    background: rgb(0, 0, 0)
+    filter: blur(2px)
+  .bottom-items
+    position: absolute
+    background: rgba(0, 0, 0, 0.5)
+    top: 0
+    width: 100%
+    height: 100%
+    z-index: 1
+    display: flex
+    justify-content: space-around
+    align-items: center
+    color: #fff
+    .bottom-item
+      width: 118px
+      height: 80px
+      display: flex
+      flex-direction: column
+      justify-content: space-around
+      align-items: center
+      .icon
+        width: 44px
+        height: 44px
+        font-size: 44px
+      .bottom-link
+        font-size: 24px
+        color: rgba(255, 255, 255, 0.3)
+      &.router-link-active
+        .bottom-link
+          color: rgba(255, 255, 255, 1)
+        .icon
+          color: rgba(255, 255, 255, 1)

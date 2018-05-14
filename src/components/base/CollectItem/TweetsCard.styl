@@ -1,0 +1,157 @@
+@import "~assets/stylus/variable.styl"
+
+.card
+.tweets-card
+  width: 100%
+  background-color: white
+  position: relative
+  .tweets-header
+    display: flex
+    width: inherit
+    height: 140px
+    align-items: center
+    .tweets-account-avatar
+      width: 140px
+      padding: 24px
+      box-sizing: border-box
+      height: inherit
+      display: flex
+      justify-content: center
+      align-items: center
+      .img
+        width: 92px
+        height: 92px
+        border-radius: 100%
+        overflow: hidden
+        img
+          width: inherit
+          object-fit: fill
+    .tweets-header-brief
+      width: 448px
+      height: 140px
+      display: flex
+      flex-direction: column
+      justify-content: center
+      .tweets-account-name
+        font-size: $font-size-large-xxxl
+        height: 42px
+        line-height: 42px
+      .tweets-time
+        font-size: $font-size-large-xx
+        color: $color-icon
+        display: block
+        height: 50px
+        line-height 50px
+    .tweets-actions
+      width: 140px
+      box-sizing: border-box
+      margin-right: 24px
+      .tweets-actions-more
+        display: block
+        text-align: right
+        .material-icons
+          color: $color-icon
+      ul.dropdown-menu
+        opacity: 0
+        transform-origin: top right
+        transition: transform .2s ease
+        z-index: 1000
+        transform: scale(0)
+        padding: 20px
+        font-size: $font-size-large-xxxl
+        background-color: white
+        box-sizing: border-box
+        color: $color-icon
+        position: absolute
+        top: 0px
+        right: 0px
+        width: auto
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)
+      ul.dropdown
+        opacity: 1
+        transform: scale(1)
+        li
+          display: flex
+          align-items: center
+          height: 96px
+          span
+            text-indent: 10px
+  .tweets-body, .tweets-tail
+    width: 100%
+    padding: 0 24px 0 140px
+    box-sizing: border-box
+  .tweets-body
+    .tweets-body-brief
+      font-size: $font-size-large-xxxl
+      line-height: 42px
+      margin-bottom: 24px
+      overflow: hidden
+      position: relative
+      .act
+        color: #2d9cf2
+    .tweets-body-brief.more
+      height: 100%
+    .tweets-body-brief.less
+      max-height: 126px
+      &::after
+        content:"...";
+        font-weight:bold;
+        position:absolute;
+        bottom:0;
+        right:0;
+        padding:0 20px 0px 0px;
+    .more-or-less
+      width 70px
+    .tweets-body-content
+      ul.images
+        display: flex
+        flex-wrap: wrap
+        width: 586px
+        height: auto
+        margin-bottom: 24px
+        li
+          width: 33.3%
+          height: calc(586px/3)
+          overflow: hidden
+          img
+            width: 100%
+            object-fit: center
+  .tweets-tail
+    display: flex
+    justify-content: space-between
+    .tweets-actions
+      display: flex
+      .tweets-action
+        width: 120px
+        height: 114px
+        line-height: 114px
+        display: flex
+        align-items: center
+        .material-icons
+          height: inherit
+          line-height: inherit
+          color: $color-icon
+        .material-icons.active
+          color: $color-theme-primary
+        span
+          font-size: $font-size-large-xx
+          text-indent: 8px
+    .tweets-api
+      height: 114px
+      line-height 114px
+      .material-icons
+        height: inherit
+        line-height: inherit
+        color: $color-icon
+      .material-icons.active
+        color: $color-theme-primary
+
+.video
+  .video-panel
+    position: relative
+    z-index: 3
+    background-color: $color-background
+    padding: 20px 20px
+    font-size: $font-size-large-xxxl
+    span
+      color: $color-singer
